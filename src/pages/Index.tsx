@@ -4,35 +4,29 @@ import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
 import { Button } from "@/components/ui/button";
 import { 
-  TrendingUp, 
-  Users, 
-  Award, 
-  ArrowRight, 
-  CheckCircle, 
-  Star,
-  PlayCircle,
   ChevronLeft,
   ChevronRight
 } from "lucide-react";
+import { 
+  ArrowUpRight01Icon,
+  UserIcon,
+  StarIcon,
+  ArrowRight01Icon,
+  RoboticIcon,
+  FlashIcon,
+  CheckmarkCircle01Icon
+} from "hugeicons-react";
 import heroBackground from "@/assets/hero-background.jpg";
-import trendingUpIcon from "@/assets/icons/trending-up.png";
-import usersIcon from "@/assets/icons/users.png";
-import awardIcon from "@/assets/icons/award.png";
-import checkCircleIcon from "@/assets/icons/check-circle.png";
-import starIcon from "@/assets/icons/star.png";
-import arrowRightIcon from "@/assets/icons/arrow-right.png";
-import aiRobotIcon from "@/assets/icons/ai-robot.png";
-import lightningIcon from "@/assets/icons/lightning.png";
 
 const Index = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [currentPartner, setCurrentPartner] = useState(0);
 
   const stats = [
-    { icon: usersIcon, value: "300+", label: "Years Collective Experience" },
-    { icon: trendingUpIcon, value: "₹500+", label: "Crore Transactions" },
-    { icon: awardIcon, value: "250+", label: "Happy Customers" },
-    { icon: checkCircleIcon, value: "15+", label: "Bank Partners" }
+    { value: "300+", label: "Years Collective Experience" },
+    { value: "₹500+", label: "Crore Transactions" },
+    { value: "250+", label: "Happy Customers" },
+    { value: "15+", label: "Bank Partners" }
   ];
 
   const testimonials = [
@@ -67,23 +61,19 @@ const Index = () => {
   const features = [
     {
       title: "AI-Powered Analytics",
-      description: "Smart algorithms that optimize your loan distribution process",
-      icon: aiRobotIcon
+      description: "Smart algorithms that optimize your loan distribution process"
     },
     {
       title: "Multi-Bank Integration", 
-      description: "Seamless access to 15+ leading banks and financial institutions",
-      icon: checkCircleIcon
+      description: "Seamless access to 15+ leading banks and financial institutions"
     },
     {
       title: "Instant Processing",
-      description: "Get started in under 10 minutes with automated onboarding",
-      icon: lightningIcon
+      description: "Get started in under 10 minutes with automated onboarding"
     },
     {
       title: "24/7 Support",
-      description: "Dedicated relationship managers and technical assistance",
-      icon: usersIcon
+      description: "Dedicated relationship managers and technical assistance"
     }
   ];
 
@@ -145,7 +135,7 @@ const Index = () => {
           {/* Trust Badge */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 text-white/90 text-sm">
-              <img src={starIcon} alt="Star" className="h-4 w-4 mr-2 filter brightness-0 invert" />
+              <StarIcon size={16} className="mr-2 text-white" />
               Trusted by Leading Banks & DSAs Across India
             </div>
           </div>
@@ -165,7 +155,7 @@ const Index = () => {
                 <Link to="/contact">
                   <Button variant="cta" size="lg" className="group">
                     Partner With Us
-                    <img src={arrowRightIcon} alt="Arrow" className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform filter brightness-0 invert" />
+                    <ArrowRight01Icon size={16} className="ml-2 group-hover:translate-x-1 transition-transform text-white" />
                   </Button>
                 </Link>
                 <Link to="/services">
@@ -238,9 +228,9 @@ const Index = () => {
                   <div className="text-5xl font-bold text-white mb-1">4.8<span className="text-gray-400 text-3xl">/5</span></div>
                 </div>
                 <div className="text-right">
-                  <div className="flex items-center mb-1">
+                  <div className="flex items-center justify-center mb-1">
                     {[...Array(5)].map((_, i) => (
-                      <img key={i} src={starIcon} alt="Star" className="h-4 w-4 mr-0.5" />
+                      <StarIcon key={i} size={16} className="text-yellow-400 mr-0.5" />
                     ))}
                   </div>
                   <div className="text-xs text-gray-400 uppercase tracking-wide">
@@ -302,7 +292,7 @@ const Index = () => {
                 <Link to="/contact">
                   <Button variant="cta" size="lg" className="group">
                     Get Started
-                    <img src={arrowRightIcon} alt="Arrow" className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform filter brightness-0 invert" />
+                    <ArrowRight01Icon size={16} className="ml-2 group-hover:translate-x-1 transition-transform text-white" />
                   </Button>
                 </Link>
               </div>
@@ -311,7 +301,7 @@ const Index = () => {
                 {/* AI-Powered Analytics - Large Card */}
                 <div className="col-span-2 bg-blue-600 rounded-2xl p-8 text-white relative overflow-hidden">
                   <div className="absolute top-6 right-6 w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                    <img src={aiRobotIcon} alt="AI" className="h-6 w-6 filter brightness-0 invert" />
+                    <RoboticIcon size={24} className="text-white" />
                   </div>
                   <div className="mt-8">
                     <h3 className="text-2xl font-bold mb-3">AI-Powered Analytics</h3>
@@ -324,7 +314,7 @@ const Index = () => {
                 {/* Multi-Bank Integration */}
                 <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
                   <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                    <img src={checkCircleIcon} alt="Integration" className="h-6 w-6" />
+                    <CheckmarkCircle01Icon size={24} className="text-blue-600" />
                   </div>
                   <h3 className="text-lg font-semibold text-black mb-2">Multi-Bank Integration</h3>
                   <p className="text-gray-600 text-sm">
@@ -335,7 +325,7 @@ const Index = () => {
                 {/* Instant Processing */}
                 <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
                   <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                    <img src={lightningIcon} alt="Speed" className="h-6 w-6" />
+                    <FlashIcon size={24} className="text-blue-600" />
                   </div>
                   <h3 className="text-lg font-semibold text-black mb-2">Instant Processing</h3>
                   <p className="text-gray-600 text-sm">
@@ -346,7 +336,7 @@ const Index = () => {
                 {/* 24/7 Support */}
                 <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
                   <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                    <img src={usersIcon} alt="Support" className="h-6 w-6" />
+                    <UserIcon size={24} className="text-blue-600" />
                   </div>
                   <h3 className="text-lg font-semibold text-black mb-2">24/7 Support</h3>
                   <p className="text-gray-600 text-sm">
@@ -357,7 +347,7 @@ const Index = () => {
                 {/* Risk Management */}
                 <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
                   <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                    <img src={trendingUpIcon} alt="Risk" className="h-6 w-6" />
+                    <ArrowUpRight01Icon size={24} className="text-blue-600" />
                   </div>
                   <h3 className="text-lg font-semibold text-black mb-2">Risk Management</h3>
                   <p className="text-gray-600 text-sm">
@@ -381,7 +371,7 @@ const Index = () => {
             <div className="flex items-center justify-center gap-2 mb-2">
               <span className="text-2xl font-bold">4.8</span>
               <span className="text-gray-400">/5</span>
-              <img src={starIcon} alt="Star" className="h-6 w-6 ml-1" />
+              <StarIcon size={24} className="text-green-600 ml-1" />
               <span className="font-semibold text-green-600">Trustpilot</span>
             </div>
             <p className="text-gray-500">Based on 250+ reviews</p>
@@ -418,7 +408,7 @@ const Index = () => {
                 <div key={index} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
                   <div className="flex mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => (
-                      <img key={i} src={starIcon} alt="Star" className="h-4 w-4 mr-0.5" />
+                      <StarIcon key={i} size={16} className="text-yellow-400 mr-0.5" />
                     ))}
                   </div>
                   <p className="text-gray-700 text-sm mb-6 leading-relaxed">
@@ -490,7 +480,7 @@ const Index = () => {
               {/* Step 1 */}
               <div className="text-left lg:pt-8">
                 <div className="flex items-center mb-6">
-                  <img src={checkCircleIcon} alt="Registration" className="h-8 w-8 mr-4" />
+                  <CheckmarkCircle01Icon size={32} className="text-blue-600 mr-4" />
                   <span className="text-8xl font-bold text-gray-200">1</span>
                 </div>
                 <h3 className="text-2xl font-bold text-black mb-4">Quick Registration</h3>
@@ -502,7 +492,7 @@ const Index = () => {
               {/* Step 2 */}
               <div className="text-left lg:pt-16">
                 <div className="flex items-center mb-6">
-                  <img src={aiRobotIcon} alt="Setup" className="h-8 w-8 mr-4" />
+                  <RoboticIcon size={32} className="text-blue-600 mr-4" />
                   <span className="text-8xl font-bold text-gray-200">2</span>
                 </div>
                 <h3 className="text-2xl font-bold text-black mb-4">Setup & Integration</h3>
@@ -514,7 +504,7 @@ const Index = () => {
               {/* Step 3 */}
               <div className="text-left lg:pt-4">
                 <div className="flex items-center mb-6">
-                  <img src={lightningIcon} alt="Processing" className="h-8 w-8 mr-4" />
+                  <FlashIcon size={32} className="text-blue-600 mr-4" />
                   <span className="text-8xl font-bold text-gray-200">3</span>
                 </div>
                 <h3 className="text-2xl font-bold text-black mb-4">Start Processing</h3>
