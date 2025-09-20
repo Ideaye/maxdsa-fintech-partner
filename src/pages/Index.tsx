@@ -181,20 +181,81 @@ const Index = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-gray-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <img src={stat.icon} alt={stat.label} className="h-6 w-6 filter brightness-0 invert" />
+          <div className="text-center mb-12">
+            <div className="text-sm font-semibold text-red-500 mb-2 tracking-wide uppercase">MISSION</div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              <span className="text-gray-500">Our focus is simple</span><br />
+              <span className="text-black">Design to convert</span>
+            </h2>
+            <p className="text-gray-600 max-w-xl mx-auto">
+              We promise to deliver beyond your expectations for your business.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {/* Partners Card */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm">
+              <div className="flex items-center mb-4">
+                <div className="flex -space-x-2">
+                  <div className="w-8 h-8 bg-orange-400 rounded-full border-2 border-white"></div>
+                  <div className="w-8 h-8 bg-blue-400 rounded-full border-2 border-white"></div>
+                  <div className="w-8 h-8 bg-red-400 rounded-full border-2 border-white"></div>
+                  <div className="w-8 h-8 bg-purple-400 rounded-full border-2 border-white"></div>
                 </div>
-                <div className="text-3xl font-bold text-primary-dark mb-2 animate-counter">
-                  {stat.value}
-                </div>
-                <div className="text-muted-foreground">{stat.label}</div>
+                <span className="ml-3 text-sm font-medium text-gray-600">15+ PARTNERS</span>
               </div>
-            ))}
+              <p className="text-gray-700 text-sm">
+                Through our custom-tailored funnel systems
+              </p>
+            </div>
+
+            {/* ROI Card */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm">
+              <div className="text-6xl font-bold text-black mb-2">90<span className="text-gray-400">%</span></div>
+              <p className="text-gray-600 text-sm">Return on investment (ROI)</p>
+              <p className="text-gray-500 text-xs mt-2">Earn back on your investment within 30 days</p>
+            </div>
+
+            {/* Revenue Card */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm">
+              <div className="text-5xl font-bold text-black mb-2">₹500<span className="text-gray-400">+</span></div>
+              <p className="text-gray-600 text-sm mb-3">Crore Transactions</p>
+              <div className="flex items-center">
+                <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
+                <span className="text-xs text-gray-500 uppercase">Available for Partners</span>
+              </div>
+            </div>
+
+            {/* Projects Card - Spanning 2 columns */}
+            <div className="bg-gray-900 rounded-2xl p-6 shadow-sm md:col-span-2 lg:col-span-2">
+              <p className="text-white text-lg mb-6">
+                We delivered 250+ successful partnerships across India, helping DSAs secure more clients and maximize their revenue potential.
+              </p>
+              <div className="flex items-end justify-between">
+                <div>
+                  <div className="text-5xl font-bold text-white mb-1">4.8<span className="text-gray-400 text-3xl">/5</span></div>
+                </div>
+                <div className="text-right">
+                  <div className="flex items-center mb-1">
+                    {[...Array(5)].map((_, i) => (
+                      <img key={i} src={starIcon} alt="Star" className="h-4 w-4 mr-0.5" />
+                    ))}
+                  </div>
+                  <div className="text-xs text-gray-400 uppercase tracking-wide">
+                    TRUSTED BY<br />CLIENTS NATIONWIDE
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Experience Card */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm">
+              <div className="text-5xl font-bold text-black mb-2">300<span className="text-gray-400">+</span></div>
+              <p className="text-gray-600 text-sm">Years Collective Experience</p>
+              <p className="text-gray-500 text-xs mt-2">Combined expertise of our team</p>
+            </div>
           </div>
         </div>
       </section>
