@@ -66,7 +66,7 @@ const Services = () => {
           </div>
           
           {/* Main Heading */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 animate-fade-in">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 animate-fade-in">
             Empowering DSAs,{" "}
             <span className="block">One Solution at a Time,</span>
             <span className="block">Every Day</span>
