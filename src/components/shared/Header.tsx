@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import maxdsaLogo from "@/assets/maxdsa-logo.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,11 +26,10 @@ const Header = () => {
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center">
               <img 
-                src="/src/assets/maxdsa-logo.png" 
+                src={maxdsaLogo} 
                 alt="MaxDSA Logo" 
-                className="w-8 h-8 mr-3"
+                className="h-12 w-auto"
               />
-              <span className="text-xl font-bold text-gray-900">MaxDSA</span>
             </Link>
           </div>
 

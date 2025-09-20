@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Linkedin, Twitter } from "lucide-react";
-import maxdsaLogo from "@/assets/maxdsa-logo.png";
+import maxdsaLogoWhite from "@/assets/maxdsa-logo-white.png";
 
 const Footer = () => {
   return (
@@ -9,9 +9,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center mb-4">
-              <img src={maxdsaLogo} alt="MaxDSA" className="h-10 w-auto mr-3" />
-              <span className="text-xl font-bold text-white">MaxDSA Business Services</span>
+            <div className="mb-4">
+              <img src={maxdsaLogoWhite} alt="MaxDSA" className="h-16 w-auto" />
             </div>
             <p className="text-sm text-gray-300 mb-4 max-w-md">
               Redefining DSA excellence with AI & expertise. Over 300 years of collective 
