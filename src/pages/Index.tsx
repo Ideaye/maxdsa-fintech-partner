@@ -115,86 +115,139 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden" style={{backgroundImage: `url(${bannerBg})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
-        <div className="absolute inset-0 bg-black/20"></div>
+      {/* Interactive Hero Banner */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 to-blue-50 px-4 sm:px-6 lg:px-8">
         
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute top-20 left-10 w-72 h-72 bg-primary rounded-full blur-3xl"></div>
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-ai-accent rounded-full blur-3xl"></div>
         </div>
 
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
-          {/* Trust Badge */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 text-white/90 text-sm">
-              <Star className="h-4 w-4 text-yellow-400 mr-2 fill-current" />
-              Trusted by Leading Banks & DSAs Across India
-            </div>
+        {/* Trust Badge */}
+        <div className="absolute top-8 left-1/2 transform -translate-x-1/2 z-10">
+          <div className="inline-flex items-center bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 text-primary-dark text-sm shadow-lg">
+            <Star className="h-4 w-4 text-yellow-500 mr-2 fill-current" />
+            Trusted by Leading Banks & DSAs Across India
           </div>
+        </div>
 
-          {/* Main Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            {/* Left Feature Card */}
-            <div className="lg:col-span-3">
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-                <div className="text-center text-white">
-                  <div className="text-3xl font-bold text-ai-accent mb-2">₹500+</div>
-                  <div className="text-sm text-white/80 mb-4">Crore Transactions Enabled</div>
-                  <div className="text-2xl font-bold text-ai-accent mb-2">250+</div>
-                  <div className="text-sm text-white/80">Channel Partners Served</div>
+        <div className="relative w-full max-w-7xl mx-auto">
+          {/* Main Banner Container */}
+          <div className="relative">
+            {/* Central Banner */}
+            <div className="bg-gradient-to-br from-primary to-primary-dark rounded-3xl overflow-hidden shadow-2xl relative min-h-[400px] flex items-center justify-center">
+              <div className="absolute inset-0 bg-black/10"></div>
+              <div 
+                className="absolute inset-0 opacity-20"
+                style={{
+                  backgroundImage: `url(${bannerBg})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center'
+                }}
+              ></div>
+              
+              {/* Central Content */}
+              <div className="relative z-10 text-center text-white px-8 py-12">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                  Empowering DSAs with 
+                  <span className="block text-ai-accent">Next-Gen Financial Solutions</span>
+                </h1>
+                <p className="text-lg md:text-xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
+                  MaxDSA leverages 300+ years of banking expertise and AI-driven tools to accelerate your business growth
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link to="/contact">
+                    <Button variant="cta" size="lg" className="group shadow-xl">
+                      Partner With Us
+                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </Link>
+                  <Link to="/services">
+                    <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white hover:text-primary-dark shadow-lg">
+                      See Our Services
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
 
-            {/* Center Content */}
-            <div className="lg:col-span-6 text-center text-white">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                Empowering DSAs with 
-                <span className="block text-ai-accent">Next-Gen Financial Solutions</span>
-              </h1>
-              <p className="text-lg md:text-xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
-                MaxDSA leverages 300+ years of banking expertise and AI-driven tools to accelerate your business growth, streamline loan distribution, and power outstanding results.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/contact">
-                  <Button variant="cta" size="lg" className="group">
-                    Partner With Us
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </Link>
-                <Link to="/services">
-                  <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white hover:text-primary-dark">
-                    See Our Services
-                  </Button>
-                </Link>
+            {/* Floating Stats Cards */}
+            
+            {/* Top Left Card */}
+            <div className="absolute -top-8 -left-8 md:-top-12 md:-left-12 transform hover:scale-105 transition-all duration-300 hover:rotate-1 animate-fade-in">
+              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/50 min-w-[200px]">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-primary-dark mb-1">₹500+</div>
+                  <div className="text-sm text-muted-foreground">Crore Transactions</div>
+                  <div className="text-xs text-muted-foreground mt-1">Enabled</div>
+                </div>
               </div>
             </div>
 
-            {/* Right Feature Card */}
-            <div className="lg:col-span-3">
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-                <div className="text-center text-white">
-                  <div className="text-3xl font-bold text-ai-accent mb-2">30+</div>
-                  <div className="text-sm text-white/80 mb-4">Leading Bank/NBFC Partners</div>
-                  <div className="text-2xl font-bold text-ai-accent mb-2">AI</div>
-                  <div className="text-sm text-white/80">Powered Credit Solutions</div>
+            {/* Top Right Card */}
+            <div className="absolute -top-8 -right-8 md:-top-12 md:-right-12 transform hover:scale-105 transition-all duration-300 hover:-rotate-1 animate-fade-in animation-delay-200">
+              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/50 min-w-[200px]">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-primary-dark mb-1">300+</div>
+                  <div className="text-sm text-muted-foreground">Years Collective</div>
+                  <div className="text-xs text-muted-foreground mt-1">Experience</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Left Card */}
+            <div className="absolute -bottom-8 -left-8 md:-bottom-12 md:-left-12 transform hover:scale-105 transition-all duration-300 hover:rotate-1 animate-fade-in animation-delay-400">
+              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/50 min-w-[200px]">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-primary-dark mb-1">250+</div>
+                  <div className="text-sm text-muted-foreground">Happy Customers</div>
+                  <div className="text-xs text-muted-foreground mt-1">Served</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Right Card */}
+            <div className="absolute -bottom-8 -right-8 md:-bottom-12 md:-right-12 transform hover:scale-105 transition-all duration-300 hover:-rotate-1 animate-fade-in animation-delay-600">
+              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/50 min-w-[200px]">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-primary-dark mb-1">15+</div>
+                  <div className="text-sm text-muted-foreground">Bank Partners</div>
+                  <div className="text-xs text-muted-foreground mt-1">Connected</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Center Left Card */}
+            <div className="absolute top-1/2 -left-16 md:-left-20 transform -translate-y-1/2 hover:scale-105 transition-all duration-300 hover:rotate-2 animate-fade-in animation-delay-800">
+              <div className="bg-gradient-to-br from-ai-accent to-ai-accent/80 text-white rounded-2xl p-6 shadow-xl min-w-[180px]">
+                <div className="text-center">
+                  <div className="text-2xl font-bold mb-1">AI</div>
+                  <div className="text-sm opacity-90">Powered</div>
+                  <div className="text-xs opacity-75 mt-1">Analytics</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Center Right Card */}
+            <div className="absolute top-1/2 -right-16 md:-right-20 transform -translate-y-1/2 hover:scale-105 transition-all duration-300 hover:-rotate-2 animate-fade-in animation-delay-1000">
+              <div className="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-2xl p-6 shadow-xl min-w-[180px]">
+                <div className="text-center">
+                  <div className="text-2xl font-bold mb-1">99%</div>
+                  <div className="text-sm opacity-90">Success Rate</div>
+                  <div className="text-xs opacity-75 mt-1">Processing</div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Partner Logos */}
-          <div className="mt-16">
-            <div className="text-center mb-8">
-              <p className="text-white/70 text-sm">Trusted by leading financial institutions</p>
-            </div>
-            <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
+          <div className="mt-20 text-center">
+            <p className="text-muted-foreground text-sm mb-6">Trusted by leading financial institutions</p>
+            <div className="flex flex-wrap justify-center items-center gap-6 opacity-60">
               {partnerBanks.slice(0, 6).map((bank, index) => (
-                <div key={index} className="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/20">
-                  <div className="text-white/80 text-sm font-medium">{bank}</div>
+                <div key={index} className="bg-white rounded-lg px-4 py-2 shadow-sm border hover:shadow-md transition-shadow">
+                  <div className="text-primary-dark text-sm font-medium">{bank}</div>
                 </div>
               ))}
             </div>
