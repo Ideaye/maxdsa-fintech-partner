@@ -15,16 +15,24 @@ import {
   ChevronRight
 } from "lucide-react";
 import heroBackground from "@/assets/hero-background.jpg";
+import trendingUpIcon from "@/assets/icons/trending-up.png";
+import usersIcon from "@/assets/icons/users.png";
+import awardIcon from "@/assets/icons/award.png";
+import checkCircleIcon from "@/assets/icons/check-circle.png";
+import starIcon from "@/assets/icons/star.png";
+import arrowRightIcon from "@/assets/icons/arrow-right.png";
+import aiRobotIcon from "@/assets/icons/ai-robot.png";
+import lightningIcon from "@/assets/icons/lightning.png";
 
 const Index = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [currentPartner, setCurrentPartner] = useState(0);
 
   const stats = [
-    { icon: Users, value: "300+", label: "Years Collective Experience" },
-    { icon: TrendingUp, value: "₹500+", label: "Crore Transactions" },
-    { icon: Award, value: "250+", label: "Happy Customers" },
-    { icon: CheckCircle, value: "15+", label: "Bank Partners" }
+    { icon: usersIcon, value: "300+", label: "Years Collective Experience" },
+    { icon: trendingUpIcon, value: "₹500+", label: "Crore Transactions" },
+    { icon: awardIcon, value: "250+", label: "Happy Customers" },
+    { icon: checkCircleIcon, value: "15+", label: "Bank Partners" }
   ];
 
   const testimonials = [
@@ -60,22 +68,22 @@ const Index = () => {
     {
       title: "AI-Powered Analytics",
       description: "Smart algorithms that optimize your loan distribution process",
-      icon: "🤖"
+      icon: aiRobotIcon
     },
     {
       title: "Multi-Bank Integration", 
       description: "Seamless access to 15+ leading banks and financial institutions",
-      icon: "🏦"
+      icon: checkCircleIcon
     },
     {
       title: "Instant Processing",
       description: "Get started in under 10 minutes with automated onboarding",
-      icon: "⚡"
+      icon: lightningIcon
     },
     {
       title: "24/7 Support",
       description: "Dedicated relationship managers and technical assistance",
-      icon: "🛟"
+      icon: usersIcon
     }
   ];
 
@@ -137,7 +145,7 @@ const Index = () => {
           {/* Trust Badge */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 text-white/90 text-sm">
-              <Star className="h-4 w-4 text-yellow-400 mr-2 fill-current" />
+              <img src={starIcon} alt="Star" className="h-4 w-4 mr-2 filter brightness-0 invert" />
               Trusted by Leading Banks & DSAs Across India
             </div>
           </div>
@@ -157,7 +165,7 @@ const Index = () => {
                 <Link to="/contact">
                   <Button variant="cta" size="lg" className="group">
                     Partner With Us
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    <img src={arrowRightIcon} alt="Arrow" className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform filter brightness-0 invert" />
                   </Button>
                 </Link>
                 <Link to="/services">
@@ -194,7 +202,7 @@ const Index = () => {
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
                 <div className="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <stat.icon className="h-6 w-6 text-white" />
+                  <img src={stat.icon} alt={stat.label} className="h-6 w-6 filter brightness-0 invert" />
                 </div>
                 <div className="text-3xl font-bold text-primary-dark mb-2 animate-counter">
                   {stat.value}
@@ -249,7 +257,9 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
               <div key={index} className="card-elegant bg-card rounded-lg p-6 text-center hover-lift">
-                <div className="text-4xl mb-4">{feature.icon}</div>
+                <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                  <img src={feature.icon} alt={feature.title} className="h-12 w-12" />
+                </div>
                 <h3 className="text-xl font-semibold text-card-foreground mb-2">{feature.title}</h3>
                 <p className="text-muted-foreground">{feature.description}</p>
               </div>
@@ -274,7 +284,7 @@ const Index = () => {
             <div className="card-elegant bg-card rounded-2xl p-8 text-center">
               <div className="flex justify-center mb-4">
                 {[...Array(testimonials[currentTestimonial].rating)].map((_, i) => (
-                  <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
+                  <img key={i} src={starIcon} alt="Star" className="h-5 w-5 mr-1" />
                 ))}
               </div>
               <blockquote className="text-xl text-card-foreground mb-6 italic">
