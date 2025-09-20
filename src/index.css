@@ -128,7 +128,7 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground font-rubik;
+    @apply bg-background text-foreground font-dm-sans;
   }
 
   /* Professional animations */

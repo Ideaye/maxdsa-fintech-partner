@@ -65,8 +65,8 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Rubik', 'system-ui', 'sans-serif'],
-        rubik: ['Rubik', 'system-ui', 'sans-serif'],
+        sans: ['DM Sans', 'system-ui', 'sans-serif'],
+        'dm-sans': ['DM Sans', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",
