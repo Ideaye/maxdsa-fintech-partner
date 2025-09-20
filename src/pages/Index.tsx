@@ -531,7 +531,7 @@ const Index = () => {
 
       {/* CTA Section */}
       <section 
-        className="py-20 relative overflow-hidden"
+        className="py-16 relative overflow-hidden"
         style={{
           backgroundImage: `url(${ctaBackground})`,
           backgroundSize: 'cover',
@@ -540,7 +540,7 @@ const Index = () => {
         }}
       >
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-          <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-12 md:p-16 max-w-3xl mx-auto">
+          <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 md:p-12 max-w-3xl mx-auto">
             <div className="mb-6">
               <div className="text-sm font-medium text-white/80 mb-2 tracking-wide uppercase">
                 MAXDSA
