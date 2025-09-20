@@ -14,7 +14,7 @@ import {
   ChevronLeft,
   ChevronRight
 } from "lucide-react";
-import heroImage from "@/assets/hero-fintech.jpg";
+import heroBackground from "@/assets/hero-background.jpg";
 
 const Index = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -116,8 +116,16 @@ const Index = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary-dark via-primary to-primary-dark min-h-screen flex items-center overflow-hidden">
-        <div className="absolute inset-0 bg-black/10"></div>
+      <section 
+        className="relative min-h-screen flex items-center overflow-hidden"
+        style={{
+          backgroundImage: `url(${heroBackground})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <div className="absolute inset-0 bg-black/40"></div>
         
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
