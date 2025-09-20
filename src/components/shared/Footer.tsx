@@ -1,18 +1,17 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Linkedin, Twitter } from "lucide-react";
+import maxdsaLogo from "@/assets/maxdsa-logo.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-primary-dark text-primary-dark-foreground">
+    <footer className="bg-black text-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center mb-4">
-              <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center mr-3">
-                <span className="text-white font-bold text-sm">M</span>
-              </div>
-              <span className="text-xl font-bold">MaxDSA Business Services</span>
+              <img src={maxdsaLogo} alt="MaxDSA" className="h-10 w-auto mr-3" />
+              <span className="text-xl font-bold text-white">MaxDSA Business Services</span>
             </div>
             <p className="text-sm text-gray-300 mb-4 max-w-md">
               Redefining DSA excellence with AI & expertise. Over 300 years of collective 
@@ -30,7 +29,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-lg font-semibold mb-4 text-white">Quick Links</h3>
             <ul className="space-y-2">
               <li>
                 <Link to="/services" className="text-gray-300 hover:text-white transition-colors">
@@ -57,7 +56,7 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Contact Info</h3>
+            <h3 className="text-lg font-semibold mb-4 text-white">Contact Info</h3>
             <div className="space-y-3">
               <div className="flex items-center">
                 <Mail className="h-4 w-4 mr-2 text-gray-400" />
