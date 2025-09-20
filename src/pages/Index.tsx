@@ -490,9 +490,7 @@ const Index = () => {
               {/* Step 1 */}
               <div className="text-left lg:pt-8">
                 <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
-                    <div className="w-6 h-6 bg-blue-600 rounded"></div>
-                  </div>
+                  <img src={checkCircleIcon} alt="Registration" className="h-8 w-8 mr-4" />
                   <span className="text-8xl font-bold text-gray-200">1</span>
                 </div>
                 <h3 className="text-2xl font-bold text-black mb-4">Quick Registration</h3>
@@ -504,13 +502,7 @@ const Index = () => {
               {/* Step 2 */}
               <div className="text-left lg:pt-16">
                 <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
-                    <div className="w-6 h-4 bg-blue-600 rounded flex flex-col space-y-1">
-                      <div className="w-full h-1 bg-blue-400 rounded"></div>
-                      <div className="w-full h-1 bg-blue-400 rounded"></div>
-                      <div className="w-full h-1 bg-blue-400 rounded"></div>
-                    </div>
-                  </div>
+                  <img src={aiRobotIcon} alt="Setup" className="h-8 w-8 mr-4" />
                   <span className="text-8xl font-bold text-gray-200">2</span>
                 </div>
                 <h3 className="text-2xl font-bold text-black mb-4">Setup & Integration</h3>
@@ -522,11 +514,7 @@ const Index = () => {
               {/* Step 3 */}
               <div className="text-left lg:pt-4">
                 <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
-                    <div className="w-6 h-6 bg-blue-600 rounded-lg relative">
-                      <div className="absolute inset-1 border-2 border-blue-200 rounded"></div>
-                    </div>
-                  </div>
+                  <img src={lightningIcon} alt="Processing" className="h-8 w-8 mr-4" />
                   <span className="text-8xl font-bold text-gray-200">3</span>
                 </div>
                 <h3 className="text-2xl font-bold text-black mb-4">Start Processing</h3>
