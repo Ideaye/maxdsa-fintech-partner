@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { 
   ChevronLeft,
   ChevronRight
-} from "lucide-react";
+ } from "lucide-react";
+// Updated imports for Huge Icons - cache refresh
 import { 
   ArrowUpRight01Icon,
   UserIcon,
