@@ -177,21 +177,6 @@ const Index = () => {
             </div>
           </div>
 
-          {/* Partner Logos */}
-          <div className="mt-16">
-            <div className="text-center mb-8">
-              <p className="text-white/70 text-sm">Trusted by leading financial institutions</p>
-            </div>
-            <div className="grid grid-cols-3 md:grid-cols-6 gap-8 opacity-60">
-              {partnerBanks.slice(0, 6).map((bank, index) => (
-                <div key={index} className="bg-white/20 backdrop-blur-sm rounded-lg p-4 border border-white/20 flex items-center justify-center">
-                  <div className="w-20 h-12 bg-white/80 rounded flex items-center justify-center">
-                    <div className="text-gray-800 text-xs font-semibold text-center">{bank}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 
