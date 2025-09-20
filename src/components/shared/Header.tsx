@@ -24,9 +24,11 @@ const Header = () => {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center">
-              <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center mr-3">
-                <span className="text-white font-bold text-sm">M</span>
-              </div>
+              <img 
+                src="/src/assets/maxdsa-logo.png" 
+                alt="MaxDSA Logo" 
+                className="w-8 h-8 mr-3"
+              />
               <span className="text-xl font-bold text-white">MaxDSA</span>
             </Link>
           </div>

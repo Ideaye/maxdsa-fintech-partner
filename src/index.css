@@ -8,7 +8,7 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Professional fintech color palette */
+    /* MaxDSA brand color palette - based on royal blue logo */
     --background: 0 0% 100%;
     --foreground: 210 24% 16%;
 
@@ -18,12 +18,12 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 210 24% 16%;
 
-    /* Corporate blue primary */
-    --primary: 213 94% 68%;
+    /* MaxDSA royal blue primary */
+    --primary: 228 100% 35%;
     --primary-foreground: 0 0% 100%;
     
-    /* Deep navy for trust */
-    --primary-dark: 213 55% 20%;
+    /* Deep royal blue for strength */
+    --primary-dark: 228 100% 25%;
     --primary-dark-foreground: 0 0% 100%;
 
     /* Light greys for sections */
@@ -33,7 +33,7 @@ All colors MUST be HSL.
     --muted: 210 14% 95%;
     --muted-foreground: 215 16% 57%;
 
-    --accent: 213 94% 68%;
+    --accent: 228 100% 35%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
@@ -41,25 +41,25 @@ All colors MUST be HSL.
 
     --border: 214 20% 89%;
     --input: 214 20% 89%;
-    --ring: 213 94% 68%;
+    --ring: 228 100% 35%;
 
-    /* Custom fintech gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(213 94% 68%), hsl(213 55% 20%));
-    --gradient-hero: linear-gradient(135deg, hsl(213 55% 20%) 0%, hsl(213 94% 68%) 100%);
+    /* MaxDSA brand gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(228 100% 35%), hsl(228 100% 25%));
+    --gradient-hero: linear-gradient(135deg, hsl(228 100% 25%) 0%, hsl(228 100% 35%) 100%);
     --gradient-section: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(210 20% 98%) 100%);
     
-    /* AI-inspired accents */
-    --ai-accent: 172 100% 40%;
-    --ai-accent-light: 172 100% 95%;
+    /* Complementary accent colors */
+    --ai-accent: 45 100% 60%;
+    --ai-accent-light: 45 100% 95%;
     
     /* Success metrics */
     --success: 142 76% 36%;
     --success-light: 142 76% 95%;
 
-    /* Shadows */
-    --shadow-elegant: 0 10px 30px -10px hsl(213 94% 68% / 0.3);
+    /* Shadows with MaxDSA brand colors */
+    --shadow-elegant: 0 10px 30px -10px hsl(228 100% 35% / 0.3);
     --shadow-card: 0 4px 6px -1px hsl(210 24% 16% / 0.1);
-    --shadow-hero: 0 20px 40px -15px hsl(213 55% 20% / 0.4);
+    --shadow-hero: 0 20px 40px -15px hsl(228 100% 25% / 0.4);
 
     --radius: 0.5rem;
 
@@ -81,36 +81,36 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 213 55% 20%;
+    --background: 228 100% 25%;
     --foreground: 0 0% 100%;
 
-    --card: 213 45% 25%;
+    --card: 228 80% 30%;
     --card-foreground: 0 0% 100%;
 
-    --popover: 213 45% 25%;
+    --popover: 228 80% 30%;
     --popover-foreground: 0 0% 100%;
 
-    --primary: 213 94% 68%;
-    --primary-foreground: 213 55% 20%;
+    --primary: 228 100% 55%;
+    --primary-foreground: 228 100% 25%;
     
-    --primary-dark: 213 94% 68%;
-    --primary-dark-foreground: 213 55% 20%;
+    --primary-dark: 228 100% 55%;
+    --primary-dark-foreground: 228 100% 25%;
 
-    --secondary: 213 35% 30%;
+    --secondary: 228 60% 35%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 213 35% 30%;
+    --muted: 228 60% 35%;
     --muted-foreground: 215 16% 70%;
 
-    --accent: 213 94% 68%;
-    --accent-foreground: 213 55% 20%;
+    --accent: 228 100% 55%;
+    --accent-foreground: 228 100% 25%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 213 35% 30%;
-    --input: 213 35% 30%;
-    --ring: 213 94% 68%;
+    --border: 228 60% 35%;
+    --input: 228 60% 35%;
+    --ring: 228 100% 55%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
