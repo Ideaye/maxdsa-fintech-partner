@@ -105,7 +105,7 @@ const WhyPartner = () => {
       {/* Hero Section */}
       <section className="gradient-section py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-primary-dark mb-6 animate-fade-in">
+          <h1 className="text-3xl md:text-4xl font-bold text-primary-dark mb-6 animate-fade-in">
             Why Partner With MaxDSA?
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8 animate-slide-up">

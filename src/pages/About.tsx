@@ -60,7 +60,7 @@ const About = () => {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h1 className="text-4xl md:text-5xl font-bold text-primary-dark mb-6 animate-fade-in">
+              <h1 className="text-3xl md:text-4xl font-bold text-primary-dark mb-6 animate-fade-in">
                 Pioneering DSA Excellence Since 2014
               </h1>
               <p className="text-xl text-muted-foreground mb-8 animate-slide-up">

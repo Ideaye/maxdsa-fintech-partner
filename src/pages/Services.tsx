@@ -124,7 +124,7 @@ const Services = () => {
               <div className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-6">
                 About Us
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
                 Building Solutions,{" "}
                 <span className="block">Expanding</span>
                 <span className="block">Horizons</span>
@@ -152,7 +152,7 @@ const Services = () => {
               <div className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-6">
                 Our story
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-8">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">
                 From Concept to{" "}
                 <span className="block">Global Impact</span>
               </h2>
