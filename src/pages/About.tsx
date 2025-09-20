@@ -56,154 +56,89 @@ const About = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="gradient-section py-20">
+      <section className="py-20 bg-gray-50">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+              Discover our journey and what drives us
+            </h1>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Founded by banking experts, we create cutting-edge DSA solutions 
+              tailored for businesses of all sizes.
+            </p>
+          </div>
+          
+          {/* Hero Image Placeholder */}
+          <div className="bg-gray-200 rounded-2xl h-96 flex items-center justify-center mb-16">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="w-8 h-8 text-primary" />
+              </div>
+              <p className="text-muted-foreground">Professional Team Image</p>
+            </div>
+          </div>
+          
+          {/* Statistics Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">95%</div>
+              <p className="text-sm text-muted-foreground">Customer satisfaction rate, reflecting our dedication</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">15+</div>
+              <p className="text-sm text-muted-foreground">Banking partnerships providing diverse solutions</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">₹500Cr</div>
+              <p className="text-sm text-muted-foreground">Platform has ensured secure and efficient financial</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">250+</div>
+              <p className="text-sm text-muted-foreground">DSAs nationwide, providing them with financial solutions</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mission Section */}
+      <section className="py-20 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Image */}
+            <div className="bg-gray-200 rounded-2xl h-96 flex items-center justify-center">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Award className="w-8 h-8 text-primary" />
+                </div>
+                <p className="text-muted-foreground">Professional Portrait</p>
+              </div>
+            </div>
+            
+            {/* Content */}
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold text-primary-dark mb-6 animate-fade-in">
-                Pioneering DSA Excellence Since 2014
-              </h1>
-              <p className="text-xl text-muted-foreground mb-8 animate-slide-up">
-                Founded by banking veterans with over 300 years of collective experience, 
-                MaxDSA Business Services has been at the forefront of retail loan distribution 
-                innovation, driving growth and success for DSA partners across India.
+              <div className="flex items-center mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <span key={i} className="text-yellow-400 text-lg">★</span>
+                ))}
+                <span className="ml-2 text-sm text-muted-foreground">4.8/5 from our partners</span>
+              </div>
+              
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+                We are passionate about empowering DSAs and businesses to take control of their growth and achieve their financial goals.
+              </h2>
+              
+              <p className="text-muted-foreground mb-8">
+                We are dedicated to revolutionizing the way DSAs and businesses manage their loan distribution. 
+                Our team is committed to providing intuitive and innovative solutions that empower our partners to achieve financial success.
               </p>
+              
               <Link to="/contact">
-                <Button variant="hero" size="lg">
+                <Button variant="cta" size="lg">
                   Partner With Us
                 </Button>
               </Link>
             </div>
-            <div className="relative">
-              <div className="gradient-primary rounded-2xl p-8 text-white">
-                <h3 className="text-2xl font-bold mb-4">Our Mission</h3>
-                <p className="text-lg opacity-90">
-                  To redefine DSA excellence through AI-powered innovation, 
-                  expertise, and unwavering commitment to our partners' success.
-                </p>
-              </div>
-            </div>
           </div>
-        </div>
-      </section>
-
-      {/* Milestones Section */}
-      <section className="py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary-dark mb-4">
-              Our Journey in Numbers
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Milestones that reflect our commitment to excellence and the trust our partners place in us.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {milestones.map((milestone, index) => (
-              <div key={index} className="text-center card-elegant bg-card rounded-lg p-6">
-                <div className="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <milestone.icon className="h-6 w-6 text-white" />
-                </div>
-                <div className="text-3xl font-bold text-primary-dark mb-2 animate-counter">
-                  {milestone.value}
-                </div>
-                <div className="text-lg font-semibold text-card-foreground mb-2">
-                  {milestone.label}
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  {milestone.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Story Section */}
-      <section className="py-20 bg-secondary">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-bold text-primary-dark mb-6">
-                Our Story
-              </h2>
-              <div className="space-y-4 text-muted-foreground">
-                <p>
-                  MaxDSA Business Services was born from a vision to transform the DSA landscape 
-                  in India. Founded in 2014 by a team of banking veterans with over 300 years 
-                  of collective experience, we recognized the need for a more efficient, 
-                  technology-driven approach to loan distribution.
-                </p>
-                <p>
-                  Starting as a small team with big dreams, we've grown into a trusted partner 
-                  for over 250 DSA businesses across the country. Our journey from inception 
-                  to crossing the ₹500+ Crore transaction milestone is a testament to our 
-                  commitment to innovation and excellence.
-                </p>
-                <p>
-                  Today, we continue to lead the industry with AI-powered tools, seamless 
-                  automation, and a comprehensive support ecosystem that empowers our partners 
-                  to achieve unprecedented growth and success.
-                </p>
-              </div>
-            </div>
-            <div className="space-y-6">
-              <div className="bg-white p-6 rounded-lg shadow-sm border border-border">
-                <h3 className="text-xl font-semibold text-primary-dark mb-2">2014</h3>
-                <p className="text-muted-foreground">Founded by banking veterans with a vision to revolutionize DSA services</p>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow-sm border border-border">
-                <h3 className="text-xl font-semibold text-primary-dark mb-2">2018</h3>
-                <p className="text-muted-foreground">Launched AI-powered automation tools and reached 100+ partner milestone</p>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow-sm border border-border">
-                <h3 className="text-xl font-semibold text-primary-dark mb-2">2024</h3>
-                <p className="text-muted-foreground">Crossed ₹500+ Crore transactions with 250+ successful DSA partners</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Values Section */}
-      <section className="py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary-dark mb-4">
-              Our Core Values
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              The principles that guide everything we do and define our commitment to excellence.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {values.map((value, index) => (
-              <div key={index} className="card-elegant bg-card rounded-lg p-6 hover-lift">
-                <h3 className="text-xl font-semibold text-card-foreground mb-4">{value.title}</h3>
-                <p className="text-muted-foreground">{value.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 gradient-hero">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Ready to Be Part of Our Success Story?
-          </h2>
-          <p className="text-xl text-gray-200 mb-8">
-            Join the MaxDSA family and experience the difference that expertise, 
-            innovation, and dedicated support can make for your DSA business.
-          </p>
-          <Link to="/contact">
-            <Button variant="cta" size="lg">
-              Start Your Journey Today
-            </Button>
-          </Link>
         </div>
       </section>
 
