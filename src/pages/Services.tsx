@@ -49,15 +49,70 @@ const Services = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="gradient-section py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-primary-dark mb-6 animate-fade-in">
-            Comprehensive DSA Solutions
+      <section className="relative py-20 bg-gradient-to-br from-primary/5 via-primary/10 to-primary/15 overflow-hidden">
+        {/* Subtle dot pattern */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute inset-0" style={{
+            backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--primary)) 1px, transparent 0)',
+            backgroundSize: '24px 24px'
+          }}></div>
+        </div>
+        
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+          {/* Badge */}
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8">
+            <div className="w-2 h-2 bg-primary rounded-full mr-2"></div>
+            <span className="text-sm font-medium text-primary">Comprehensive DSA Solutions</span>
+          </div>
+          
+          {/* Main Heading */}
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 animate-fade-in">
+            Empowering DSAs,{" "}
+            <span className="block">One Solution at a Time,</span>
+            <span className="block">Every Day</span>
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8 animate-slide-up">
-            Empower your DSA business with our AI-driven tools, seamless automation, 
-            and comprehensive support ecosystem designed for maximum efficiency and growth.
+          
+          {/* Description */}
+          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-12 animate-slide-up">
+            MaxDSA was created to meet the need for a fast, intuitive, and flexible platform
+            that helps DSA partners achieve maximum productivity and growth.
           </p>
+          
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+            <Link to="/contact">
+              <Button variant="hero" size="lg" className="px-8">
+                Get Started Now
+              </Button>
+            </Link>
+            <Link to="/why-partner">
+              <Button variant="outline" size="lg" className="px-8">
+                Learn More
+              </Button>
+            </Link>
+          </div>
+          
+          {/* Statistics Card */}
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/50 max-w-4xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              <div className="text-center">
+                <div className="text-3xl md:text-4xl font-bold text-primary mb-2">250+</div>
+                <div className="text-sm text-muted-foreground">Active DSA Partners</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl md:text-4xl font-bold text-primary mb-2">15+</div>
+                <div className="text-sm text-muted-foreground">Banking Partners</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl md:text-4xl font-bold text-primary mb-2">₹500Cr+</div>
+                <div className="text-sm text-muted-foreground">Loans Processed</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl md:text-4xl font-bold text-primary mb-2">99.9%</div>
+                <div className="text-sm text-muted-foreground">Platform Uptime</div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
