@@ -116,6 +116,117 @@ const Services = () => {
         </div>
       </section>
 
+      {/* About Us Section */}
+      <section className="py-20 bg-background">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-6">
+                About Us
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+                Building Solutions,{" "}
+                <span className="block">Expanding</span>
+                <span className="block">Horizons</span>
+              </h2>
+            </div>
+            <div className="space-y-6 text-muted-foreground">
+              <p className="text-lg">
+                As we automated processes, built workflows, and expanded our community beyond what we imagined, 
+                MaxDSA work os naturally came to life through that journey.
+              </p>
+              <p className="text-lg">
+                On February 8th, 2021, MaxDSA marked a new chapter by establishing partnerships with leading banks. 
+                Today, we keep growing as a multi-product DSA platform company.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Story Timeline Section */}
+      <section className="py-20 bg-secondary/30">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div>
+              <div className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-6">
+                Our story
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-8">
+                From Concept to{" "}
+                <span className="block">Global Impact</span>
+              </h2>
+            </div>
+            
+            <div className="space-y-8">
+              {/* Timeline Item 1 */}
+              <div className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+                    <Bot className="w-6 h-6 text-white" />
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <div className="text-primary font-medium text-sm mb-1">2020 • December</div>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">Idea And Initial Concept</h3>
+                  <p className="text-muted-foreground">
+                    MaxDSA was born as a simple concept to bridge gaps in DSA management and financial workflow coordination.
+                  </p>
+                </div>
+              </div>
+
+              {/* Timeline Item 2 */}
+              <div className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+                    <Zap className="w-6 h-6 text-white" />
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <div className="text-primary font-medium text-sm mb-1">2021 • February</div>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">Beta Launch</h3>
+                  <p className="text-muted-foreground">
+                    Launched our beta platform with core DSA functionalities and established partnerships with our first banking partners.
+                  </p>
+                </div>
+              </div>
+
+              {/* Timeline Item 3 */}
+              <div className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+                    <Shield className="w-6 h-6 text-white" />
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <div className="text-primary font-medium text-sm mb-1">2022 • September</div>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">Introducing Automation</h3>
+                  <p className="text-muted-foreground">
+                    Revolutionized DSA operations with AI-driven automation tools and streamlined loan processing workflows.
+                  </p>
+                </div>
+              </div>
+
+              {/* Timeline Item 4 */}
+              <div className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+                    <TrendingUp className="w-6 h-6 text-white" />
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <div className="text-primary font-medium text-sm mb-1">2023 • December</div>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">Going Global</h3>
+                  <p className="text-muted-foreground">
+                    Expanded our platform nationally with 15+ banking partners and 250+ active DSA agents across India.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Services Grid */}
       <section className="py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
