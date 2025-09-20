@@ -460,33 +460,91 @@ const Index = () => {
       </section>
 
       {/* Onboarding Process */}
-      <section className="py-20 bg-secondary">
+      <section className="py-20 bg-gray-50 relative overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary-dark mb-4">
-              Get Started in Under 10 Minutes
+          <div className="text-center mb-16">
+            <div className="text-sm font-medium text-blue-600 mb-2 flex items-center justify-center">
+              <span className="w-8 h-0.5 bg-blue-600 mr-2"></span>
+              essentials.
+              <span className="w-8 h-0.5 bg-blue-600 ml-2"></span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-black">
+              Process section.
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Our streamlined onboarding process gets you up and running quickly 
-              with minimal paperwork and maximum efficiency.
-            </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {onboardingSteps.map((step, index) => (
-              <div key={index} className="text-center">
-                <div className="relative">
-                  <div className="w-16 h-16 gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white font-bold text-lg">{step.step}</span>
+          <div className="relative">
+            {/* Flowing Connection Line */}
+            <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5">
+              <svg className="w-full h-32" viewBox="0 0 1200 120" fill="none">
+                <path 
+                  d="M0 60 Q300 20 600 60 Q900 100 1200 60" 
+                  stroke="#3B82F6" 
+                  strokeWidth="3" 
+                  fill="none"
+                />
+              </svg>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 relative z-10">
+              {/* Step 1 */}
+              <div className="text-left lg:pt-8">
+                <div className="flex items-center mb-6">
+                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                    <div className="w-6 h-6 bg-blue-600 rounded"></div>
                   </div>
-                  {index < onboardingSteps.length - 1 && (
-                    <div className="hidden md:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-primary to-transparent transform -translate-x-1/2"></div>
-                  )}
+                  <span className="text-8xl font-bold text-gray-200">1</span>
                 </div>
-                <h3 className="text-xl font-semibold text-card-foreground mb-2">{step.title}</h3>
-                <p className="text-muted-foreground">{step.description}</p>
+                <h3 className="text-2xl font-bold text-black mb-4">Quick Registration</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Complete your DSA registration with our streamlined process. Submit required documents and get verified in minutes.
+                </p>
               </div>
-            ))}
+
+              {/* Step 2 */}
+              <div className="text-left lg:pt-16">
+                <div className="flex items-center mb-6">
+                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                    <div className="w-6 h-4 bg-blue-600 rounded flex flex-col space-y-1">
+                      <div className="w-full h-1 bg-blue-400 rounded"></div>
+                      <div className="w-full h-1 bg-blue-400 rounded"></div>
+                      <div className="w-full h-1 bg-blue-400 rounded"></div>
+                    </div>
+                  </div>
+                  <span className="text-8xl font-bold text-gray-200">2</span>
+                </div>
+                <h3 className="text-2xl font-bold text-black mb-4">Setup & Integration</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Connect with our multi-bank platform and configure your preferences. Access AI-powered tools for optimal performance.
+                </p>
+              </div>
+
+              {/* Step 3 */}
+              <div className="text-left lg:pt-4">
+                <div className="flex items-center mb-6">
+                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                    <div className="w-6 h-6 bg-blue-600 rounded-lg relative">
+                      <div className="absolute inset-1 border-2 border-blue-200 rounded"></div>
+                    </div>
+                  </div>
+                  <span className="text-8xl font-bold text-gray-200">3</span>
+                </div>
+                <h3 className="text-2xl font-bold text-black mb-4">Start Processing</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Begin processing loan applications immediately with our automated workflow. Track progress and maximize conversions.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="flex justify-between items-center mt-16 pt-8 border-t border-gray-200">
+            <div className="text-sm text-blue-600 font-medium">
+              2024 <span className="text-gray-400">essentials.</span>
+            </div>
+            <div className="text-sm text-gray-400">
+              www.maxdsa.com
+            </div>
           </div>
         </div>
       </section>
