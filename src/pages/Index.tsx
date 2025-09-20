@@ -288,28 +288,87 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20">
+      <section className="py-20 bg-gray-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary-dark mb-4">
-              Why Choose MaxDSA?
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Experience the power of AI-driven automation combined with decades 
-              of banking expertise to transform your DSA business.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <div key={index} className="card-elegant bg-card rounded-lg p-6 text-center hover-lift">
-                <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                  <img src={feature.icon} alt={feature.title} className="h-12 w-12" />
-                </div>
-                <h3 className="text-xl font-semibold text-card-foreground mb-2">{feature.title}</h3>
-                <p className="text-muted-foreground">{feature.description}</p>
+          <div className="mb-16">
+            <div className="text-sm font-semibold text-gray-500 mb-4 tracking-wide uppercase border border-gray-300 rounded-full px-4 py-2 inline-block">
+              SERVICES
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+              <div>
+                <h2 className="text-4xl md:text-5xl font-bold text-black mb-6 leading-tight">
+                  Explore our comprehensive service offerings
+                </h2>
+                <p className="text-gray-600 text-lg leading-relaxed mb-8">
+                  Focused on your unique needs, our team delivers solutions that blend deep industry knowledge and cutting-edge strategies to ensure lasting growth.
+                </p>
+                <Link to="/contact">
+                  <Button variant="cta" size="lg" className="group">
+                    Get Started
+                    <img src={arrowRightIcon} alt="Arrow" className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform filter brightness-0 invert" />
+                  </Button>
+                </Link>
               </div>
-            ))}
+              
+              <div className="grid grid-cols-2 gap-4">
+                {/* AI-Powered Analytics - Large Card */}
+                <div className="col-span-2 bg-blue-600 rounded-2xl p-8 text-white relative overflow-hidden">
+                  <div className="absolute top-6 right-6 w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                    <img src={aiRobotIcon} alt="AI" className="h-6 w-6 filter brightness-0 invert" />
+                  </div>
+                  <div className="mt-8">
+                    <h3 className="text-2xl font-bold mb-3">AI-Powered Analytics</h3>
+                    <p className="text-blue-100">
+                      Crafting strategic plans that align with your goals.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Multi-Bank Integration */}
+                <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                    <img src={checkCircleIcon} alt="Integration" className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-black mb-2">Multi-Bank Integration</h3>
+                  <p className="text-gray-600 text-sm">
+                    Expert guidance to optimize your financial performance.
+                  </p>
+                </div>
+
+                {/* Instant Processing */}
+                <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                    <img src={lightningIcon} alt="Speed" className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-black mb-2">Instant Processing</h3>
+                  <p className="text-gray-600 text-sm">
+                    Innovative tech strategies to enhance operational efficiency.
+                  </p>
+                </div>
+
+                {/* 24/7 Support */}
+                <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                    <img src={usersIcon} alt="Support" className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-black mb-2">24/7 Support</h3>
+                  <p className="text-gray-600 text-sm">
+                    Identify, assess, and mitigate risks to protect your assets.
+                  </p>
+                </div>
+
+                {/* Risk Management */}
+                <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                    <img src={trendingUpIcon} alt="Risk" className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-black mb-2">Risk Management</h3>
+                  <p className="text-gray-600 text-sm">
+                    Comprehensive risk assessment and mitigation strategies.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
