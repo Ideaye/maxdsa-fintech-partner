@@ -260,29 +260,26 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Partner Banks Carousel */}
-      <section className="py-16 bg-secondary">
+      {/* Partner Banks Section */}
+      <section className="py-20 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary-dark mb-4">
-              Trusted Partner Banks
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">
+              Our Partners
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              We work with India's leading banks and financial institutions to provide 
-              you with the best loan products and highest conversion rates.
+            <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+              As a DSA partner, it is important to have reliable banking partnerships for seamless loan processing and customer satisfaction.
             </p>
           </div>
           
-          <div className="relative overflow-hidden">
-            <div className="flex transition-transform duration-300 ease-in-out">
-              {partnerBanks.slice(currentPartner, currentPartner + 4).map((bank, index) => (
-                <div key={index} className="flex-1 px-4">
-                  <div className="bg-white rounded-lg p-6 shadow-sm text-center hover-lift">
-                    <div className="text-lg font-semibold text-primary-dark">{bank}</div>
-                  </div>
+          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 lg:gap-16 opacity-60">
+            {partnerBanks.map((bank, index) => (
+              <div key={index} className="flex items-center justify-center min-w-[120px]">
+                <div className="text-gray-700 font-semibold text-lg hover:text-primary transition-colors">
+                  {bank}
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
