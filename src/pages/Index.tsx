@@ -18,6 +18,7 @@ import {
   CheckmarkCircle01Icon
 } from "hugeicons-react";
 import heroBackground from "@/assets/hero-background.jpg";
+import ctaBackground from "@/assets/cta-background.png";
 
 const Index = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -529,49 +530,37 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-purple-200 relative overflow-hidden">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-3xl p-12 md:p-16 relative overflow-hidden max-w-5xl mx-auto">
-            {/* Floating Elements */}
-            <div className="absolute top-12 right-12 w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center">
-              <div className="w-6 h-6 bg-white rounded-full"></div>
-            </div>
-            <div className="absolute top-32 right-24 bg-purple-500 text-white text-xs px-3 py-1 rounded-full">
-              Nicopay
-            </div>
-            <div className="absolute top-16 right-32 w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center">
-              <div className="w-8 h-8 bg-white rounded-lg opacity-80"></div>
-            </div>
-            <div className="absolute bottom-24 right-16 bg-purple-500 text-white text-xs px-3 py-1 rounded-full">
-              Nicopay
-            </div>
-            <div className="absolute bottom-12 right-32 w-10 h-10 bg-purple-400 rounded-full flex items-center justify-center">
-              <div className="w-4 h-4 bg-white rounded-full"></div>
-            </div>
-            <div className="absolute top-20 right-56 w-8 h-8 bg-purple-300 rounded-full"></div>
-
-            <div className="relative z-10 max-w-2xl">
-              <div className="mb-6">
-                <div className="inline-flex items-center bg-purple-100 text-purple-700 text-sm px-4 py-2 rounded-full">
-                  <div className="w-4 h-4 bg-purple-500 rounded-sm mr-2"></div>
-                  Our workflow
-                </div>
-              </div>
-              
-              <h2 className="text-4xl md:text-5xl font-bold text-black mb-8 leading-tight">
-                Ready to transform<br />
-                your financial<br />
-                <span className="text-purple-600">management?</span>
-              </h2>
-              
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/contact">
-                  <Button className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-full text-lg">
-                    Free Trial
-                  </Button>
-                </Link>
+      <section 
+        className="py-20 relative overflow-hidden"
+        style={{
+          backgroundImage: `url(${ctaBackground})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+          <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-12 md:p-16 max-w-3xl mx-auto">
+            <div className="mb-6">
+              <div className="text-sm font-medium text-white/80 mb-2 tracking-wide uppercase">
+                MAXDSA
               </div>
             </div>
+            
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+              Start your<br />
+              free trial today
+            </h2>
+            
+            <p className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
+              Unlock the full potential of your DSA business with our comprehensive platform and AI-powered solutions.
+            </p>
+            
+            <Link to="/contact">
+              <Button className="bg-black hover:bg-gray-800 text-white px-8 py-3 rounded-full text-lg font-medium">
+                Get Started
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
