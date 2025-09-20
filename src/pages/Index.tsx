@@ -315,50 +315,89 @@ const Index = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 gradient-section">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <section className="py-20 bg-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary-dark mb-4">
-              What Our Partners Say
+            <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">
+              Read reviews,<br />
+              ride with confidence.
             </h2>
-            <p className="text-muted-foreground">
-              Real stories from DSA partners who have transformed their business with MaxDSA.
-            </p>
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <span className="text-2xl font-bold">4.8</span>
+              <span className="text-gray-400">/5</span>
+              <img src={starIcon} alt="Star" className="h-6 w-6 ml-1" />
+              <span className="font-semibold text-green-600">Trustpilot</span>
+            </div>
+            <p className="text-gray-500">Based on 250+ reviews</p>
           </div>
           
-          <div className="relative">
-            <div className="card-elegant bg-card rounded-2xl p-8 text-center">
-              <div className="flex justify-center mb-4">
-                {[...Array(testimonials[currentTestimonial].rating)].map((_, i) => (
-                  <img key={i} src={starIcon} alt="Star" className="h-5 w-5 mr-1" />
-                ))}
-              </div>
-              <blockquote className="text-xl text-card-foreground mb-6 italic">
-                "{testimonials[currentTestimonial].content}"
-              </blockquote>
-              <div className="flex items-center justify-center">
-                <div className="text-center">
-                  <div className="font-semibold text-card-foreground">
-                    {testimonials[currentTestimonial].name}
-                  </div>
-                  <div className="text-muted-foreground">
-                    {testimonials[currentTestimonial].role}
-                  </div>
-                </div>
+          <div className="flex items-start gap-8 max-w-6xl mx-auto">
+            {/* Left Side Quote */}
+            <div className="hidden lg:flex flex-col items-start">
+              <div className="text-8xl text-gray-300 font-serif leading-none mb-4">"</div>
+              <h3 className="text-2xl font-bold text-black">
+                What our<br />
+                partners are<br />
+                saying
+              </h3>
+              <div className="flex items-center mt-8">
+                <button 
+                  onClick={() => setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
+                  className="p-2 rounded-full border border-gray-300 hover:bg-gray-50 transition-colors mr-4"
+                >
+                  <ChevronLeft className="h-5 w-5 text-gray-600" />
+                </button>
+                <button 
+                  onClick={() => setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)}
+                  className="p-2 rounded-full border border-gray-300 hover:bg-gray-50 transition-colors"
+                >
+                  <ChevronRight className="h-5 w-5 text-gray-600" />
+                </button>
               </div>
             </div>
-            
+
+            {/* Testimonials Grid */}
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-6">
+              {testimonials.map((testimonial, index) => (
+                <div key={index} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                  <div className="flex mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <img key={i} src={starIcon} alt="Star" className="h-4 w-4 mr-0.5" />
+                    ))}
+                  </div>
+                  <p className="text-gray-700 text-sm mb-6 leading-relaxed">
+                    {testimonial.content}
+                  </p>
+                  <div className="flex items-center">
+                    <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold text-sm mr-3">
+                      {testimonial.name.charAt(0)}
+                    </div>
+                    <div>
+                      <div className="font-semibold text-black text-sm">{testimonial.name}</div>
+                      <div className="text-gray-500 text-xs">{testimonial.role}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile Navigation */}
+          <div className="flex justify-center items-center mt-8 lg:hidden">
             <button 
               onClick={() => setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-shadow"
+              className="p-2 rounded-full border border-gray-300 hover:bg-gray-50 transition-colors mr-4"
             >
-              <ChevronLeft className="h-5 w-5 text-primary" />
+              <ChevronLeft className="h-5 w-5 text-gray-600" />
             </button>
+            <span className="text-sm text-gray-500 mx-4">
+              {currentTestimonial + 1} of {testimonials.length}
+            </span>
             <button 
               onClick={() => setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-shadow"
+              className="p-2 rounded-full border border-gray-300 hover:bg-gray-50 transition-colors"
             >
-              <ChevronRight className="h-5 w-5 text-primary" />
+              <ChevronRight className="h-5 w-5 text-gray-600" />
             </button>
           </div>
         </div>
