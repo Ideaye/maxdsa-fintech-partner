@@ -53,6 +53,7 @@ export default {
         "ai-accent-light": "hsl(var(--ai-accent-light))",
         success: "hsl(var(--success))",
         "success-light": "hsl(var(--success-light))",
+        "fintech-blue": "hsl(var(--fintech-blue))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

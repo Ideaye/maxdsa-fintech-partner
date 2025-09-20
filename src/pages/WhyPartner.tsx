@@ -103,15 +103,85 @@ const WhyPartner = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="gradient-section py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-primary-dark mb-6 animate-fade-in">
-            Why Partner With MaxDSA?
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8 animate-slide-up">
-            Discover the advantages that make MaxDSA the preferred choice for DSA partners 
-            looking to scale their business with cutting-edge technology and expert support.
-          </p>
+      <section className="relative min-h-screen bg-gradient-to-br from-background via-secondary/20 to-background py-20 overflow-hidden">
+        {/* Floating portrait images */}
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Top row */}
+          <div className="absolute top-20 left-[5%] w-20 h-20 rounded-2xl bg-card shadow-elegant overflow-hidden rotate-3 animate-float">
+            <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/40 flex items-center justify-center">
+              <Users className="w-8 h-8 text-primary" />
+            </div>
+          </div>
+          <div className="absolute top-32 left-[15%] w-24 h-24 rounded-2xl bg-card shadow-elegant overflow-hidden -rotate-2 animate-float" style={{animationDelay: '0.5s'}}>
+            <div className="w-full h-full bg-gradient-to-br from-ai-accent/20 to-ai-accent/40 flex items-center justify-center">
+              <TrendingUp className="w-10 h-10 text-ai-accent" />
+            </div>
+          </div>
+          <div className="absolute top-16 right-[15%] w-22 h-22 rounded-2xl bg-card shadow-elegant overflow-hidden rotate-2 animate-float" style={{animationDelay: '1s'}}>
+            <div className="w-full h-full bg-gradient-to-br from-fintech-blue/20 to-fintech-blue/40 flex items-center justify-center">
+              <Bot className="w-9 h-9 text-fintech-blue" />
+            </div>
+          </div>
+          <div className="absolute top-28 right-[5%] w-20 h-20 rounded-2xl bg-card shadow-elegant overflow-hidden -rotate-1 animate-float" style={{animationDelay: '1.5s'}}>
+            <div className="w-full h-full bg-gradient-to-br from-success/20 to-success/40 flex items-center justify-center">
+              <Network className="w-8 h-8 text-success" />
+            </div>
+          </div>
+
+          {/* Middle row */}
+          <div className="absolute top-1/2 left-[8%] w-18 h-18 rounded-2xl bg-card shadow-elegant overflow-hidden rotate-1 animate-float" style={{animationDelay: '2s'}}>
+            <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/40 flex items-center justify-center">
+              <Zap className="w-7 h-7 text-primary" />
+            </div>
+          </div>
+          <div className="absolute top-1/2 right-[8%] w-18 h-18 rounded-2xl bg-card shadow-elegant overflow-hidden -rotate-2 animate-float" style={{animationDelay: '2.5s'}}>
+            <div className="w-full h-full bg-gradient-to-br from-fintech-blue/20 to-fintech-blue/40 flex items-center justify-center">
+              <Target className="w-7 h-7 text-fintech-blue" />
+            </div>
+          </div>
+
+          {/* Bottom row */}
+          <div className="absolute bottom-32 left-[12%] w-24 h-24 rounded-2xl bg-card shadow-elegant overflow-hidden rotate-2 animate-float" style={{animationDelay: '3s'}}>
+            <div className="w-full h-full bg-gradient-to-br from-ai-accent/20 to-ai-accent/40 flex items-center justify-center">
+              <Shield className="w-10 h-10 text-ai-accent" />
+            </div>
+          </div>
+          <div className="absolute bottom-20 left-[25%] w-20 h-20 rounded-2xl bg-card shadow-elegant overflow-hidden -rotate-1 animate-float" style={{animationDelay: '3.5s'}}>
+            <div className="w-full h-full bg-gradient-to-br from-success/20 to-success/40 flex items-center justify-center">
+              <ArrowUp className="w-8 h-8 text-success" />
+            </div>
+          </div>
+          <div className="absolute bottom-28 right-[20%] w-22 h-22 rounded-2xl bg-card shadow-elegant overflow-hidden rotate-1 animate-float" style={{animationDelay: '4s'}}>
+            <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/40 flex items-center justify-center">
+              <CheckCircle className="w-9 h-9 text-primary" />
+            </div>
+          </div>
+          <div className="absolute bottom-16 right-[8%] w-20 h-20 rounded-2xl bg-card shadow-elegant overflow-hidden -rotate-2 animate-float" style={{animationDelay: '4.5s'}}>
+            <div className="w-full h-full bg-gradient-to-br from-fintech-blue/20 to-fintech-blue/40 flex items-center justify-center">
+              <Users className="w-8 h-8 text-fintech-blue" />
+            </div>
+          </div>
+        </div>
+
+        {/* Central content */}
+        <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center min-h-screen flex flex-col justify-center">
+          <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-12 shadow-2xl border border-white/20">
+            <div className="mb-6">
+              <span className="inline-block px-4 py-2 bg-primary/10 text-primary text-sm font-medium rounded-full mb-4">
+                Partnership Testimonials
+              </span>
+            </div>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-dark mb-6 animate-fade-in">
+              Trusted by leaders <br />
+              <span className="text-muted-foreground">from various industries</span>
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-slide-up">
+              Learn why professionals trust MaxDSA solutions to complete their customer journeys and scale their DSA business.
+            </p>
+            <Button variant="default" size="lg" className="bg-primary-dark hover:bg-primary-dark/90 text-white px-8 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+              Read Success Stories →
+            </Button>
+          </div>
         </div>
       </section>
 
