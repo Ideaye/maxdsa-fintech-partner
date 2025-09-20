@@ -4,6 +4,12 @@ import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
 import { Button } from "@/components/ui/button";
 import { 
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { 
   ChevronLeft,
   ChevronRight
  } from "lucide-react";
@@ -525,6 +531,59 @@ const Index = () => {
             <div className="text-sm text-gray-400">
               www.maxdsa.com
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-white">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-black">
+              Frequently Ask Questions
+            </h2>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="item-1" className="border border-gray-200 rounded-lg px-6 mb-4">
+                <AccordionTrigger className="text-left font-semibold hover:no-underline">
+                  How long does the DSA onboarding process take?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600 pt-2">
+                  Our streamlined digital onboarding process typically takes 24-48 hours. Once you submit your documents, our verification team ensures quick processing so you can start earning commissions immediately.
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="item-2" className="border border-gray-200 rounded-lg px-6 mb-4">
+                <AccordionTrigger className="text-left font-semibold hover:no-underline">
+                  What is the commission structure for DSA partners?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600 pt-2">
+                  Commission rates vary by product type and loan amount, typically ranging from 0.5% to 2% of the sanctioned amount. We offer competitive payouts with transparent calculations and timely disbursements.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="item-3" className="border border-gray-200 rounded-lg px-6 mb-4">
+                <AccordionTrigger className="text-left font-semibold hover:no-underline">
+                  Which banks and financial institutions do you partner with?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600 pt-2">
+                  We work with 15+ leading banks including HDFC, ICICI, Kotak Mahindra, and other top NBFCs. This gives you access to diverse loan products and better approval rates for your clients.
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="item-4" className="border border-gray-200 rounded-lg px-6 mb-4">
+                <AccordionTrigger className="text-left font-semibold hover:no-underline">
+                  Do you provide training and support for new DSAs?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600 pt-2">
+                  Yes, we provide comprehensive training on loan products, sales techniques, and our AI-powered platform. You'll also have access to dedicated relationship managers and 24/7 technical support.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         </div>
       </section>
