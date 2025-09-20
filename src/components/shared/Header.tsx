@@ -11,14 +11,14 @@ const Header = () => {
     { name: "Home", href: "/" },
     { name: "Services", href: "/services" },
     { name: "About Us", href: "/about" },
-    { name: "Why Partner", href: "/why-partner" },
-    { name: "Contact", href: "/contact" },
+    { name: "Why Partner With Us", href: "/why-partner" },
+    { name: "Contact Us", href: "/contact" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className="bg-white shadow-sm border-b border-border sticky top-0 z-50">
+    <header className="bg-background/80 backdrop-blur-sm border-b border-white/10 sticky top-0 z-50">
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -27,7 +27,7 @@ const Header = () => {
               <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center mr-3">
                 <span className="text-white font-bold text-sm">M</span>
               </div>
-              <span className="text-xl font-bold text-primary-dark">MaxDSA</span>
+              <span className="text-xl font-bold text-white">MaxDSA</span>
             </Link>
           </div>
 
@@ -40,8 +40,8 @@ const Header = () => {
                   to={item.href}
                   className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
                     isActive(item.href)
-                      ? "text-primary border-b-2 border-primary"
-                      : "text-muted-foreground hover:text-primary"
+                      ? "text-white border-b-2 border-white"
+                      : "text-white/80 hover:text-white"
                   }`}
                 >
                   {item.name}
@@ -50,13 +50,11 @@ const Header = () => {
             </div>
           </div>
 
-          {/* CTA Button */}
+          {/* Sign In Button */}
           <div className="hidden md:block">
-            <Link to="/contact">
-              <Button variant="corporate" size="sm">
-                Partner With Us
-              </Button>
-            </Link>
+            <Button variant="outline" size="sm" className="border-white/30 text-white hover:bg-white hover:text-primary-dark">
+              Sign In
+            </Button>
           </div>
 
           {/* Mobile menu button */}

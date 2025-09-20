@@ -116,21 +116,49 @@ const Index = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative gradient-hero py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="text-white">
-              <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
-                Redefining DSA Excellence with 
-                <span className="block text-ai-accent">AI & Expertise</span>
+      <section className="relative bg-gradient-to-br from-primary-dark via-primary to-primary-dark min-h-screen flex items-center overflow-hidden">
+        <div className="absolute inset-0 bg-black/10"></div>
+        
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-ai-accent rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
+          {/* Trust Badge */}
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 text-white/90 text-sm">
+              <Star className="h-4 w-4 text-yellow-400 mr-2 fill-current" />
+              Trusted by Leading Banks & DSAs Across India
+            </div>
+          </div>
+
+          {/* Main Content Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            {/* Left Feature Card */}
+            <div className="lg:col-span-3">
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                <div className="text-center text-white">
+                  <div className="text-3xl font-bold text-ai-accent mb-2">₹500+</div>
+                  <div className="text-sm text-white/80 mb-4">Crore Transactions Enabled</div>
+                  <div className="text-2xl font-bold text-ai-accent mb-2">250+</div>
+                  <div className="text-sm text-white/80">Channel Partners Served</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Center Content */}
+            <div className="lg:col-span-6 text-center text-white">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                Empowering DSAs with 
+                <span className="block text-ai-accent">Next-Gen Financial Solutions</span>
               </h1>
-              <p className="text-xl text-gray-200 mb-8 animate-slide-up">
-                Transform your DSA business with our AI-powered platform, backed by 
-                300+ years of collective leadership experience and proven track record 
-                of ₹500+ Crore successful transactions.
+              <p className="text-lg md:text-xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
+                MaxDSA leverages 300+ years of banking expertise and AI-driven tools to accelerate your business growth, streamline loan distribution, and power outstanding results.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 animate-slide-up">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/contact">
                   <Button variant="cta" size="lg" className="group">
                     Partner With Us
@@ -138,25 +166,37 @@ const Index = () => {
                   </Button>
                 </Link>
                 <Link to="/services">
-                  <Button variant="outline-corporate" size="lg" className="border-white text-white hover:bg-white hover:text-primary-dark">
-                    <PlayCircle className="mr-2 h-4 w-4" />
-                    Learn More
+                  <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white hover:text-primary-dark">
+                    See Our Services
                   </Button>
                 </Link>
               </div>
             </div>
-            <div className="relative">
-              <img 
-                src={heroImage} 
-                alt="MaxDSA Fintech Platform"
-                className="rounded-2xl shadow-hero w-full h-auto"
-              />
-              <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg">
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                  <span className="text-sm font-medium text-gray-900">Live Platform</span>
+
+            {/* Right Feature Card */}
+            <div className="lg:col-span-3">
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                <div className="text-center text-white">
+                  <div className="text-3xl font-bold text-ai-accent mb-2">30+</div>
+                  <div className="text-sm text-white/80 mb-4">Leading Bank/NBFC Partners</div>
+                  <div className="text-2xl font-bold text-ai-accent mb-2">AI</div>
+                  <div className="text-sm text-white/80">Powered Credit Solutions</div>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Partner Logos */}
+          <div className="mt-16">
+            <div className="text-center mb-8">
+              <p className="text-white/70 text-sm">Trusted by leading financial institutions</p>
+            </div>
+            <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
+              {partnerBanks.slice(0, 6).map((bank, index) => (
+                <div key={index} className="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/20">
+                  <div className="text-white/80 text-sm font-medium">{bank}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
