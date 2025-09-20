@@ -143,25 +143,12 @@ const Index = () => {
           </div>
 
           {/* Main Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            {/* Left Feature Card */}
-            <div className="lg:col-span-3">
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-                <div className="text-center text-white">
-                  <div className="text-3xl font-bold text-ai-accent mb-2">₹500+</div>
-                  <div className="text-sm text-white/80 mb-4">Crore Transactions Enabled</div>
-                  <div className="text-2xl font-bold text-ai-accent mb-2">250+</div>
-                  <div className="text-sm text-white/80">Channel Partners Served</div>
-                </div>
-              </div>
-            </div>
-
+          <div className="flex flex-col items-center justify-center text-center">
             {/* Center Content */}
-            <div className="lg:col-span-6 text-center text-white">
+            <div className="text-white max-w-4xl">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
                 Empowering DSAs with 
-                <span className="block text-ai-accent">Next-Gen Financial Solutions</span>
+                <span className="block text-white">Next-Gen Financial Solutions</span>
               </h1>
               <p className="text-lg md:text-xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
                 MaxDSA leverages 300+ years of banking expertise and AI-driven tools to accelerate your business growth, streamline loan distribution, and power outstanding results.
@@ -180,18 +167,6 @@ const Index = () => {
                 </Link>
               </div>
             </div>
-
-            {/* Right Feature Card */}
-            <div className="lg:col-span-3">
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-                <div className="text-center text-white">
-                  <div className="text-3xl font-bold text-ai-accent mb-2">30+</div>
-                  <div className="text-sm text-white/80 mb-4">Leading Bank/NBFC Partners</div>
-                  <div className="text-2xl font-bold text-ai-accent mb-2">AI</div>
-                  <div className="text-sm text-white/80">Powered Credit Solutions</div>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Partner Logos */}
@@ -199,10 +174,12 @@ const Index = () => {
             <div className="text-center mb-8">
               <p className="text-white/70 text-sm">Trusted by leading financial institutions</p>
             </div>
-            <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-8 opacity-60">
               {partnerBanks.slice(0, 6).map((bank, index) => (
-                <div key={index} className="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/20">
-                  <div className="text-white/80 text-sm font-medium">{bank}</div>
+                <div key={index} className="bg-white/20 backdrop-blur-sm rounded-lg p-4 border border-white/20 flex items-center justify-center">
+                  <div className="w-20 h-12 bg-white/80 rounded flex items-center justify-center">
+                    <div className="text-gray-800 text-xs font-semibold text-center">{bank}</div>
+                  </div>
                 </div>
               ))}
             </div>

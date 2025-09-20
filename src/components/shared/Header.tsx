@@ -18,7 +18,7 @@ const Header = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className="bg-primary-dark/95 backdrop-blur-sm border-b border-primary-dark/20 sticky top-0 z-50">
+    <header className="bg-white/95 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -29,7 +29,7 @@ const Header = () => {
                 alt="MaxDSA Logo" 
                 className="w-8 h-8 mr-3"
               />
-              <span className="text-xl font-bold text-white">MaxDSA</span>
+              <span className="text-xl font-bold text-gray-900">MaxDSA</span>
             </Link>
           </div>
 
@@ -42,8 +42,8 @@ const Header = () => {
                   to={item.href}
                   className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
                     isActive(item.href)
-                      ? "text-white border-b-2 border-white"
-                      : "text-white/80 hover:text-white"
+                      ? "text-primary border-b-2 border-primary"
+                      : "text-gray-700 hover:text-primary"
                   }`}
                 >
                   {item.name}
@@ -54,7 +54,7 @@ const Header = () => {
 
           {/* Sign In Button */}
           <div className="hidden md:block">
-            <Button variant="outline" size="sm" className="border-white/30 text-white hover:bg-white hover:text-primary-dark">
+            <Button variant="outline" size="sm" className="border-primary text-primary hover:bg-primary hover:text-white">
               Sign In
             </Button>
           </div>
