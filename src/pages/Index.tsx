@@ -26,6 +26,16 @@ import {
 import heroBackground from "@/assets/hero-background.jpg";
 import ctaBackground from "@/assets/cta-background.png";
 
+// Import bank logos
+import hdfcLogo from "@/assets/hdfc-bank-logo.png";
+import iciciLogo from "@/assets/bank-logos/icici-bank-logo.png";
+import kotakLogo from "@/assets/bank-logos/kotak-mahindra-logo.png";
+import rblLogo from "@/assets/bank-logos/rbl-bank-logo.png";
+import bajajLogo from "@/assets/bajaj-finance-logo.png";
+import idfcLogo from "@/assets/idfc-first-bank-alt-logo.png";
+import indusindLogo from "@/assets/bank-logos/indusind-bank-logo.png";
+import yesLogo from "@/assets/bank-logos/yes-bank-logo.png";
+
 const Index = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [currentPartner, setCurrentPartner] = useState(0);
@@ -62,8 +72,14 @@ const Index = () => {
   ];
 
   const partnerBanks = [
-    "HDFC Bank", "ICICI Bank", "Kotak Mahindra", "RBL Bank", 
-    "Bajaj Finance", "IDFC First", "IndusInd Bank", "Yes Bank"
+    { name: "HDFC Bank", logo: hdfcLogo },
+    { name: "ICICI Bank", logo: iciciLogo },
+    { name: "Kotak Mahindra", logo: kotakLogo },
+    { name: "RBL Bank", logo: rblLogo },
+    { name: "Bajaj Finance", logo: bajajLogo },
+    { name: "IDFC First", logo: idfcLogo },
+    { name: "IndusInd Bank", logo: indusindLogo },
+    { name: "Yes Bank", logo: yesLogo }
   ];
 
   const features = [
@@ -115,7 +131,7 @@ const Index = () => {
       setCurrentPartner((prev) => (prev + 4) % partnerBanks.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [partnerBanks.length]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -270,12 +286,14 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 lg:gap-16 opacity-60">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-8 items-center justify-items-center opacity-70">
             {partnerBanks.map((bank, index) => (
-              <div key={index} className="flex items-center justify-center min-w-[120px]">
-                <div className="text-gray-700 font-semibold text-lg hover:text-primary transition-colors">
-                  {bank}
-                </div>
+              <div key={index} className="flex items-center justify-center h-16 w-full">
+                <img 
+                  src={bank.logo} 
+                  alt={bank.name}
+                  className="max-h-12 max-w-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                />
               </div>
             ))}
           </div>
