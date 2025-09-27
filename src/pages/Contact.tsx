@@ -1,7 +1,6 @@
 import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Mail, Phone, MapPin, MessageSquare, Users, Building2 } from "lucide-react";
 
 const Contact = () => {
@@ -280,39 +279,21 @@ const Contact = () => {
                 <h3 className="text-2xl font-bold text-card-foreground mb-2">
                   Branch Offices
                 </h3>
-                <p className="text-sm text-muted-foreground">Select a branch to view details</p>
+                <p className="text-sm text-muted-foreground">Our other office locations</p>
               </div>
               
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-card-foreground mb-2">
-                    Select Branch Office
-                  </label>
-                  <Select>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Choose an office location" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {officeAddresses.map((office, index) => (
-                        <SelectItem key={index} value={office.name.toLowerCase().replace(' ', '-')}>
-                          {office.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div className="mt-6 p-4 bg-secondary rounded-lg">
-                  <p className="text-sm text-muted-foreground text-center">
-                    Select a branch office above to view the complete address and contact details.
-                  </p>
-                </div>
-
-                {/* Office details will be shown based on selection */}
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <p><strong>Coimbatore:</strong> Old No 607, New Number 254, Dr RadhaKrishnan Road, Tata Bad, Coimbatore 641012</p>
-                  <p><strong>UAE:</strong> License no 41620, BLV -1F-SF15420, Ajman Boulevard- A- Building, Ajman Free Zone, UAE</p>
-                </div>
+              <div className="space-y-6">
+                {officeAddresses.map((office, index) => (
+                  <div key={index} className="space-y-2">
+                    <div className="flex items-start">
+                      <MapPin className="h-5 w-5 text-primary mr-3 mt-1" />
+                      <div>
+                        <p className="font-medium text-card-foreground">{office.name}</p>
+                        <p className="text-muted-foreground">{office.address}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
