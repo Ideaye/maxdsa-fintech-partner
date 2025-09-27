@@ -26,13 +26,13 @@ import {
 import heroBackground from "@/assets/hero-background.jpg";
 import ctaBackground from "@/assets/cta-background.png";
 
-// Import bank logos
-import hdfcLogo from "@/assets/hdfc-bank-logo.png";
+// Import bank logos - using the AI-generated ones from bank-logos folder
+import hdfcLogo from "@/assets/bank-logos/hdfc-bank-logo.png";
 import iciciLogo from "@/assets/bank-logos/icici-bank-logo.png";
 import kotakLogo from "@/assets/bank-logos/kotak-mahindra-logo.png";
 import rblLogo from "@/assets/bank-logos/rbl-bank-logo.png";
-import bajajLogo from "@/assets/bajaj-finance-logo.png";
-import idfcLogo from "@/assets/idfc-first-bank-alt-logo.png";
+import bajajLogo from "@/assets/bank-logos/bajaj-finance-logo.png";
+import idfcLogo from "@/assets/bank-logos/idfc-first-bank-alt-logo.png";
 import indusindLogo from "@/assets/bank-logos/indusind-bank-logo.png";
 import yesLogo from "@/assets/bank-logos/yes-bank-logo.png";
 
