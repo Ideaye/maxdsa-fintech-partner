@@ -617,8 +617,8 @@ const Index = () => {
             </div>
             
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-6 leading-tight tracking-tight">
-              Start your<br />
-              free trial today
+              Transform Your DSA Business<br />
+              Into a Revenue Powerhouse
             </h2>
             
             <p className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
