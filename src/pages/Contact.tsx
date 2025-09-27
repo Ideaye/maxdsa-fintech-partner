@@ -1,7 +1,8 @@
 import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
 import { Button } from "@/components/ui/button";
-import { Mail, Phone, MapPin, Clock, MessageSquare, Users } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Mail, Phone, MapPin, MessageSquare, Users, Building2 } from "lucide-react";
 
 const Contact = () => {
   const contactInfo = [
@@ -18,16 +19,21 @@ const Contact = () => {
       description: "Speak directly with our team"
     },
     {
-      icon: MapPin,
-      title: "Visit Us",
-      details: ["Business District", "Mumbai, Maharashtra 400001"],
-      description: "Our headquarters location"
+      icon: Building2,
+      title: "Company Details",
+      details: ["CIN: U82990TZ2025PTC035993", "PAN: AATCM8615M", "TAN: CMBM12055B"],
+      description: "Our official registration details"
+    }
+  ];
+
+  const officeAddresses = [
+    {
+      name: "Coimbatore Office",
+      address: "Old No 607, New Number 254, Dr RadhaKrishnan Road, Tata Bad, Coimbatore 641012"
     },
     {
-      icon: Clock,
-      title: "Business Hours",
-      details: ["Mon - Fri: 9:00 AM - 6:00 PM", "Sat: 9:00 AM - 2:00 PM"],
-      description: "We're here to help during these hours"
+      name: "UAE Office", 
+      address: "License no 41620, BLV -1F-SF15420, Ajman Boulevard- A- Building, Ajman Free Zone, UAE"
     }
   ];
 
@@ -72,7 +78,7 @@ const Contact = () => {
       {/* Contact Information */}
       <section className="py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             {contactInfo.map((info, index) => (
               <div key={index} className="card-elegant bg-card rounded-lg p-6 text-center hover-lift">
                 <div className="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center mx-auto mb-4">
@@ -81,7 +87,7 @@ const Contact = () => {
                 <h3 className="text-lg font-semibold text-card-foreground mb-2">{info.title}</h3>
                 <div className="space-y-1 mb-2">
                   {info.details.map((detail, idx) => (
-                    <p key={idx} className="text-primary font-medium">{detail}</p>
+                    <p key={idx} className="text-primary font-medium text-sm">{detail}</p>
                   ))}
                 </div>
                 <p className="text-sm text-muted-foreground">{info.description}</p>
@@ -226,53 +232,87 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Map Section */}
+      {/* Office Locations Section */}
       <section className="py-20 bg-secondary">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-primary-dark mb-4">
-              Visit Our Office
+              Visit Our Offices
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Located in the heart of Mumbai's business district, our office is easily accessible 
-              and we welcome you to visit us for in-person consultations.
+              We have multiple offices to serve you better. Visit our head office or select from our branch locations.
             </p>
           </div>
           
-          <div className="card-elegant bg-card rounded-2xl p-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-              <div>
-                <h3 className="text-2xl font-bold text-card-foreground mb-6">
-                  MaxDSA Business Services Pvt. Ltd.
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Head Office */}
+            <div className="card-elegant bg-card rounded-2xl p-8">
+              <div className="mb-6">
+                <h3 className="text-2xl font-bold text-card-foreground mb-2">
+                  Head Office
                 </h3>
-                <div className="space-y-4">
-                  <div className="flex items-start">
-                    <MapPin className="h-5 w-5 text-primary mr-3 mt-1" />
-                    <div>
-                      <p className="font-medium text-card-foreground">Business District</p>
-                      <p className="text-muted-foreground">Mumbai, Maharashtra 400001</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center">
-                    <Phone className="h-5 w-5 text-primary mr-3" />
-                    <p className="text-card-foreground">+91 9876543210</p>
-                  </div>
-                  <div className="flex items-center">
-                    <Mail className="h-5 w-5 text-primary mr-3" />
-                    <p className="text-card-foreground">info@maxdsa.com</p>
-                  </div>
-                  <div className="flex items-start">
-                    <Clock className="h-5 w-5 text-primary mr-3 mt-1" />
-                    <div>
-                      <p className="text-card-foreground font-medium">Business Hours</p>
-                      <p className="text-muted-foreground">Monday - Friday: 9:00 AM - 6:00 PM</p>
-                      <p className="text-muted-foreground">Saturday: 9:00 AM - 2:00 PM</p>
-                    </div>
+                <p className="text-sm text-primary font-medium">MaxDSA Business Services Pvt. Ltd.</p>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="flex items-start">
+                  <MapPin className="h-5 w-5 text-primary mr-3 mt-1" />
+                  <div>
+                    <p className="font-medium text-card-foreground">1st floor, Urban Vault</p>
+                    <p className="text-muted-foreground">19, 18th Cross Rd, Sector 6</p>
+                    <p className="text-muted-foreground">HSR Layout, Bengaluru, Karnataka 560102</p>
                   </div>
                 </div>
+                <div className="flex items-center">
+                  <Phone className="h-5 w-5 text-primary mr-3" />
+                  <p className="text-card-foreground">+91 9876543210</p>
+                </div>
+                <div className="flex items-center">
+                  <Mail className="h-5 w-5 text-primary mr-3" />
+                  <p className="text-card-foreground">info@maxdsa.com</p>
+                </div>
               </div>
-              <div className="h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                <p className="text-muted-foreground">Interactive Map Coming Soon</p>
+            </div>
+
+            {/* Branch Offices */}
+            <div className="card-elegant bg-card rounded-2xl p-8">
+              <div className="mb-6">
+                <h3 className="text-2xl font-bold text-card-foreground mb-2">
+                  Branch Offices
+                </h3>
+                <p className="text-sm text-muted-foreground">Select a branch to view details</p>
+              </div>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-card-foreground mb-2">
+                    Select Branch Office
+                  </label>
+                  <Select>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Choose an office location" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {officeAddresses.map((office, index) => (
+                        <SelectItem key={index} value={office.name.toLowerCase().replace(' ', '-')}>
+                          {office.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div className="mt-6 p-4 bg-secondary rounded-lg">
+                  <p className="text-sm text-muted-foreground text-center">
+                    Select a branch office above to view the complete address and contact details.
+                  </p>
+                </div>
+
+                {/* Office details will be shown based on selection */}
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><strong>Coimbatore:</strong> Old No 607, New Number 254, Dr RadhaKrishnan Road, Tata Bad, Coimbatore 641012</p>
+                  <p><strong>UAE:</strong> License no 41620, BLV -1F-SF15420, Ajman Boulevard- A- Building, Ajman Free Zone, UAE</p>
+                </div>
               </div>
             </div>
           </div>
