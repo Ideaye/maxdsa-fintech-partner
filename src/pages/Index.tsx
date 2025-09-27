@@ -32,7 +32,7 @@ import iciciLogo from "@/assets/bank-logos/icici-bank-logo.png";
 import kotakLogo from "@/assets/bank-logos/kotak-mahindra-logo.png";
 import rblLogo from "@/assets/bank-logos/rbl-bank-logo.png";
 import bajajLogo from "@/assets/bank-logos/bajaj-finance-logo.png";
-import idfcLogo from "@/assets/bank-logos/idfc-first-bank-alt-logo.png";
+import idfcLogo from "@/assets/bank-logos/idfc-first-bank-logo.png";
 import indusindLogo from "@/assets/bank-logos/indusind-bank-logo.png";
 import yesLogo from "@/assets/bank-logos/yes-bank-logo.png";
 
