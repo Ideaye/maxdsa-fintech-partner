@@ -475,83 +475,72 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Onboarding Process */}
-      <section className="py-20 bg-gray-50 relative overflow-hidden">
+      {/* Process Section - Redesigned */}
+      <section className="py-20 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <div className="text-sm font-medium text-blue-600 mb-2 flex items-center justify-center">
-              <span className="w-8 h-0.5 bg-blue-600 mr-2"></span>
-              essentials.
-              <span className="w-8 h-0.5 bg-blue-600 ml-2"></span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-black">
-              Process section.
+            <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">
+              The DSA Partnership Process Is<br />
+              Designed for Maximum Success
             </h2>
-            <p className="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Our streamlined approach ensures quick onboarding and immediate results. 
               Payout Guaranteed, Seamless TDS & GST Processing, Dedicated Relationship Manager
             </p>
           </div>
           
-          <div className="relative">
-            {/* Flowing Connection Line */}
-            <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5">
-              <svg className="w-full h-32" viewBox="0 0 1200 120" fill="none">
-                <path 
-                  d="M0 60 Q300 20 600 60 Q900 100 1200 60" 
-                  stroke="#3B82F6" 
-                  strokeWidth="3" 
-                  fill="none"
-                />
-              </svg>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {/* Step 1 */}
+            <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-lg transition-shadow">
+              <div className="text-center">
+                <div className="text-6xl font-bold text-primary mb-4">01</div>
+                <h3 className="text-xl font-semibold text-black mb-4">Quick Registration</h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  Complete your DSA registration with our streamlined digital process. Submit documents and get verified within minutes.
+                </p>
+                <Button variant="outline" className="w-full">
+                  Get Started
+                </Button>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 relative z-10">
-              {/* Step 1 */}
-              <div className="text-left lg:pt-8">
-                <div className="flex items-center mb-6">
-                  <CheckmarkCircle01Icon size={32} className="text-blue-600 mr-4" />
-                  <span className="text-8xl font-bold text-gray-200">1</span>
-                </div>
-                <h3 className="text-2xl font-bold text-black mb-4">Quick Registration</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  Complete your DSA registration with our streamlined process. Submit required documents and get verified in minutes.
+            {/* Step 2 */}
+            <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-lg transition-shadow">
+              <div className="text-center">
+                <div className="text-6xl font-bold text-primary mb-4">02</div>
+                <h3 className="text-xl font-semibold text-black mb-4">Platform Integration</h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  Connect with our multi-bank platform and access AI-powered tools. Configure preferences for optimal performance.
                 </p>
+                <Button variant="outline" className="w-full">
+                  Get Started
+                </Button>
               </div>
+            </div>
 
-              {/* Step 2 */}
-              <div className="text-left lg:pt-16">
-                <div className="flex items-center mb-6">
-                  <RoboticIcon size={32} className="text-blue-600 mr-4" />
-                  <span className="text-8xl font-bold text-gray-200">2</span>
-                </div>
-                <h3 className="text-2xl font-bold text-black mb-4">Setup & Integration</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  Connect with our multi-bank platform and configure your preferences. Access AI-powered tools for optimal performance.
+            {/* Step 3 */}
+            <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-lg transition-shadow">
+              <div className="text-center">
+                <div className="text-6xl font-bold text-primary mb-4">03</div>
+                <h3 className="text-xl font-semibold text-black mb-4">Start Earning</h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  Begin processing loan applications immediately with guaranteed payouts. Track progress and maximize conversions.
                 </p>
-              </div>
-
-              {/* Step 3 */}
-              <div className="text-left lg:pt-4">
-                <div className="flex items-center mb-6">
-                  <FlashIcon size={32} className="text-blue-600 mr-4" />
-                  <span className="text-8xl font-bold text-gray-200">3</span>
-                </div>
-                <h3 className="text-2xl font-bold text-black mb-4">Start Processing</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  Begin processing loan applications immediately with our automated workflow. Track progress and maximize conversions.
-                </p>
+                <Button variant="outline" className="w-full">
+                  Get Started
+                </Button>
               </div>
             </div>
           </div>
 
-          {/* Footer */}
-          <div className="flex justify-between items-center mt-16 pt-8 border-t border-gray-200">
-            <div className="text-sm text-blue-600 font-medium">
-              2024 <span className="text-gray-400">essentials.</span>
-            </div>
-            <div className="text-sm text-gray-400">
-              www.maxdsa.com
-            </div>
+          {/* Bottom CTA */}
+          <div className="text-center mt-12">
+            <Link to="/contact">
+              <Button variant="cta" size="lg" className="group">
+                Start Your DSA Journey
+                <ArrowRight01Icon size={16} className="ml-2 group-hover:translate-x-1 transition-transform text-white" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
