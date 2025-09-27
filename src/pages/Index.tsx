@@ -209,11 +209,11 @@ const Index = () => {
               </p>
             </div>
 
-            {/* ROI Card */}
+            {/* Payout Guarantee Card */}
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <div className="text-6xl font-bold text-black mb-2">90<span className="text-gray-400">%</span></div>
-              <p className="text-gray-600 text-sm">Return on investment (ROI)</p>
-              <p className="text-gray-500 text-xs mt-2">Earn back on your investment within 30 days</p>
+              <div className="text-6xl font-bold text-black mb-2">100<span className="text-gray-400">%</span></div>
+              <p className="text-gray-600 text-sm">Payout Guarantee</p>
+              <p className="text-gray-500 text-xs mt-2">Guaranteed commission payout for all successful transactions</p>
             </div>
 
             {/* Revenue Card */}
@@ -263,7 +263,7 @@ const Index = () => {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
-              Our Partners
+              Our Banking Partners
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto text-lg">
               As a DSA partner, it is important to have reliable banking partnerships for seamless loan processing and customer satisfaction.
@@ -469,6 +469,9 @@ const Index = () => {
             <h2 className="text-4xl md:text-5xl font-bold text-black">
               Process section.
             </h2>
+            <p className="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">
+              Payout Guaranteed, Seamless TDS & GST Processing, Dedicated Relationship Manager
+            </p>
           </div>
           
           <div className="relative">
