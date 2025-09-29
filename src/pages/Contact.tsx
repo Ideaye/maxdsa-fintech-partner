@@ -240,7 +240,7 @@ const Contact = () => {
                 </div>
                 <div className="flex items-center">
                   <Mail className="h-5 w-5 text-primary mr-3" />
-                  <p className="text-card-foreground">info@maxdsa.com</p>
+                  <p className="text-card-foreground">partner@maxdsa.com</p>
                 </div>
               </div>
             </div>
