@@ -103,7 +103,7 @@ const WhyPartner = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-gradient-to-br from-background via-secondary/20 to-background py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-background via-secondary/20 to-background py-20 overflow-hidden">
         {/* Floating portrait images */}
         <div className="absolute inset-0 pointer-events-none">
           {/* Top row */}
@@ -164,7 +164,7 @@ const WhyPartner = () => {
         </div>
 
         {/* Central content */}
-        <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center min-h-screen flex flex-col justify-center">
+        <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center flex flex-col justify-center">
           <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-12 shadow-2xl border border-white/20">
             <div className="mb-6">
               <span className="inline-block px-4 py-2 bg-primary/10 text-primary text-sm font-medium rounded-full mb-4">
