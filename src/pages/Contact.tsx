@@ -96,34 +96,6 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Support Options */}
-      <section className="py-20 bg-secondary">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary-dark mb-4">
-              How Can We Help You?
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Choose the type of support you need, and we'll connect you with the right team member.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {supportOptions.map((option, index) => (
-              <div key={index} className="card-elegant bg-card rounded-lg p-6 text-center hover-lift">
-                <div className="w-16 h-16 gradient-primary rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <option.icon className="h-8 w-8 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-card-foreground mb-3">{option.title}</h3>
-                <p className="text-muted-foreground mb-6">{option.description}</p>
-                <Button variant="corporate" size="sm" className="w-full">
-                  {option.action}
-                </Button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Contact Form */}
       <section className="py-20">
