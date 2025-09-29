@@ -8,7 +8,7 @@ const Contact = () => {
     {
       icon: Mail,
       title: "Email Us",
-      details: ["info@maxdsa.com", "support@maxdsa.com"],
+      details: ["partner@maxdsa.com"],
       description: "Send us your queries anytime"
     },
     {
