@@ -74,7 +74,7 @@ const Services = () => {
           
           {/* Description */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-12 animate-slide-up">
-            MaxDSA was created to meet the need for a fast, intuitive, and flexible platform
+            MaxDSA is created to meet the need for a fast, intuitive, and flexible platform
             that helps DSA partners achieve maximum productivity and growth.
           </p>
           
