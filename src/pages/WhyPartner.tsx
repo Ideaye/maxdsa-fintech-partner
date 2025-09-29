@@ -178,9 +178,6 @@ const WhyPartner = () => {
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-slide-up">
               Learn why professionals trust MaxDSA solutions to complete their customer journeys and scale their DSA business.
             </p>
-            <Button variant="default" size="lg" className="bg-primary-dark hover:bg-primary-dark/90 text-white px-8 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
-              Read Success Stories →
-            </Button>
           </div>
         </div>
       </section>
