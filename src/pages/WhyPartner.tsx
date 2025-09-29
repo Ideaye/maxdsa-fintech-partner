@@ -171,11 +171,11 @@ const WhyPartner = () => {
                 Partnership Testimonials
               </span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-dark mb-6 animate-fade-in">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary-dark mb-6 animate-fade-in">
               Trusted by leaders <br />
               <span className="text-muted-foreground">from various industries</span>
             </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-slide-up">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10 animate-slide-up">
               Learn why professionals trust MaxDSA solutions to complete their customer journeys and scale their DSA business.
             </p>
           </div>
