@@ -239,7 +239,7 @@ const Contact = () => {
               Visit Our Offices
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              We have multiple offices to serve you better. Visit our head office or select from our branch locations.
+              Located in the heart of business district, our office is easily accessible and we welcome you to visit us for in-person consultations.
             </p>
           </div>
           
