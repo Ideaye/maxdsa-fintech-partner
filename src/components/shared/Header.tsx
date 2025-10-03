@@ -54,9 +54,11 @@ const Header = () => {
 
           {/* Sign In Button */}
           <div className="hidden md:block">
-            <Button variant="outline" size="sm" className="border-primary text-primary hover:bg-primary hover:text-white">
-              Sign In
-            </Button>
+            <a href="https://bridge.hyperfin.tech/" target="_blank" rel="noopener noreferrer">
+              <Button variant="outline" size="sm" className="border-primary text-primary hover:bg-primary hover:text-white">
+                Sign In
+              </Button>
+            </a>
           </div>
 
           {/* Mobile menu button */}
@@ -90,7 +92,7 @@ const Header = () => {
                 </Link>
               ))}
               <div className="px-3 pt-4">
-                <Link to="/contact">
+                <Link to="/partner-signup">
                   <Button variant="corporate" size="sm" className="w-full">
                     Partner With Us
                   </Button>

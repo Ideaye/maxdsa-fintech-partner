@@ -134,7 +134,7 @@ const About = () => {
                 Our team is committed to providing intuitive and innovative solutions that empower our partners to achieve financial success.
               </p>
               
-              <Link to="/contact">
+              <Link to="/partner-signup">
                 <Button variant="cta" size="lg">
                   Partner With Us
                 </Button>

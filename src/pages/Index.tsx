@@ -176,7 +176,7 @@ const Index = () => {
                 MaxDSA leverages 300+ years of banking expertise and AI-driven tools to accelerate your business growth, streamline loan distribution, and power outstanding results.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/contact">
+                <Link to="/partner-signup">
                   <Button variant="cta" size="lg" className="group">
                     Partner With Us
                     <ArrowRight01Icon size={16} className="ml-2 group-hover:translate-x-1 transition-transform text-white" />
