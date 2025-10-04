@@ -60,22 +60,23 @@ const handler = async (req: Request): Promise<Response> => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
 
-    // Generate signed URLs for documents (valid for 7 days)
+    // Generate signed URLs for documents (valid for 1 hour for security)
+    // Admin needs to access documents within this timeframe
     const { data: passportPhotoSignedUrl } = await supabaseClient.storage
       .from('partner-documents')
-      .createSignedUrl(passportPhotoUrl, 604800);
+      .createSignedUrl(passportPhotoUrl, 3600);
 
     const { data: companyDocSignedUrl } = await supabaseClient.storage
       .from('partner-documents')
-      .createSignedUrl(companyDocumentUrl, 604800);
+      .createSignedUrl(companyDocumentUrl, 3600);
 
     const { data: gstSignedUrl } = await supabaseClient.storage
       .from('partner-documents')
-      .createSignedUrl(gstRegistrationUrl, 604800);
+      .createSignedUrl(gstRegistrationUrl, 3600);
 
     const { data: bankDocSignedUrl } = await supabaseClient.storage
       .from('partner-documents')
-      .createSignedUrl(bankDocumentUrl, 604800);
+      .createSignedUrl(bankDocumentUrl, 3600);
 
     // Send confirmation email to applicant
     console.log('Sending confirmation email to:', email);
