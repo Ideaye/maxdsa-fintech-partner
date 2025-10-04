@@ -10,7 +10,7 @@ const Footer = () => {
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
             <div className="mb-4">
-              <img src={maxdsaLogoWhite} alt="MaxDSA" className="h-16 w-auto" />
+              <img src={maxdsaLogoWhite} alt="MaxDSA" className="h-10 w-auto" />
             </div>
             <p className="text-sm text-gray-300 mb-4 max-w-md">
               Redefining DSA excellence with AI & expertise. Over 300 years of collective 
