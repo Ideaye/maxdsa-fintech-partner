@@ -612,37 +612,48 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section 
-        className="py-16 relative overflow-hidden"
-        style={{
-          backgroundImage: `url(${ctaBackground})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-          <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 md:p-12 max-w-3xl mx-auto">
-            <div className="mb-6">
-              <div className="text-sm font-medium text-white/80 mb-2 tracking-wide uppercase">
-                MAXDSA
+      <section className="py-20 bg-gray-50">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div 
+            className="relative overflow-hidden rounded-3xl"
+            style={{
+              backgroundImage: `url(${ctaBackground})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
+            
+            <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-center p-8 md:p-12 lg:p-16">
+              {/* Left Content */}
+              <div className="text-white">
+                <div className="mb-4">
+                  <span className="text-sm font-medium text-white/80 tracking-wide uppercase">
+                    GET IN TOUCH
+                  </span>
+                </div>
+                
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+                  Ready to Transform Your<br />
+                  <span className="italic text-white/90">DSA Business?</span>
+                </h2>
+                
+                <p className="text-lg text-white/90 mb-8 max-w-xl leading-relaxed">
+                  Connect with our team to discover how MaxDSA can accelerate your growth and maximize your revenue potential.
+                </p>
+                
+                <Link to="/contact">
+                  <Button className="bg-white hover:bg-gray-100 text-black px-8 py-6 rounded-full text-lg font-semibold group">
+                    Contact Us
+                    <ArrowRight01Icon size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
               </div>
+
+              {/* Right Visual Space */}
+              <div className="hidden lg:block"></div>
             </div>
-            
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-6 leading-tight tracking-tight">
-              Transform Your DSA Business<br />
-              Into a Revenue Powerhouse
-            </h2>
-            
-            <p className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
-              Unlock the full potential of your DSA business with our comprehensive platform and AI-powered solutions.
-            </p>
-            
-            <Link to="/contact">
-              <Button className="bg-black hover:bg-gray-800 text-white px-8 py-3 rounded-full text-lg font-medium">
-                Get Started
-              </Button>
-            </Link>
           </div>
         </div>
       </section>
