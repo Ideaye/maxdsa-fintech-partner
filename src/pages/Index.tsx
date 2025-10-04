@@ -328,7 +328,7 @@ const Index = () => {
                 <p className="text-gray-600 text-lg leading-relaxed mb-8">
                   Focused on your unique needs, our team delivers solutions that blend deep industry knowledge and cutting-edge strategies to ensure lasting growth.
                 </p>
-                <Link to="/contact">
+                <Link to="/services">
                   <Button variant="cta" size="lg" className="group">
                     Get Started
                     <ArrowRight01Icon size={16} className="ml-2 group-hover:translate-x-1 transition-transform text-white" />
@@ -548,7 +548,7 @@ const Index = () => {
 
           {/* Bottom CTA */}
           <div className="text-center mt-12">
-            <Link to="/contact">
+            <Link to="/partner-signup">
               <Button variant="cta" size="lg" className="group">
                 Start Your DSA Journey
                 <ArrowRight01Icon size={16} className="ml-2 group-hover:translate-x-1 transition-transform text-white" />
