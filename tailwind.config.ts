@@ -99,6 +99,14 @@ export default {
             transform: "translateX(-50%)",
           },
         },
+        "slide-horizontal": {
+          "0%, 100%": {
+            transform: "translateX(0)",
+          },
+          "50%": {
+            transform: "translateX(20px)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",

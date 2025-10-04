@@ -635,9 +635,9 @@ const Index = () => {
                   </span>
                 </div>
                 
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-relaxed">
                   Ready to Transform Your DSA Business?<br />
-                  <span className="italic text-white/90">Let's Connect</span>
+                  <span className="font-light text-white/90">Let's Connect</span>
                 </h2>
                 
                 <p className="text-lg text-white/90 mb-8 max-w-xl leading-relaxed">
@@ -657,7 +657,7 @@ const Index = () => {
                 <img 
                   src={paperPlaneIcon} 
                   alt="Paper plane" 
-                  className="w-64 h-64 object-contain opacity-90 animate-float"
+                  className="w-80 h-80 object-contain opacity-90 animate-[slide-horizontal_3s_ease-in-out_infinite]"
                 />
               </div>
             </div>
