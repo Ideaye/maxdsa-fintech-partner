@@ -205,27 +205,18 @@ const PartnerSignup = () => {
     setIsSubmitting(true);
 
     try {
-      // Upload all files
-      const passportPhotoPath = await uploadFile(formData.passportPhoto!, 'passport-photos', 'passport photo');
-      if (!passportPhotoPath) {
-        setIsSubmitting(false);
-        return;
-      }
+      // Upload all files in parallel for faster processing
+      const uploadResults = await Promise.all([
+        uploadFile(formData.passportPhoto!, 'passport-photos', 'passport photo'),
+        uploadFile(formData.companyDocument!, 'company-documents', 'company document'),
+        uploadFile(formData.gstRegistration!, 'gst-documents', 'GST registration'),
+        uploadFile(formData.bankDocument!, 'bank-documents', 'bank document')
+      ]);
 
-      const companyDocumentPath = await uploadFile(formData.companyDocument!, 'company-documents', 'company document');
-      if (!companyDocumentPath) {
-        setIsSubmitting(false);
-        return;
-      }
+      const [passportPhotoPath, companyDocumentPath, gstRegistrationPath, bankDocumentPath] = uploadResults;
 
-      const gstRegistrationPath = await uploadFile(formData.gstRegistration!, 'gst-documents', 'GST registration');
-      if (!gstRegistrationPath) {
-        setIsSubmitting(false);
-        return;
-      }
-
-      const bankDocumentPath = await uploadFile(formData.bankDocument!, 'bank-documents', 'bank document');
-      if (!bankDocumentPath) {
+      // Check if any upload failed
+      if (!passportPhotoPath || !companyDocumentPath || !gstRegistrationPath || !bankDocumentPath) {
         setIsSubmitting(false);
         return;
       }
