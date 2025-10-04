@@ -12,8 +12,14 @@ const corsHeaders = {
 interface PartnerApplicationRequest {
   fullName: string;
   email: string;
+  phone: string;
   businessName: string;
+  businessType: string;
+  yearsInBusiness: string;
   partnershipType: string;
+  monthlyLeadCapacity: string;
+  regionsOfOperation: string;
+  additionalInformation?: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -23,7 +29,18 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { fullName, email, businessName, partnershipType }: PartnerApplicationRequest = await req.json();
+    const { 
+      fullName, 
+      email, 
+      phone, 
+      businessName, 
+      businessType, 
+      yearsInBusiness, 
+      partnershipType, 
+      monthlyLeadCapacity, 
+      regionsOfOperation, 
+      additionalInformation 
+    }: PartnerApplicationRequest = await req.json();
 
     console.log("Sending partner application emails for:", { fullName, email, businessName });
 
@@ -64,13 +81,35 @@ const handler = async (req: Request): Promise<Response> => {
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h1 style="color: #2563eb;">New Partnership Application</h1>
+          
           <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
-            <h3 style="margin-top: 0;">Application Details:</h3>
+            <h3 style="margin-top: 0; color: #1f2937;">Personal Information</h3>
             <p><strong>Name:</strong> ${fullName}</p>
             <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Business:</strong> ${businessName}</p>
-            <p><strong>Partnership Type:</strong> ${partnershipType}</p>
+            <p><strong>Phone:</strong> ${phone}</p>
           </div>
+
+          <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="margin-top: 0; color: #1f2937;">Business Information</h3>
+            <p><strong>Business Name:</strong> ${businessName}</p>
+            <p><strong>Business Type:</strong> ${businessType}</p>
+            <p><strong>Years in Business:</strong> ${yearsInBusiness}</p>
+          </div>
+
+          <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="margin-top: 0; color: #1f2937;">Partnership Details</h3>
+            <p><strong>Partnership Type:</strong> ${partnershipType}</p>
+            <p><strong>Monthly Lead Capacity:</strong> ${monthlyLeadCapacity}</p>
+            <p><strong>Regions of Operation:</strong> ${regionsOfOperation}</p>
+          </div>
+
+          ${additionalInformation ? `
+          <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="margin-top: 0; color: #1f2937;">Additional Information</h3>
+            <p style="white-space: pre-wrap;">${additionalInformation}</p>
+          </div>
+          ` : ''}
+
           <p>Login to your admin panel to view the full application details.</p>
         </div>
       `,

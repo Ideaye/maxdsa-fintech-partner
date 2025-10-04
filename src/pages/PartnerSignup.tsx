@@ -150,8 +150,14 @@ const PartnerSignup = () => {
           body: {
             fullName: formData.fullName,
             email: formData.email,
+            phone: formData.phone,
             businessName: formData.businessName,
+            businessType: formData.businessType,
+            yearsInBusiness: formData.yearsInBusiness,
             partnershipType: formData.partnershipType,
+            monthlyLeadCapacity: formData.monthlyLeadCapacity,
+            regionsOfOperation: formData.regionsOfOperation,
+            additionalInformation: formData.additionalInfo,
           },
         }
       );
