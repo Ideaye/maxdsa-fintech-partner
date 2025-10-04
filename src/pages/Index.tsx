@@ -266,8 +266,8 @@ const Index = () => {
 
             {/* Experience Card */}
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <div className="text-5xl font-bold text-black mb-2">300<span className="text-gray-400">+</span></div>
-              <p className="text-gray-600 text-sm">Manyears Collective Experience</p>
+              <div className="text-4xl font-bold text-black mb-2">Manyears</div>
+              <p className="text-gray-600 text-sm">Collective Experience</p>
               <p className="text-gray-500 text-xs mt-2">Combined expertise of our team</p>
             </div>
           </div>
