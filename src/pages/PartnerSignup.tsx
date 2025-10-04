@@ -40,8 +40,62 @@ const PartnerSignup = () => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  const validateStep = (currentStep: number): boolean => {
+    switch (currentStep) {
+      case 1:
+        if (!formData.fullName.trim()) {
+          toast({ title: "Required Field", description: "Please enter your full name", variant: "destructive" });
+          return false;
+        }
+        if (!formData.email.trim()) {
+          toast({ title: "Required Field", description: "Please enter your email address", variant: "destructive" });
+          return false;
+        }
+        if (!formData.phone.trim()) {
+          toast({ title: "Required Field", description: "Please enter your phone number", variant: "destructive" });
+          return false;
+        }
+        return true;
+      
+      case 2:
+        if (!formData.businessName.trim()) {
+          toast({ title: "Required Field", description: "Please enter your business name", variant: "destructive" });
+          return false;
+        }
+        if (!formData.businessType) {
+          toast({ title: "Required Field", description: "Please select a business type", variant: "destructive" });
+          return false;
+        }
+        if (!formData.yearsInBusiness.trim()) {
+          toast({ title: "Required Field", description: "Please enter years in business", variant: "destructive" });
+          return false;
+        }
+        return true;
+      
+      case 3:
+        if (!formData.partnershipType) {
+          toast({ title: "Required Field", description: "Please select a partnership type", variant: "destructive" });
+          return false;
+        }
+        if (!formData.monthlyLeadCapacity.trim()) {
+          toast({ title: "Required Field", description: "Please enter monthly lead capacity", variant: "destructive" });
+          return false;
+        }
+        if (!formData.regionsOfOperation.trim()) {
+          toast({ title: "Required Field", description: "Please enter regions of operation", variant: "destructive" });
+          return false;
+        }
+        return true;
+      
+      default:
+        return true;
+    }
+  };
+
   const handleNext = () => {
-    if (step < 4) setStep(step + 1);
+    if (validateStep(step) && step < 4) {
+      setStep(step + 1);
+    }
   };
 
   const handlePrevious = () => {
