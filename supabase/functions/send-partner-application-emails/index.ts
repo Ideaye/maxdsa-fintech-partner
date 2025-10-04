@@ -128,7 +128,7 @@ const handler = async (req: Request): Promise<Response> => {
             <div class="email-container">
               <!-- Header Section -->
               <div class="header">
-                <div style="font-size: 32px; font-weight: 700; margin-bottom: 15px; color: #ffffff;">MaxDSA</div>
+                <img src="https://tqqwtctwknherkejrpss.supabase.co/storage/v1/object/public/website-assets/maxdsa-logo.png" alt="MaxDSA" style="height: 50px; margin-bottom: 15px;" />
                 <div class="header-icon">🎉</div>
                 <h1>Thank You, ${fullName}!</h1>
                 <p>Your partnership application has been successfully submitted</p>
@@ -252,7 +252,7 @@ const handler = async (req: Request): Promise<Response> => {
               <!-- Footer Section -->
               <div class="footer">
                 <div class="logo-container">
-                  <p class="logo-text">MaxDSA</p>
+                  <img src="https://tqqwtctwknherkejrpss.supabase.co/storage/v1/object/public/website-assets/maxdsa-logo.png" alt="MaxDSA" style="height: 32px; margin-bottom: 10px;" />
                 </div>
                 
                 <div class="button-container">
@@ -315,7 +315,7 @@ const handler = async (req: Request): Promise<Response> => {
           <body>
             <div class="email-container">
               <div class="header">
-                <div style="font-size: 24px; font-weight: 700; margin-bottom: 10px; color: #ffffff;">MaxDSA</div>
+                <img src="https://tqqwtctwknherkejrpss.supabase.co/storage/v1/object/public/website-assets/maxdsa-logo.png" alt="MaxDSA" style="height: 40px; margin-bottom: 10px;" />
                 <h1>🎉 New Partner Application Received</h1>
               </div>
               
