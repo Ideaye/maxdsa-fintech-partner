@@ -170,7 +170,7 @@ const Contact = () => {
       {/* Partnership CTA Section */}
       <section className="py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="relative bg-gradient-to-r from-primary to-fintech-blue rounded-3xl p-16 md:p-20 overflow-hidden">
+          <div className="relative bg-gradient-to-r from-primary to-fintech-blue rounded-3xl p-20 overflow-hidden">
             {/* Handshake Icon */}
             <div className="absolute right-8 top-1/2 -translate-y-1/2 opacity-20 pointer-events-none">
               <img 
@@ -183,11 +183,10 @@ const Contact = () => {
             {/* Content */}
             <div className="relative z-10">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Ready to become a MaxDSA Partner?
+                Ready to become a <br />MaxDSA Partner?
               </h2>
               <p className="text-white/90 text-lg mb-8 max-w-2xl">
-                Join our network of successful DSA partners and unlock new opportunities for growth. 
-                Let's build a profitable partnership together.
+                Join our network of successful DSA partners <br />and unlock new opportunities for growth. <br />Let's build a profitable partnership together.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button asChild variant="secondary" size="lg" className="bg-white text-primary hover:bg-white/90">
