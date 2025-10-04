@@ -13,6 +13,7 @@ import {
   ArrowUp,
   CheckCircle
 } from "lucide-react";
+import handshakeIcon from "@/assets/icons/handshake-icon.png";
 
 const WhyPartner = () => {
   const advantages = [
@@ -285,12 +286,13 @@ const WhyPartner = () => {
       <section className="py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="relative bg-gradient-to-r from-primary to-fintech-blue rounded-3xl p-16 md:p-20 overflow-hidden">
-            {/* Decorative geometric shapes */}
-            <div className="absolute right-0 top-0 bottom-0 w-1/2 opacity-10 pointer-events-none">
-              <div className="absolute top-10 right-20 w-32 h-32 border-2 border-white rounded-[2rem] rotate-12"></div>
-              <div className="absolute top-32 right-40 w-24 h-24 border-2 border-white rounded-[1.5rem] -rotate-6"></div>
-              <div className="absolute bottom-20 right-32 w-28 h-28 border-2 border-white rounded-[2rem] rotate-45"></div>
-              <div className="absolute bottom-10 right-12 w-20 h-20 border-2 border-white rounded-[1.5rem] -rotate-12"></div>
+            {/* Handshake Icon */}
+            <div className="absolute right-8 top-1/2 -translate-y-1/2 opacity-20 pointer-events-none">
+              <img 
+                src={handshakeIcon} 
+                alt="Partnership handshake" 
+                className="w-64 h-64 md:w-80 md:h-80 object-contain"
+              />
             </div>
 
             {/* Content */}
