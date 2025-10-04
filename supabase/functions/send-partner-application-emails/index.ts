@@ -4,6 +4,9 @@ import { Resend } from "npm:resend@2.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
+// Base64 encoded MaxDSA logo for email embedding
+const MAXDSA_LOGO_BASE64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="; // Placeholder - will be replaced with actual logo
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -128,7 +131,9 @@ const handler = async (req: Request): Promise<Response> => {
             <div class="email-container">
               <!-- Header Section -->
               <div class="header">
-                <img src="https://tqqwtctwknherkejrpss.supabase.co/storage/v1/object/public/website-assets/maxdsa-logo.png" alt="MaxDSA" style="height: 50px; margin-bottom: 15px;" />
+                <div style="margin-bottom: 15px;">
+                  <img src="${MAXDSA_LOGO_BASE64}" alt="MaxDSA" style="height: 50px; width: auto; display: inline-block;" />
+                </div>
                 <div class="header-icon">🎉</div>
                 <h1>Thank You, ${fullName}!</h1>
                 <p>Your partnership application has been successfully submitted</p>
@@ -252,7 +257,7 @@ const handler = async (req: Request): Promise<Response> => {
               <!-- Footer Section -->
               <div class="footer">
                 <div class="logo-container">
-                  <img src="https://tqqwtctwknherkejrpss.supabase.co/storage/v1/object/public/website-assets/maxdsa-logo.png" alt="MaxDSA" style="height: 32px; margin-bottom: 10px;" />
+                  <img src="${MAXDSA_LOGO_BASE64}" alt="MaxDSA" style="height: 32px; width: auto; margin-bottom: 10px; display: inline-block;" />
                 </div>
                 
                 <div class="button-container">
@@ -315,7 +320,9 @@ const handler = async (req: Request): Promise<Response> => {
           <body>
             <div class="email-container">
               <div class="header">
-                <img src="https://tqqwtctwknherkejrpss.supabase.co/storage/v1/object/public/website-assets/maxdsa-logo.png" alt="MaxDSA" style="height: 40px; margin-bottom: 10px;" />
+                <div style="margin-bottom: 10px;">
+                  <img src="${MAXDSA_LOGO_BASE64}" alt="MaxDSA" style="height: 40px; width: auto; display: inline-block;" />
+                </div>
                 <h1>🎉 New Partner Application Received</h1>
               </div>
               
