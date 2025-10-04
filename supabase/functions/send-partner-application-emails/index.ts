@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { Resend } from "npm:resend@2.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
@@ -26,6 +27,10 @@ interface PartnerApplicationRequest {
   referenceName?: string;
   referencePhone?: string;
   referenceEmail?: string;
+  passportPhotoUrl: string;
+  companyDocumentUrl: string;
+  gstRegistrationUrl: string;
+  bankDocumentUrl: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -38,8 +43,32 @@ const handler = async (req: Request): Promise<Response> => {
       fullName, email, phone, panNumber, aadharNumber,
       businessName, businessType, companyPanNumber, companyDocumentType,
       bankAccountNumber, bankIfscCode, bankName, bankBranch, bankDocumentType,
-      referenceName, referencePhone, referenceEmail
+      referenceName, referencePhone, referenceEmail,
+      passportPhotoUrl, companyDocumentUrl, gstRegistrationUrl, bankDocumentUrl
     }: PartnerApplicationRequest = await req.json();
+
+    // Create Supabase client
+    const supabaseClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+    );
+
+    // Generate signed URLs for documents (valid for 7 days)
+    const { data: passportPhotoSignedUrl } = await supabaseClient.storage
+      .from('partner-documents')
+      .createSignedUrl(passportPhotoUrl, 604800);
+
+    const { data: companyDocSignedUrl } = await supabaseClient.storage
+      .from('partner-documents')
+      .createSignedUrl(companyDocumentUrl, 604800);
+
+    const { data: gstSignedUrl } = await supabaseClient.storage
+      .from('partner-documents')
+      .createSignedUrl(gstRegistrationUrl, 604800);
+
+    const { data: bankDocSignedUrl } = await supabaseClient.storage
+      .from('partner-documents')
+      .createSignedUrl(bankDocumentUrl, 604800);
 
     // Send confirmation email to applicant
     await resend.emails.send({
@@ -49,31 +78,46 @@ const handler = async (req: Request): Promise<Response> => {
       html: `<h1>Thank you, ${fullName}!</h1><p>We have received your partnership application and will review it within 2-3 business days.</p><p>Best regards,<br>The MaxDSA Team</p>`,
     });
 
-    // Send notification email to admin
+    // Send notification email to admin with document links
     await resend.emails.send({
       from: "MaxDSA <onboarding@resend.dev>",
       to: ["partner@maxdsa.com"],
       subject: `New Partner Application: ${businessName}`,
       html: `
         <h1>New Partner Application</h1>
+        
         <h3>Personal Information</h3>
         <p><strong>Name:</strong> ${fullName}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Phone:</strong> ${phone}</p>
         <p><strong>PAN:</strong> ${panNumber}</p>
         <p><strong>Aadhar:</strong> ${aadharNumber}</p>
+        
         <h3>Business Details</h3>
         <p><strong>Business Name:</strong> ${businessName}</p>
         <p><strong>Type:</strong> ${businessType}</p>
         <p><strong>Company PAN:</strong> ${companyPanNumber}</p>
         <p><strong>Document Type:</strong> ${companyDocumentType}</p>
+        
         <h3>Banking Details</h3>
         <p><strong>Account:</strong> ${bankAccountNumber}</p>
         <p><strong>IFSC:</strong> ${bankIfscCode}</p>
         <p><strong>Bank:</strong> ${bankName}</p>
         ${bankBranch ? `<p><strong>Branch:</strong> ${bankBranch}</p>` : ''}
         <p><strong>Document Type:</strong> ${bankDocumentType}</p>
+        
         ${referenceName ? `<h3>Reference</h3><p><strong>Name:</strong> ${referenceName}</p>${referencePhone ? `<p><strong>Phone:</strong> ${referencePhone}</p>` : ''}${referenceEmail ? `<p><strong>Email:</strong> ${referenceEmail}</p>` : ''}` : ''}
+        
+        <h3>Document Downloads</h3>
+        <p>Documents are available for 7 days:</p>
+        <ul>
+          <li><a href="${passportPhotoSignedUrl?.signedUrl}" target="_blank">📷 Download Passport Photo</a></li>
+          <li><a href="${companyDocSignedUrl?.signedUrl}" target="_blank">📄 Download Company Document (${companyDocumentType})</a></li>
+          <li><a href="${gstSignedUrl?.signedUrl}" target="_blank">📄 Download GST Registration</a></li>
+          <li><a href="${bankDocSignedUrl?.signedUrl}" target="_blank">🏦 Download Bank Document (${bankDocumentType})</a></li>
+        </ul>
+        
+        <p><em>Review the application and documents to proceed with onboarding.</em></p>
       `,
     });
 

@@ -291,6 +291,10 @@ const PartnerSignup = () => {
             referenceName: formData.referenceName,
             referencePhone: formData.referencePhone,
             referenceEmail: formData.referenceEmail,
+            passportPhotoUrl: passportPhotoPath,
+            companyDocumentUrl: companyDocumentPath,
+            gstRegistrationUrl: gstRegistrationPath,
+            bankDocumentUrl: bankDocumentPath,
           },
         }
       );
