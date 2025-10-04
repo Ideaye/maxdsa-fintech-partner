@@ -1,6 +1,7 @@
 import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, MessageSquare, Users, Building2 } from "lucide-react";
 
 const Contact = () => {
@@ -96,113 +97,6 @@ const Contact = () => {
         </div>
       </section>
 
-
-      {/* Contact Form */}
-      <section className="py-20">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary-dark mb-4">
-              Send Us a Message
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Fill out the form below and our team will get back to you within 24 hours.
-            </p>
-          </div>
-          
-          <div className="card-elegant bg-card rounded-2xl p-8">
-            <form className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-card-foreground mb-2">
-                    Full Name *
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-3 border border-input rounded-md focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                    placeholder="Enter your full name"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-card-foreground mb-2">
-                    Business Name
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-3 border border-input rounded-md focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                    placeholder="Enter your business name"
-                  />
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-card-foreground mb-2">
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    className="w-full px-4 py-3 border border-input rounded-md focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                    placeholder="Enter your email address"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-card-foreground mb-2">
-                    Mobile Number *
-                  </label>
-                  <input
-                    type="tel"
-                    className="w-full px-4 py-3 border border-input rounded-md focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-                    placeholder="Enter your mobile number"
-                  />
-                </div>
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-card-foreground mb-2">
-                  Subject *
-                </label>
-                <select className="w-full px-4 py-3 border border-input rounded-md focus:ring-2 focus:ring-primary focus:border-transparent transition-colors">
-                  <option value="">Select a subject</option>
-                  <option value="partnership">Partnership Inquiry</option>
-                  <option value="services">Services Information</option>
-                  <option value="support">Technical Support</option>
-                  <option value="general">General Question</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-card-foreground mb-2">
-                  Message *
-                </label>
-                <textarea
-                  rows={6}
-                  className="w-full px-4 py-3 border border-input rounded-md focus:ring-2 focus:ring-primary focus:border-transparent transition-colors resize-none"
-                  placeholder="Tell us how we can help you..."
-                ></textarea>
-              </div>
-              
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  id="privacy"
-                  className="h-4 w-4 text-primary border-input rounded focus:ring-primary"
-                />
-                <label htmlFor="privacy" className="ml-2 text-sm text-muted-foreground">
-                  I agree to the privacy policy and terms of service
-                </label>
-              </div>
-              
-              <div className="text-center">
-                <Button variant="hero" size="lg" className="w-full md:w-auto px-12">
-                  Send Message
-                </Button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </section>
-
       {/* Office Locations Section */}
       <section className="py-20 bg-secondary">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -266,6 +160,40 @@ const Contact = () => {
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Partnership CTA Section */}
+      <section className="py-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="relative bg-gradient-to-r from-primary to-fintech-blue rounded-3xl p-16 md:p-20 overflow-hidden">
+            {/* Decorative geometric shapes */}
+            <div className="absolute right-0 top-0 bottom-0 w-1/2 opacity-10 pointer-events-none">
+              <div className="absolute top-10 right-20 w-32 h-32 border-2 border-white rounded-[2rem] rotate-12"></div>
+              <div className="absolute top-32 right-40 w-24 h-24 border-2 border-white rounded-[1.5rem] -rotate-6"></div>
+              <div className="absolute bottom-20 right-32 w-28 h-28 border-2 border-white rounded-[2rem] rotate-45"></div>
+              <div className="absolute bottom-10 right-12 w-20 h-20 border-2 border-white rounded-[1.5rem] -rotate-12"></div>
+            </div>
+
+            {/* Content */}
+            <div className="relative z-10">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                Ready to become a MaxDSA Partner?
+              </h2>
+              <p className="text-white/90 text-lg mb-8 max-w-2xl">
+                Join our network of successful DSA partners and unlock new opportunities for growth. 
+                Let's build a profitable partnership together.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button asChild variant="secondary" size="lg" className="bg-white text-primary hover:bg-white/90">
+                  <Link to="/partner-signup">Apply for Partnership</Link>
+                </Button>
+                <Button asChild size="lg" className="border-2 border-white bg-transparent text-white hover:bg-white hover:text-primary">
+                  <Link to="/why-partner">Learn More</Link>
+                </Button>
               </div>
             </div>
           </div>
