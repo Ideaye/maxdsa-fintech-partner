@@ -41,7 +41,7 @@ const Index = () => {
   const [currentPartner, setCurrentPartner] = useState(0);
 
   const stats = [
-    { value: "300+", label: "Years Collective Experience" },
+    { value: "Manyears", label: "Collective Experience" },
     { value: "₹500+", label: "Crore Transactions" },
     { value: "250+", label: "Happy Customers" },
     { value: "15+", label: "Bank Partners" }
@@ -168,12 +168,12 @@ const Index = () => {
           <div className="flex flex-col items-center justify-center text-center">
             {/* Center Content */}
             <div className="text-white max-w-4xl">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
                 India's First Assisted Corporate DSA
                 <span className="block text-white">Disrupting the Lending Distribution Business</span>
               </h1>
               <p className="text-lg md:text-xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
-                MaxDSA leverages 300+ manyears of banking expertise and AI-driven tools to accelerate your business growth, streamline loan distribution, and power outstanding results.
+                MaxDSA leverages manyears of banking expertise and AI-driven tools to accelerate your business growth, streamline loan distribution, and power outstanding results.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/partner-signup">
