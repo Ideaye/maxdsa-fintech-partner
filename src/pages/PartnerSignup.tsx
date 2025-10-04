@@ -15,6 +15,7 @@ import { supabase } from "@/integrations/supabase/client";
 const PartnerSignup = () => {
   const [step, setStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     // Step 1: Personal Information
@@ -115,6 +116,9 @@ const PartnerSignup = () => {
       return;
     }
 
+    if (isSubmitting) return; // Prevent multiple submissions
+    setIsSubmitting(true);
+
     try {
       // Insert application into database
       const { error: dbError } = await supabase
@@ -140,6 +144,7 @@ const PartnerSignup = () => {
           description: "Failed to submit application. Please try again.",
           variant: "destructive",
         });
+        setIsSubmitting(false);
         return;
       }
 
@@ -179,6 +184,7 @@ const PartnerSignup = () => {
         description: "An unexpected error occurred. Please try again.",
         variant: "destructive",
       });
+      setIsSubmitting(false);
     }
   };
 
@@ -484,8 +490,13 @@ const PartnerSignup = () => {
                         <ArrowRight01Icon size={16} />
                       </Button>
                     ) : (
-                      <Button type="submit" variant="cta" className="gap-2">
-                        Submit Application
+                      <Button 
+                        type="submit" 
+                        variant="cta" 
+                        className="gap-2"
+                        disabled={isSubmitting}
+                      >
+                        {isSubmitting ? "Submitting..." : "Submit Application"}
                         <ArrowRight01Icon size={16} />
                       </Button>
                     )}
