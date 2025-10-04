@@ -71,15 +71,23 @@ const handler = async (req: Request): Promise<Response> => {
       .createSignedUrl(bankDocumentUrl, 604800);
 
     // Send confirmation email to applicant
-    await resend.emails.send({
+    console.log('Sending confirmation email to:', email);
+    const confirmationResult = await resend.emails.send({
       from: "MaxDSA <onboarding@resend.dev>",
       to: [email],
       subject: "Partner Application Received - MaxDSA",
       html: `<h1>Thank you, ${fullName}!</h1><p>We have received your partnership application and will review it within 2-3 business days.</p><p>Best regards,<br>The MaxDSA Team</p>`,
     });
 
+    if (confirmationResult.error) {
+      console.error('Error sending confirmation email:', confirmationResult.error);
+      throw new Error(`Failed to send confirmation email: ${confirmationResult.error.message}`);
+    }
+    console.log('Confirmation email sent successfully:', confirmationResult.data);
+
     // Send notification email to admin with document links
-    await resend.emails.send({
+    console.log('Sending admin notification email');
+    const adminResult = await resend.emails.send({
       from: "MaxDSA <onboarding@resend.dev>",
       to: ["partner@maxdsa.com"],
       subject: `New Partner Application: ${businessName}`,
@@ -120,6 +128,12 @@ const handler = async (req: Request): Promise<Response> => {
         <p><em>Review the application and documents to proceed with onboarding.</em></p>
       `,
     });
+
+    if (adminResult.error) {
+      console.error('Error sending admin email:', adminResult.error);
+      throw new Error(`Failed to send admin notification: ${adminResult.error.message}`);
+    }
+    console.log('Admin email sent successfully:', adminResult.data);
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
