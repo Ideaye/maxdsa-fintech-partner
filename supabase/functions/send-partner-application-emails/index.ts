@@ -99,40 +99,154 @@ const handler = async (req: Request): Promise<Response> => {
       to: ["partner@maxdsa.com"],
       subject: `New Partner Application: ${businessName}`,
       html: `
-        <h1>New Partner Application</h1>
-        
-        <h3>Personal Information</h3>
-        <p><strong>Name:</strong> ${fullName}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>PAN:</strong> ${panNumber}</p>
-        <p><strong>Aadhar:</strong> ${aadharNumber}</p>
-        
-        <h3>Business Details</h3>
-        <p><strong>Business Name:</strong> ${businessName}</p>
-        <p><strong>Type:</strong> ${businessType}</p>
-        <p><strong>Company PAN:</strong> ${companyPanNumber}</p>
-        <p><strong>Document Type:</strong> ${companyDocumentType}</p>
-        
-        <h3>Banking Details</h3>
-        <p><strong>Account:</strong> ${bankAccountNumber}</p>
-        <p><strong>IFSC:</strong> ${bankIfscCode}</p>
-        <p><strong>Bank:</strong> ${bankName}</p>
-        ${bankBranch ? `<p><strong>Branch:</strong> ${bankBranch}</p>` : ''}
-        <p><strong>Document Type:</strong> ${bankDocumentType}</p>
-        
-        ${referenceName ? `<h3>Reference</h3><p><strong>Name:</strong> ${referenceName}</p>${referencePhone ? `<p><strong>Phone:</strong> ${referencePhone}</p>` : ''}${referenceEmail ? `<p><strong>Email:</strong> ${referenceEmail}</p>` : ''}` : ''}
-        
-        <h3>Document Downloads</h3>
-        <p>Documents are available for 7 days:</p>
-        <ul>
-          <li><a href="${passportPhotoSignedUrl?.signedUrl}" target="_blank">📷 Download Passport Photo</a></li>
-          <li><a href="${companyDocSignedUrl?.signedUrl}" target="_blank">📄 Download Company Document (${companyDocumentType})</a></li>
-          <li><a href="${gstSignedUrl?.signedUrl}" target="_blank">📄 Download GST Registration</a></li>
-          <li><a href="${bankDocSignedUrl?.signedUrl}" target="_blank">🏦 Download Bank Document (${bankDocumentType})</a></li>
-        </ul>
-        
-        <p><em>Review the application and documents to proceed with onboarding.</em></p>
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+              body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; }
+              .email-container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
+              .header { background-color: #1a56db; color: #ffffff; padding: 30px 20px; text-align: center; }
+              .header h1 { margin: 0; font-size: 24px; font-weight: 600; }
+              .content { padding: 20px; }
+              .section { margin-bottom: 30px; }
+              .section-title { font-size: 18px; font-weight: 600; color: #1a56db; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #e5e7eb; }
+              .info-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+              .info-table tr { border-bottom: 1px solid #e5e7eb; }
+              .info-table tr:last-child { border-bottom: none; }
+              .info-table td { padding: 12px 10px; }
+              .info-table td:first-child { font-weight: 600; color: #374151; width: 40%; background-color: #f9fafb; }
+              .info-table td:last-child { color: #6b7280; }
+              .documents-section { background-color: #f9fafb; padding: 20px; border-radius: 8px; margin-top: 20px; }
+              .document-link { display: inline-block; margin: 8px 10px 8px 0; padding: 12px 20px; background-color: #1a56db; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: 500; }
+              .document-link:hover { background-color: #1e40af; }
+              .footer { padding: 20px; text-align: center; color: #6b7280; font-size: 14px; background-color: #f9fafb; border-top: 1px solid #e5e7eb; }
+            </style>
+          </head>
+          <body>
+            <div class="email-container">
+              <div class="header">
+                <h1>🎉 New Partner Application Received</h1>
+              </div>
+              
+              <div class="content">
+                <!-- Personal Information Section -->
+                <div class="section">
+                  <div class="section-title">👤 Personal Information</div>
+                  <table class="info-table">
+                    <tr>
+                      <td>Full Name</td>
+                      <td>${fullName}</td>
+                    </tr>
+                    <tr>
+                      <td>Email Address</td>
+                      <td>${email}</td>
+                    </tr>
+                    <tr>
+                      <td>Phone Number</td>
+                      <td>${phone}</td>
+                    </tr>
+                    <tr>
+                      <td>PAN Number</td>
+                      <td>${panNumber}</td>
+                    </tr>
+                    <tr>
+                      <td>Aadhar Number</td>
+                      <td>${aadharNumber}</td>
+                    </tr>
+                  </table>
+                </div>
+
+                <!-- Business Details Section -->
+                <div class="section">
+                  <div class="section-title">🏢 Business Details</div>
+                  <table class="info-table">
+                    <tr>
+                      <td>Business Name</td>
+                      <td>${businessName}</td>
+                    </tr>
+                    <tr>
+                      <td>Business Type</td>
+                      <td>${businessType}</td>
+                    </tr>
+                    <tr>
+                      <td>Company PAN</td>
+                      <td>${companyPanNumber}</td>
+                    </tr>
+                    <tr>
+                      <td>Company Document Type</td>
+                      <td>${companyDocumentType}</td>
+                    </tr>
+                  </table>
+                </div>
+
+                <!-- Banking Details Section -->
+                <div class="section">
+                  <div class="section-title">🏦 Banking Details</div>
+                  <table class="info-table">
+                    <tr>
+                      <td>Account Number</td>
+                      <td>${bankAccountNumber}</td>
+                    </tr>
+                    <tr>
+                      <td>IFSC Code</td>
+                      <td>${bankIfscCode}</td>
+                    </tr>
+                    <tr>
+                      <td>Bank Name</td>
+                      <td>${bankName}</td>
+                    </tr>
+                    ${bankBranch ? `<tr>
+                      <td>Branch</td>
+                      <td>${bankBranch}</td>
+                    </tr>` : ''}
+                    <tr>
+                      <td>Bank Document Type</td>
+                      <td>${bankDocumentType}</td>
+                    </tr>
+                  </table>
+                </div>
+
+                ${referenceName ? `
+                <!-- Reference Section -->
+                <div class="section">
+                  <div class="section-title">📞 Reference Information</div>
+                  <table class="info-table">
+                    <tr>
+                      <td>Reference Name</td>
+                      <td>${referenceName}</td>
+                    </tr>
+                    ${referencePhone ? `<tr>
+                      <td>Reference Phone</td>
+                      <td>${referencePhone}</td>
+                    </tr>` : ''}
+                    ${referenceEmail ? `<tr>
+                      <td>Reference Email</td>
+                      <td>${referenceEmail}</td>
+                    </tr>` : ''}
+                  </table>
+                </div>
+                ` : ''}
+
+                <!-- Documents Section -->
+                <div class="documents-section">
+                  <div class="section-title">📄 Application Documents</div>
+                  <p style="color: #6b7280; margin-bottom: 15px;">All documents are available for download for the next 7 days:</p>
+                  <a href="${passportPhotoSignedUrl?.signedUrl}" target="_blank" class="document-link">📷 Passport Photo</a>
+                  <a href="${companyDocSignedUrl?.signedUrl}" target="_blank" class="document-link">📄 Company Document</a>
+                  <a href="${gstSignedUrl?.signedUrl}" target="_blank" class="document-link">📄 GST Registration</a>
+                  <a href="${bankDocSignedUrl?.signedUrl}" target="_blank" class="document-link">🏦 Bank Document</a>
+                </div>
+              </div>
+
+              <div class="footer">
+                <p style="margin: 5px 0;">Please review the application and proceed with onboarding.</p>
+                <p style="margin: 5px 0; font-weight: 600; color: #1a56db;">MaxDSA Partner Team</p>
+              </div>
+            </div>
+          </body>
+        </html>
       `,
     });
 
