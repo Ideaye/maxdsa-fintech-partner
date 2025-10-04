@@ -16,49 +16,82 @@ export type Database = {
     Tables: {
       partner_applications: {
         Row: {
-          additional_information: string | null
+          aadhar_number: string
           agreed_to_terms: boolean
+          bank_account_number: string
+          bank_branch: string | null
+          bank_document_type: string
+          bank_document_url: string
+          bank_ifsc_code: string
+          bank_name: string
           business_name: string
           business_type: string
+          company_document_type: string
+          company_document_url: string
+          company_pan_number: string
           created_at: string
           email: string
           full_name: string
+          gst_registration_url: string
           id: string
-          monthly_lead_capacity: string
-          partnership_type: string
+          pan_number: string
+          passport_photo_url: string
           phone: string
-          regions_of_operation: string
-          years_in_business: string
+          reference_email: string | null
+          reference_name: string | null
+          reference_phone: string | null
         }
         Insert: {
-          additional_information?: string | null
+          aadhar_number: string
           agreed_to_terms?: boolean
+          bank_account_number: string
+          bank_branch?: string | null
+          bank_document_type: string
+          bank_document_url: string
+          bank_ifsc_code: string
+          bank_name: string
           business_name: string
           business_type: string
+          company_document_type: string
+          company_document_url: string
+          company_pan_number: string
           created_at?: string
           email: string
           full_name: string
+          gst_registration_url: string
           id?: string
-          monthly_lead_capacity: string
-          partnership_type: string
+          pan_number: string
+          passport_photo_url: string
           phone: string
-          regions_of_operation: string
-          years_in_business: string
+          reference_email?: string | null
+          reference_name?: string | null
+          reference_phone?: string | null
         }
         Update: {
-          additional_information?: string | null
+          aadhar_number?: string
           agreed_to_terms?: boolean
+          bank_account_number?: string
+          bank_branch?: string | null
+          bank_document_type?: string
+          bank_document_url?: string
+          bank_ifsc_code?: string
+          bank_name?: string
           business_name?: string
           business_type?: string
+          company_document_type?: string
+          company_document_url?: string
+          company_pan_number?: string
           created_at?: string
           email?: string
           full_name?: string
+          gst_registration_url?: string
           id?: string
-          monthly_lead_capacity?: string
-          partnership_type?: string
+          pan_number?: string
+          passport_photo_url?: string
           phone?: string
-          regions_of_operation?: string
-          years_in_business?: string
+          reference_email?: string | null
+          reference_name?: string | null
+          reference_phone?: string | null
         }
         Relationships: []
       }
