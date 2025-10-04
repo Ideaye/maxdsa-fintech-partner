@@ -282,9 +282,9 @@ const WhyPartner = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="relative bg-gradient-to-r from-primary to-fintech-blue rounded-3xl p-12 overflow-hidden">
+      <section className="py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="relative bg-gradient-to-r from-primary to-fintech-blue rounded-3xl p-16 md:p-20 overflow-hidden">
             {/* Decorative geometric shapes */}
             <div className="absolute right-0 top-0 bottom-0 w-1/2 opacity-10 pointer-events-none">
               <div className="absolute top-10 right-20 w-32 h-32 border-2 border-white rounded-[2rem] rotate-12"></div>
