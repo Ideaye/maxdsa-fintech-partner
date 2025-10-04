@@ -28,7 +28,7 @@ const Header = () => {
               <img 
                 src={maxdsaLogo} 
                 alt="MaxDSA Logo" 
-                className="h-12 w-auto"
+                className="h-8 w-auto"
               />
             </Link>
           </div>
