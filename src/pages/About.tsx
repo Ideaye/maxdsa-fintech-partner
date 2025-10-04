@@ -73,16 +73,16 @@ const About = () => {
           </div>
           
           {/* Hero Image */}
-          <div className="rounded-2xl h-96 overflow-hidden shadow-xl">
+          <div className="rounded-2xl h-[500px] overflow-hidden shadow-xl mb-12">
             <img 
               src={aboutHero} 
               alt="MaxDSA team discussing financial solutions in boardroom meeting" 
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-center"
             />
           </div>
           
           {/* Statistics Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
             <div className="text-center">
               <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">95%</div>
               <p className="text-sm text-muted-foreground">Customer satisfaction rate, reflecting our dedication</p>
