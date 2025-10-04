@@ -83,7 +83,193 @@ const handler = async (req: Request): Promise<Response> => {
       from: "MaxDSA <partner@maxdsa.com>",
       to: [email],
       subject: "Partner Application Received - MaxDSA",
-      html: `<h1>Thank you, ${fullName}!</h1><p>We have received your partnership application and will review it within 2-3 business days.</p><p>Best regards,<br>The MaxDSA Team</p>`,
+      html: `
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+              body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; }
+              .email-container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
+              .header { background: linear-gradient(135deg, #1a56db 0%, #1e40af 100%); color: #ffffff; padding: 40px 20px; text-align: center; }
+              .header-icon { font-size: 48px; margin-bottom: 10px; }
+              .header h1 { margin: 10px 0 5px 0; font-size: 28px; font-weight: 600; }
+              .header p { margin: 5px 0 0 0; font-size: 16px; opacity: 0.95; }
+              .content { padding: 30px 20px; }
+              .intro { background-color: #eff6ff; border-left: 4px solid #1a56db; padding: 20px; margin-bottom: 30px; border-radius: 4px; }
+              .intro p { margin: 8px 0; color: #374151; line-height: 1.6; }
+              .section { margin-bottom: 25px; }
+              .section-title { font-size: 16px; font-weight: 600; color: #1a56db; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #e5e7eb; }
+              .info-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+              .info-table tr { border-bottom: 1px solid #e5e7eb; }
+              .info-table tr:last-child { border-bottom: none; }
+              .info-table td { padding: 10px 12px; font-size: 14px; }
+              .info-table td:first-child { font-weight: 600; color: #374151; width: 45%; background-color: #f9fafb; }
+              .info-table td:last-child { color: #6b7280; }
+              .documents-list { background-color: #f9fafb; padding: 15px 20px; border-radius: 6px; margin-top: 20px; }
+              .document-item { padding: 8px 0; color: #374151; font-size: 14px; }
+              .document-item:before { content: '✓'; color: #10b981; font-weight: bold; margin-right: 8px; }
+              .footer { background-color: #f9fafb; padding: 30px 20px; text-align: center; border-top: 1px solid #e5e7eb; }
+              .logo-container { margin-bottom: 20px; }
+              .logo-text { font-size: 24px; font-weight: 700; color: #1a56db; margin: 0; }
+              .button-container { margin: 20px 0; }
+              .button { display: inline-block; margin: 8px 5px; padding: 12px 28px; text-decoration: none; border-radius: 6px; font-weight: 500; font-size: 14px; transition: all 0.3s; }
+              .button-primary { background-color: #1a56db; color: #ffffff; }
+              .button-primary:hover { background-color: #1e40af; }
+              .button-secondary { background-color: #ffffff; color: #1a56db; border: 2px solid #1a56db; }
+              .button-secondary:hover { background-color: #eff6ff; }
+              .footer-text { color: #6b7280; font-size: 13px; margin: 10px 0; }
+              .footer-contact { color: #9ca3af; font-size: 12px; margin-top: 15px; }
+            </style>
+          </head>
+          <body>
+            <div class="email-container">
+              <!-- Header Section -->
+              <div class="header">
+                <div class="header-icon">🎉</div>
+                <h1>Thank You, ${fullName}!</h1>
+                <p>Your partnership application has been successfully submitted</p>
+              </div>
+              
+              <div class="content">
+                <!-- Introduction Message -->
+                <div class="intro">
+                  <p><strong>Dear ${fullName},</strong></p>
+                  <p>We have received your partnership application and appreciate your interest in joining MaxDSA. Our team will carefully review your application and get back to you within <strong>2-3 business days</strong>.</p>
+                  <p>In the meantime, you can review the information you submitted below.</p>
+                </div>
+
+                <!-- Application Summary -->
+                <h2 style="font-size: 20px; color: #1f2937; margin-bottom: 20px;">Application Summary</h2>
+
+                <!-- Personal Information -->
+                <div class="section">
+                  <div class="section-title">👤 Personal Information</div>
+                  <table class="info-table">
+                    <tr>
+                      <td>Full Name</td>
+                      <td>${fullName}</td>
+                    </tr>
+                    <tr>
+                      <td>Email Address</td>
+                      <td>${email}</td>
+                    </tr>
+                    <tr>
+                      <td>Phone Number</td>
+                      <td>${phone}</td>
+                    </tr>
+                    <tr>
+                      <td>PAN Number</td>
+                      <td>${panNumber}</td>
+                    </tr>
+                    <tr>
+                      <td>Aadhar Number</td>
+                      <td>${aadharNumber.replace(/\d(?=\d{4})/g, 'X')}</td>
+                    </tr>
+                  </table>
+                </div>
+
+                <!-- Business Details -->
+                <div class="section">
+                  <div class="section-title">🏢 Business Details</div>
+                  <table class="info-table">
+                    <tr>
+                      <td>Business Name</td>
+                      <td>${businessName}</td>
+                    </tr>
+                    <tr>
+                      <td>Business Type</td>
+                      <td>${businessType}</td>
+                    </tr>
+                    <tr>
+                      <td>Company PAN</td>
+                      <td>${companyPanNumber}</td>
+                    </tr>
+                    <tr>
+                      <td>Document Type</td>
+                      <td>${companyDocumentType}</td>
+                    </tr>
+                  </table>
+                </div>
+
+                <!-- Banking Details -->
+                <div class="section">
+                  <div class="section-title">🏦 Banking Details</div>
+                  <table class="info-table">
+                    <tr>
+                      <td>Account Number</td>
+                      <td>${bankAccountNumber.replace(/\d(?=\d{4})/g, 'X')}</td>
+                    </tr>
+                    <tr>
+                      <td>IFSC Code</td>
+                      <td>${bankIfscCode}</td>
+                    </tr>
+                    <tr>
+                      <td>Bank Name</td>
+                      <td>${bankName}</td>
+                    </tr>
+                    ${bankBranch ? `<tr>
+                      <td>Branch</td>
+                      <td>${bankBranch}</td>
+                    </tr>` : ''}
+                  </table>
+                </div>
+
+                ${referenceName ? `
+                <!-- Reference Information -->
+                <div class="section">
+                  <div class="section-title">📞 Reference Information</div>
+                  <table class="info-table">
+                    <tr>
+                      <td>Reference Name</td>
+                      <td>${referenceName}</td>
+                    </tr>
+                    ${referencePhone ? `<tr>
+                      <td>Phone Number</td>
+                      <td>${referencePhone}</td>
+                    </tr>` : ''}
+                    ${referenceEmail ? `<tr>
+                      <td>Email Address</td>
+                      <td>${referenceEmail}</td>
+                    </tr>` : ''}
+                  </table>
+                </div>
+                ` : ''}
+
+                <!-- Documents Submitted -->
+                <div class="documents-list">
+                  <div class="section-title">📄 Documents Submitted</div>
+                  <div class="document-item">Passport Size Photo</div>
+                  <div class="document-item">Company Document (${companyDocumentType})</div>
+                  <div class="document-item">GST Registration Certificate</div>
+                  <div class="document-item">Bank Document (${bankDocumentType})</div>
+                </div>
+              </div>
+
+              <!-- Footer Section -->
+              <div class="footer">
+                <div class="logo-container">
+                  <p class="logo-text">MaxDSA</p>
+                </div>
+                
+                <div class="button-container">
+                  <a href="https://maxdsa.com" target="_blank" class="button button-primary">Visit Website</a>
+                  <a href="mailto:partner@maxdsa.com" class="button button-secondary">Contact Us</a>
+                </div>
+                
+                <p class="footer-text">We're excited about the possibility of partnering with you!</p>
+                <p class="footer-text">If you have any questions, feel free to reach out to us anytime.</p>
+                
+                <div class="footer-contact">
+                  <p style="margin: 5px 0;">📧 partner@maxdsa.com</p>
+                  <p style="margin: 15px 0 5px 0;">© 2025 MaxDSA. All rights reserved.</p>
+                </div>
+              </div>
+            </div>
+          </body>
+        </html>
+      `,
     });
 
     if (confirmationResult.error) {
