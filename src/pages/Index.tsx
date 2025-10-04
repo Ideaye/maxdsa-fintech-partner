@@ -169,11 +169,11 @@ const Index = () => {
             {/* Center Content */}
             <div className="text-white max-w-4xl">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                Empowering DSAs with 
-                <span className="block text-white">Next-Gen Financial Solutions</span>
+                India's First Assisted Corporate DSA
+                <span className="block text-white">Disrupting the Lending Distribution Business</span>
               </h1>
               <p className="text-lg md:text-xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
-                MaxDSA leverages 300+ years of banking expertise and AI-driven tools to accelerate your business growth, streamline loan distribution, and power outstanding results.
+                MaxDSA leverages 300+ manyears of banking expertise and AI-driven tools to accelerate your business growth, streamline loan distribution, and power outstanding results.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/partner-signup">
@@ -183,7 +183,7 @@ const Index = () => {
                   </Button>
                 </Link>
                 <Link to="/services">
-                  <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white hover:text-primary-dark">
+                  <Button variant="hero" size="lg">
                     See Our Services
                   </Button>
                 </Link>
@@ -267,7 +267,7 @@ const Index = () => {
             {/* Experience Card */}
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <div className="text-5xl font-bold text-black mb-2">300<span className="text-gray-400">+</span></div>
-              <p className="text-gray-600 text-sm">Years Collective Experience</p>
+              <p className="text-gray-600 text-sm">Manyears Collective Experience</p>
               <p className="text-gray-500 text-xs mt-2">Combined expertise of our team</p>
             </div>
           </div>
@@ -275,7 +275,7 @@ const Index = () => {
       </section>
 
       {/* Partner Banks Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-6 leading-tight tracking-tight">
@@ -286,16 +286,29 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-8 items-center justify-items-center opacity-70">
-            {partnerBanks.map((bank, index) => (
-              <div key={index} className="flex items-center justify-center h-16 w-full">
-                <img 
-                  src={bank.logo} 
-                  alt={bank.name}
-                  className="max-h-12 max-w-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
-                />
-              </div>
-            ))}
+          <div className="relative">
+            <div className="flex animate-scroll-left">
+              {/* First set of logos */}
+              {partnerBanks.map((bank, index) => (
+                <div key={`first-${index}`} className="flex items-center justify-center h-16 min-w-[150px] mx-8">
+                  <img 
+                    src={bank.logo} 
+                    alt={bank.name}
+                    className="max-h-12 max-w-full object-contain transition-all duration-300"
+                  />
+                </div>
+              ))}
+              {/* Duplicate set for seamless loop */}
+              {partnerBanks.map((bank, index) => (
+                <div key={`second-${index}`} className="flex items-center justify-center h-16 min-w-[150px] mx-8">
+                  <img 
+                    src={bank.logo} 
+                    alt={bank.name}
+                    className="max-h-12 max-w-full object-contain transition-all duration-300"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
