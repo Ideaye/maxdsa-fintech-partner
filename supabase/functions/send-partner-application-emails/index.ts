@@ -4,8 +4,8 @@ import { Resend } from "npm:resend@2.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
-// Base64 encoded MaxDSA logo for email embedding
-const MAXDSA_LOGO_BASE64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="; // Placeholder - will be replaced with actual logo
+// Base64 encoded MaxDSA logo for email embedding (white version for dark backgrounds)
+const MAXDSA_LOGO_BASE64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAACXBIWXMAAAsTAAALEwEAmpwYAAAF8WlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNy4yLWMwMDAgNzkuMWI2NWE3OWI0LCAyMDIyLzA2LzEzLTIyOjAxOjAxICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgMjMuNSAoTWFjaW50b3NoKSIgeG1wOkNyZWF0ZURhdGU9IjIwMjUtMTAtMDRUMTg6NDU6MzcrMDU6MzAiIHhtcDpNb2RpZnlEYXRlPSIyMDI1LTEwLTA0VDE4OjQ2OjA4KzA1OjMwIiB4bXA6TWV0YWRhdGFEYXRlPSIyMDI1LTEwLTA0VDE4OjQ2OjA4KzA1OjMwIiBkYzpmb3JtYXQ9ImltYWdlL3BuZyIgcGhvdG9zaG9wOkNvbG9yTW9kZT0iMyIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo2YTJhNjQxZi1kZTYyLTRjNDctYjg3Yi04YmVjMjZhN2IyOTAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NmEyYTY0MWYtZGU2Mi00YzQ3LWI4N2ItOGJlYzI2YTdiMjkwIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6NmEyYTY0MWYtZGU2Mi00YzQ3LWI4N2ItOGJlYzI2YTdiMjkwIj4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo2YTJhNjQxZi1kZTYyLTRjNDctYjg3Yi04YmVjMjZhN2IyOTAiIHN0RXZ0OndoZW49IjIwMjUtMTAtMDRUMTg6NDU6MzcrMDU6MzAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCAyMy41IChNYWNpbnRvc2gpIi8+IDwvcmRmOlNlcT4gPC94bXBNTTpIaXN0b3J5PiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pue7kH4AABdASURBVHic7N1prF1Vvfjxn5k5zz3nnHPPPb23Zy5tKYVSbJlEpqIgMhgQJUQF/zExEhOj8QUxMUZ9YXzh/2V8wQtNjDEaEzUaERCZZygz/Ak+McYYE2OM8YUvfGGM8b9+z73nts7tnOfce84+Z+21Pv+/7f+/v//v7/ufv/7v/u+1v/u7/zAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -98,13 +98,13 @@ const handler = async (req: Request): Promise<Response> => {
               .email-container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
               .header { background: linear-gradient(135deg, #1a56db 0%, #1e40af 100%); color: #ffffff; padding: 40px 20px; text-align: center; }
               .header-icon { font-size: 48px; margin-bottom: 10px; }
-              .header h1 { margin: 10px 0 5px 0; font-size: 28px; font-weight: 600; }
-              .header p { margin: 5px 0 0 0; font-size: 16px; opacity: 0.95; }
+              .header h1 { margin: 10px 0 5px 0; font-size: 28px; font-weight: 600; color: #ffffff; }
+              .header p { margin: 5px 0 0 0; font-size: 16px; opacity: 0.95; color: #ffffff; }
               .content { padding: 30px 20px; }
               .intro { background-color: #eff6ff; border-left: 4px solid #1a56db; padding: 20px; margin-bottom: 30px; border-radius: 4px; }
               .intro p { margin: 8px 0; color: #374151; line-height: 1.6; }
               .section { margin-bottom: 25px; }
-              .section-title { font-size: 16px; font-weight: 600; color: #1a56db; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #e5e7eb; }
+              .section-title { font-size: 16px; font-weight: 600; color: #1a56db; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #e5e7eb; display: block; }
               .info-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
               .info-table tr { border-bottom: 1px solid #e5e7eb; }
               .info-table tr:last-child { border-bottom: none; }
@@ -300,11 +300,11 @@ const handler = async (req: Request): Promise<Response> => {
             <style>
               body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; }
               .email-container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
-              .header { background-color: #1a56db; color: #ffffff; padding: 30px 20px; text-align: center; }
-              .header h1 { margin: 0; font-size: 24px; font-weight: 600; }
+              .header { background: linear-gradient(135deg, #1a56db 0%, #1e40af 100%); color: #ffffff; padding: 30px 20px; text-align: center; }
+              .header h1 { margin: 0; font-size: 24px; font-weight: 600; color: #ffffff; }
               .content { padding: 20px; }
               .section { margin-bottom: 30px; }
-              .section-title { font-size: 18px; font-weight: 600; color: #1a56db; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #e5e7eb; }
+              .section-title { font-size: 18px; font-weight: 600; color: #1a56db; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #e5e7eb; display: block; }
               .info-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
               .info-table tr { border-bottom: 1px solid #e5e7eb; }
               .info-table tr:last-child { border-bottom: none; }
