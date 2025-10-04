@@ -281,96 +281,32 @@ const WhyPartner = () => {
         </div>
       </section>
 
-      {/* Partner Form Section */}
-      <section className="py-20 gradient-hero">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              Become a MaxDSA Partner Today
-            </h2>
-            <p className="text-xl text-gray-200 mb-8">
-              Join 250+ successful DSA partners and start your growth journey with MaxDSA. 
-              Get started in under 10 minutes with our streamlined onboarding process.
-            </p>
-          </div>
-          
-          <div className="bg-white rounded-2xl p-8 shadow-xl">
-            <h3 className="text-2xl font-bold text-primary-dark mb-6 text-center">
-              Partnership Interest Form
-            </h3>
-            <form className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-muted-foreground mb-2">
-                    Full Name *
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-2 border border-input rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
-                    placeholder="Enter your full name"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-muted-foreground mb-2">
-                    Business Name *
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-2 border border-input rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
-                    placeholder="Enter your business name"
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-muted-foreground mb-2">
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    className="w-full px-4 py-2 border border-input rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
-                    placeholder="Enter your email"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-muted-foreground mb-2">
-                    Mobile Number *
-                  </label>
-                  <input
-                    type="tel"
-                    className="w-full px-4 py-2 border border-input rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
-                    placeholder="Enter your mobile number"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-muted-foreground mb-2">
-                  Current DSA Experience
-                </label>
-                <select className="w-full px-4 py-2 border border-input rounded-md focus:ring-2 focus:ring-primary focus:border-transparent">
-                  <option value="">Select your experience level</option>
-                  <option value="new">New to DSA</option>
-                  <option value="1-2">1-2 years</option>
-                  <option value="3-5">3-5 years</option>
-                  <option value="5+">5+ years</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-muted-foreground mb-2">
-                  Message
-                </label>
-                <textarea
-                  rows={4}
-                  className="w-full px-4 py-2 border border-input rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
-                  placeholder="Tell us about your business goals and why you want to partner with MaxDSA"
-                ></textarea>
-              </div>
-              <div className="text-center">
-                <Button variant="corporate" size="lg" className="w-full md:w-auto">
-                  Submit Partnership Request
+      {/* CTA Section */}
+      <section className="py-20">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="relative bg-gradient-to-r from-primary to-fintech-blue rounded-3xl p-12 overflow-hidden">
+            {/* Decorative geometric shapes */}
+            <div className="absolute right-0 top-0 bottom-0 w-1/2 opacity-10 pointer-events-none">
+              <div className="absolute top-10 right-20 w-32 h-32 border-2 border-white rounded-[2rem] rotate-12"></div>
+              <div className="absolute top-32 right-40 w-24 h-24 border-2 border-white rounded-[1.5rem] -rotate-6"></div>
+              <div className="absolute bottom-20 right-32 w-28 h-28 border-2 border-white rounded-[2rem] rotate-45"></div>
+              <div className="absolute bottom-10 right-12 w-20 h-20 border-2 border-white rounded-[1.5rem] -rotate-12"></div>
+            </div>
+
+            {/* Content */}
+            <div className="relative z-10">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">
+                Ready to transform your<br />DSA business?
+              </h2>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button asChild variant="secondary" size="lg" className="bg-white text-primary hover:bg-white/90">
+                  <Link to="/partner-signup">Get started</Link>
+                </Button>
+                <Button asChild variant="outline" size="lg" className="border-2 border-white text-white hover:bg-white/10">
+                  <Link to="/contact">Talk to sales</Link>
                 </Button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </section>
