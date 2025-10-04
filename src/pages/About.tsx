@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Users, TrendingUp, Award, Clock, Target, Lightbulb, Shield, Rocket } from "lucide-react";
 import teamPhoto from "@/assets/team-photo.jpg";
 import partnershipImage from "@/assets/partnership-handshake.jpg";
+import aboutHero from "@/assets/about-hero.jpg";
 
 const About = () => {
   const milestones = [
@@ -71,14 +72,13 @@ const About = () => {
             </p>
           </div>
           
-          {/* Hero Image Placeholder */}
-          <div className="bg-gray-200 rounded-2xl h-96 flex items-center justify-center mb-16">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-primary" />
-              </div>
-              <p className="text-muted-foreground">Professional Team Image</p>
-            </div>
+          {/* Hero Image */}
+          <div className="rounded-2xl h-96 overflow-hidden shadow-xl">
+            <img 
+              src={aboutHero} 
+              alt="MaxDSA team discussing financial solutions in boardroom meeting" 
+              className="w-full h-full object-cover"
+            />
           </div>
           
           {/* Statistics Grid */}
