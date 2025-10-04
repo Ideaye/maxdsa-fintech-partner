@@ -10,6 +10,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowRight01Icon, ArrowLeft01Icon } from "hugeicons-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const PartnerSignup = () => {
   const [step, setStep] = useState(1);
@@ -102,7 +103,7 @@ const PartnerSignup = () => {
     if (step > 1) setStep(step - 1);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.agreedToTerms) {
@@ -114,10 +115,65 @@ const PartnerSignup = () => {
       return;
     }
 
-    // Here we'll later integrate with the edge function
-    console.log("Form submitted:", formData);
-    
-    setIsSubmitted(true);
+    try {
+      // Insert application into database
+      const { error: dbError } = await supabase
+        .from('partner_applications')
+        .insert({
+          full_name: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          business_name: formData.businessName,
+          business_type: formData.businessType,
+          years_in_business: formData.yearsInBusiness,
+          partnership_type: formData.partnershipType,
+          monthly_lead_capacity: formData.monthlyLeadCapacity,
+          regions_of_operation: formData.regionsOfOperation,
+          additional_information: formData.additionalInfo,
+          agreed_to_terms: formData.agreedToTerms,
+        });
+
+      if (dbError) {
+        console.error("Database error:", dbError);
+        toast({
+          title: "Submission Error",
+          description: "Failed to submit application. Please try again.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Send notification emails
+      const { error: emailError } = await supabase.functions.invoke(
+        'send-partner-application-emails',
+        {
+          body: {
+            fullName: formData.fullName,
+            email: formData.email,
+            businessName: formData.businessName,
+            partnershipType: formData.partnershipType,
+          },
+        }
+      );
+
+      if (emailError) {
+        console.error("Email error:", emailError);
+        // Don't block submission if emails fail
+      }
+
+      setIsSubmitted(true);
+      toast({
+        title: "Application Submitted!",
+        description: "We'll contact you within 2-3 business days.",
+      });
+    } catch (error) {
+      console.error("Submission error:", error);
+      toast({
+        title: "Submission Error",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (

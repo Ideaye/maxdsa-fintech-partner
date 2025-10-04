@@ -14,7 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      partner_applications: {
+        Row: {
+          additional_information: string | null
+          agreed_to_terms: boolean
+          business_name: string
+          business_type: string
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          monthly_lead_capacity: string
+          partnership_type: string
+          phone: string
+          regions_of_operation: string
+          years_in_business: string
+        }
+        Insert: {
+          additional_information?: string | null
+          agreed_to_terms?: boolean
+          business_name: string
+          business_type: string
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          monthly_lead_capacity: string
+          partnership_type: string
+          phone: string
+          regions_of_operation: string
+          years_in_business: string
+        }
+        Update: {
+          additional_information?: string | null
+          agreed_to_terms?: boolean
+          business_name?: string
+          business_type?: string
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          monthly_lead_capacity?: string
+          partnership_type?: string
+          phone?: string
+          regions_of_operation?: string
+          years_in_business?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
