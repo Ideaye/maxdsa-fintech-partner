@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { Users, TrendingUp, Award, Clock, Target, Lightbulb, Shield, Rocket } from "lucide-react";
 import teamPhoto from "@/assets/team-photo.jpg";
+import partnershipImage from "@/assets/partnership-handshake.jpg";
 
 const About = () => {
   const milestones = [
@@ -107,13 +108,12 @@ const About = () => {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Image */}
-            <div className="bg-gray-200 rounded-2xl h-96 flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Award className="w-8 h-8 text-primary" />
-                </div>
-                <p className="text-muted-foreground">Professional Portrait</p>
-              </div>
+            <div className="rounded-2xl h-96 overflow-hidden bg-gray-900">
+              <img 
+                src={partnershipImage} 
+                alt="Partnership and collaboration in digital banking" 
+                className="w-full h-full object-cover"
+              />
             </div>
             
             {/* Content */}
