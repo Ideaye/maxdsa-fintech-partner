@@ -302,8 +302,8 @@ const WhyPartner = () => {
                 <Button asChild variant="secondary" size="lg" className="bg-white text-primary hover:bg-white/90">
                   <Link to="/partner-signup">Get started</Link>
                 </Button>
-                <Button asChild variant="outline" size="lg" className="border-2 border-white text-white hover:bg-white/10">
-                  <Link to="/contact">Talk to sales</Link>
+                <Button asChild size="lg" className="border-2 border-white bg-transparent text-white hover:bg-white hover:text-primary">
+                  <Link to="/contact">Contact us</Link>
                 </Button>
               </div>
             </div>
