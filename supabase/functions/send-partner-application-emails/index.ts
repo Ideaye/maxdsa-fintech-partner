@@ -39,6 +39,13 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    // Validate API key is configured
+    const apiKey = Deno.env.get("RESEND_API_KEY");
+    if (!apiKey) {
+      console.error('RESEND_API_KEY is not configured');
+      throw new Error('Email service is not configured');
+    }
+
     const {
       fullName, email, phone, panNumber, aadharNumber,
       businessName, businessType, companyPanNumber, companyDocumentType,
@@ -73,7 +80,7 @@ const handler = async (req: Request): Promise<Response> => {
     // Send confirmation email to applicant
     console.log('Sending confirmation email to:', email);
     const confirmationResult = await resend.emails.send({
-      from: "MaxDSA <onboarding@resend.dev>",
+      from: "MaxDSA <partner@maxdsa.com>",
       to: [email],
       subject: "Partner Application Received - MaxDSA",
       html: `<h1>Thank you, ${fullName}!</h1><p>We have received your partnership application and will review it within 2-3 business days.</p><p>Best regards,<br>The MaxDSA Team</p>`,
@@ -88,7 +95,7 @@ const handler = async (req: Request): Promise<Response> => {
     // Send notification email to admin with document links
     console.log('Sending admin notification email');
     const adminResult = await resend.emails.send({
-      from: "MaxDSA <onboarding@resend.dev>",
+      from: "MaxDSA <partner@maxdsa.com>",
       to: ["partner@maxdsa.com"],
       subject: `New Partner Application: ${businessName}`,
       html: `
