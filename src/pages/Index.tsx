@@ -512,9 +512,10 @@ const Index = () => {
                 <p className="text-gray-600 mb-6 leading-relaxed">
                   Complete your DSA registration with our streamlined digital process. Submit documents and get verified within minutes.
                 </p>
-                <Button variant="outline" className="w-full">
-                  Get Started
-                </Button>
+                <div className="flex flex-wrap gap-2 justify-center">
+                  <span className="text-sm font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">#DigitalOnboarding</span>
+                  <span className="text-sm font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">#QuickVerification</span>
+                </div>
               </div>
             </div>
 
@@ -526,9 +527,10 @@ const Index = () => {
                 <p className="text-gray-600 mb-6 leading-relaxed">
                   Connect with our multi-bank platform and access AI-powered tools. Configure preferences for optimal performance.
                 </p>
-                <Button variant="outline" className="w-full">
-                  Get Started
-                </Button>
+                <div className="flex flex-wrap gap-2 justify-center">
+                  <span className="text-sm font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">#AITools</span>
+                  <span className="text-sm font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">#MultiBank</span>
+                </div>
               </div>
             </div>
 
@@ -540,9 +542,10 @@ const Index = () => {
                 <p className="text-gray-600 mb-6 leading-relaxed">
                   Begin processing loan applications immediately with guaranteed payouts. Track progress and maximize conversions.
                 </p>
-                <Button variant="outline" className="w-full">
-                  Get Started
-                </Button>
+                <div className="flex flex-wrap gap-2 justify-center">
+                  <span className="text-sm font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">#GuaranteedPayout</span>
+                  <span className="text-sm font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">#ImmediateEarnings</span>
+                </div>
               </div>
             </div>
           </div>
