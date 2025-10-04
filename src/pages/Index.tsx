@@ -25,6 +25,7 @@ import {
 } from "hugeicons-react";
 import heroBackground from "@/assets/hero-background.jpg";
 import ctaBackground from "@/assets/cta-background.png";
+import paperPlaneIcon from "@/assets/paper-plane-icon.png";
 
 // Import bank logos - using the AI-generated ones from bank-logos folder
 import hdfcLogo from "@/assets/bank-logos/hdfc-bank-logo.png";
@@ -635,8 +636,8 @@ const Index = () => {
                 </div>
                 
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
-                  Ready to Transform Your<br />
-                  <span className="italic text-white/90">DSA Business?</span>
+                  Ready to Transform Your DSA Business?<br />
+                  <span className="italic text-white/90">Let's Connect</span>
                 </h2>
                 
                 <p className="text-lg text-white/90 mb-8 max-w-xl leading-relaxed">
@@ -651,8 +652,14 @@ const Index = () => {
                 </Link>
               </div>
 
-              {/* Right Visual Space */}
-              <div className="hidden lg:block"></div>
+              {/* Right Icon */}
+              <div className="hidden lg:flex justify-center items-center">
+                <img 
+                  src={paperPlaneIcon} 
+                  alt="Paper plane" 
+                  className="w-64 h-64 object-contain opacity-90 animate-float"
+                />
+              </div>
             </div>
           </div>
         </div>
