@@ -16,7 +16,9 @@ export type Database = {
     Tables: {
       partner_applications: {
         Row: {
+          aadhar_card_url: string
           aadhar_number: string
+          additional_documents: Json | null
           agreed_to_terms: boolean
           bank_account_number: string
           bank_branch: string | null
@@ -25,24 +27,30 @@ export type Database = {
           bank_ifsc_code: string
           bank_name: string
           business_name: string
-          business_type: string
+          city: string
           company_document_type: string
           company_document_url: string
           company_pan_number: string
+          correspondence_address: string
           created_at: string
           email: string
           full_name: string
           gst_registration_url: string
           id: string
-          pan_number: string
+          pan_card_url: string
           passport_photo_url: string
           phone: string
-          reference_email: string | null
+          pincode: string
+          reference_2_name: string
+          reference_2_phone: string
           reference_name: string | null
           reference_phone: string | null
+          state: string
         }
         Insert: {
+          aadhar_card_url?: string
           aadhar_number: string
+          additional_documents?: Json | null
           agreed_to_terms?: boolean
           bank_account_number: string
           bank_branch?: string | null
@@ -51,24 +59,30 @@ export type Database = {
           bank_ifsc_code: string
           bank_name: string
           business_name: string
-          business_type: string
+          city?: string
           company_document_type: string
           company_document_url: string
           company_pan_number: string
+          correspondence_address?: string
           created_at?: string
           email: string
           full_name: string
           gst_registration_url: string
           id?: string
-          pan_number: string
+          pan_card_url?: string
           passport_photo_url: string
           phone: string
-          reference_email?: string | null
+          pincode?: string
+          reference_2_name?: string
+          reference_2_phone?: string
           reference_name?: string | null
           reference_phone?: string | null
+          state?: string
         }
         Update: {
+          aadhar_card_url?: string
           aadhar_number?: string
+          additional_documents?: Json | null
           agreed_to_terms?: boolean
           bank_account_number?: string
           bank_branch?: string | null
@@ -77,21 +91,25 @@ export type Database = {
           bank_ifsc_code?: string
           bank_name?: string
           business_name?: string
-          business_type?: string
+          city?: string
           company_document_type?: string
           company_document_url?: string
           company_pan_number?: string
+          correspondence_address?: string
           created_at?: string
           email?: string
           full_name?: string
           gst_registration_url?: string
           id?: string
-          pan_number?: string
+          pan_card_url?: string
           passport_photo_url?: string
           phone?: string
-          reference_email?: string | null
+          pincode?: string
+          reference_2_name?: string
+          reference_2_phone?: string
           reference_name?: string | null
           reference_phone?: string | null
+          state?: string
         }
         Relationships: []
       }

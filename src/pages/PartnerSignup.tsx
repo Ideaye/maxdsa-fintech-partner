@@ -23,15 +23,20 @@ const PartnerSignup = () => {
     fullName: "",
     phone: "",
     email: "",
-    panNumber: "",
     aadharNumber: "",
+    panCard: null as File | null,
+    aadharCard: null as File | null,
+    correspondenceAddress: "",
+    city: "",
+    state: "",
+    pincode: "",
     passportPhoto: null as File | null,
     businessName: "",
-    businessType: "",
     companyPanNumber: "",
     companyDocumentType: "",
     companyDocument: null as File | null,
     gstRegistration: null as File | null,
+    additionalDocuments: [] as File[],
     bankAccountNumber: "",
     bankIfscCode: "",
     bankName: "",
@@ -40,7 +45,8 @@ const PartnerSignup = () => {
     bankDocument: null as File | null,
     referenceName: "",
     referencePhone: "",
-    referenceEmail: "",
+    reference2Name: "",
+    reference2Phone: "",
     agreedToTerms: false,
   });
 
@@ -53,9 +59,9 @@ const PartnerSignup = () => {
     return panRegex.test(pan);
   };
 
-  const validateAadhar = (aadhar: string) => {
-    const aadharRegex = /^[0-9]{12}$/;
-    return aadharRegex.test(aadhar.replace(/\s/g, ''));
+  const validatePincode = (pincode: string) => {
+    const pincodeRegex = /^[0-9]{6}$/;
+    return pincodeRegex.test(pincode);
   };
 
   const validateIFSC = (ifsc: string) => {
@@ -126,16 +132,22 @@ const PartnerSignup = () => {
   const validateStep = (currentStep: number): boolean => {
     switch (currentStep) {
       case 1:
-        if (!formData.fullName || !formData.email || !formData.phone) {
+        if (!formData.fullName || !formData.email || !formData.phone || !formData.aadharNumber || !formData.correspondenceAddress || !formData.city || !formData.state || !formData.pincode) {
           toast({ title: "Error", description: "Please fill in all required fields", variant: "destructive" });
           return false;
         }
-        if (!validatePAN(formData.panNumber)) {
-          toast({ title: "Error", description: "Please enter a valid PAN number (e.g., ABCDE1234F)", variant: "destructive" });
+        if (formData.aadharNumber.length !== 12) {
+          toast({ title: "Error", description: "Please enter a valid 12-digit Aadhar number", variant: "destructive" });
           return false;
         }
-        if (!validateAadhar(formData.aadharNumber)) {
-          toast({ title: "Error", description: "Please enter a valid 12-digit Aadhar number", variant: "destructive" });
+        if (!validatePincode(formData.pincode)) {
+          toast({ title: "Error", description: "Please enter a valid 6-digit pincode", variant: "destructive" });
+          return false;
+        }
+        if (!validateFile(formData.panCard, "PAN card")) {
+          return false;
+        }
+        if (!validateFile(formData.aadharCard, "Aadhar card")) {
           return false;
         }
         if (!validateFile(formData.passportPhoto, "passport photo")) {
@@ -144,7 +156,7 @@ const PartnerSignup = () => {
         return true;
       
       case 2:
-        if (!formData.businessName || !formData.businessType || !formData.companyPanNumber || !formData.companyDocumentType) {
+        if (!formData.businessName || !formData.companyPanNumber || !formData.companyDocumentType) {
           toast({ title: "Error", description: "Please fill in all required fields", variant: "destructive" });
           return false;
         }
@@ -170,6 +182,13 @@ const PartnerSignup = () => {
           return false;
         }
         if (!validateFile(formData.bankDocument, "bank document")) {
+          return false;
+        }
+        return true;
+
+      case 4:
+        if (!formData.referenceName || !formData.referencePhone || !formData.reference2Name || !formData.reference2Phone) {
+          toast({ title: "Error", description: "Please provide both reference contacts", variant: "destructive" });
           return false;
         }
         return true;
@@ -206,17 +225,26 @@ const PartnerSignup = () => {
 
     try {
       // Upload all files in parallel for faster processing
-      const uploadResults = await Promise.all([
+      const baseUploads = [
+        uploadFile(formData.panCard!, 'pan-cards', 'PAN card'),
+        uploadFile(formData.aadharCard!, 'aadhar-cards', 'Aadhar card'),
         uploadFile(formData.passportPhoto!, 'passport-photos', 'passport photo'),
         uploadFile(formData.companyDocument!, 'company-documents', 'company document'),
         uploadFile(formData.gstRegistration!, 'gst-documents', 'GST registration'),
         uploadFile(formData.bankDocument!, 'bank-documents', 'bank document')
-      ]);
+      ];
 
-      const [passportPhotoPath, companyDocumentPath, gstRegistrationPath, bankDocumentPath] = uploadResults;
+      // Upload additional documents
+      const additionalUploads = formData.additionalDocuments.map((file, index) => 
+        uploadFile(file, 'additional-documents', `additional document ${index + 1}`)
+      );
+
+      const uploadResults = await Promise.all([...baseUploads, ...additionalUploads]);
+
+      const [panCardPath, aadharCardPath, passportPhotoPath, companyDocumentPath, gstRegistrationPath, bankDocumentPath, ...additionalDocPaths] = uploadResults;
 
       // Check if any upload failed
-      if (!passportPhotoPath || !companyDocumentPath || !gstRegistrationPath || !bankDocumentPath) {
+      if (!panCardPath || !aadharCardPath || !passportPhotoPath || !companyDocumentPath || !gstRegistrationPath || !bankDocumentPath) {
         setIsSubmitting(false);
         return;
       }
@@ -224,30 +252,36 @@ const PartnerSignup = () => {
       // Insert into database
       const { error: dbError } = await supabase
         .from('partner_applications')
-        .insert({
+        .insert([{
           full_name: formData.fullName,
           email: formData.email,
           phone: formData.phone,
-          pan_number: formData.panNumber,
           aadhar_number: formData.aadharNumber,
+          pan_card_url: panCardPath,
+          aadhar_card_url: aadharCardPath,
+          correspondence_address: formData.correspondenceAddress,
+          city: formData.city,
+          state: formData.state,
+          pincode: formData.pincode,
           passport_photo_url: passportPhotoPath,
           business_name: formData.businessName,
-          business_type: formData.businessType,
           company_pan_number: formData.companyPanNumber,
           company_document_type: formData.companyDocumentType,
           company_document_url: companyDocumentPath,
           gst_registration_url: gstRegistrationPath,
+          additional_documents: additionalDocPaths.filter(p => p !== null),
           bank_account_number: formData.bankAccountNumber,
           bank_ifsc_code: formData.bankIfscCode,
           bank_name: formData.bankName,
           bank_branch: formData.bankBranch || null,
           bank_document_type: formData.bankDocumentType,
           bank_document_url: bankDocumentPath,
-          reference_name: formData.referenceName || null,
-          reference_phone: formData.referencePhone || null,
-          reference_email: formData.referenceEmail || null,
+          reference_name: formData.referenceName,
+          reference_phone: formData.referencePhone,
+          reference_2_name: formData.reference2Name,
+          reference_2_phone: formData.reference2Phone,
           agreed_to_terms: formData.agreedToTerms,
-        });
+        }]);
 
       if (dbError) {
         console.error("Database error:", dbError);
@@ -268,10 +302,12 @@ const PartnerSignup = () => {
             fullName: formData.fullName,
             email: formData.email,
             phone: formData.phone,
-            panNumber: formData.panNumber,
             aadharNumber: formData.aadharNumber,
+            correspondenceAddress: formData.correspondenceAddress,
+            city: formData.city,
+            state: formData.state,
+            pincode: formData.pincode,
             businessName: formData.businessName,
-            businessType: formData.businessType,
             companyPanNumber: formData.companyPanNumber,
             companyDocumentType: formData.companyDocumentType,
             bankAccountNumber: formData.bankAccountNumber,
@@ -281,7 +317,10 @@ const PartnerSignup = () => {
             bankDocumentType: formData.bankDocumentType,
             referenceName: formData.referenceName,
             referencePhone: formData.referencePhone,
-            referenceEmail: formData.referenceEmail,
+            reference2Name: formData.reference2Name,
+            reference2Phone: formData.reference2Phone,
+            panCardUrl: panCardPath,
+            aadharCardUrl: aadharCardPath,
             passportPhotoUrl: passportPhotoPath,
             companyDocumentUrl: companyDocumentPath,
             gstRegistrationUrl: gstRegistrationPath,
@@ -467,19 +506,6 @@ const PartnerSignup = () => {
                       </div>
 
                       <div>
-                        <Label htmlFor="panNumber">PAN Number *</Label>
-                        <Input
-                          id="panNumber"
-                          value={formData.panNumber}
-                          onChange={(e) => updateFormData("panNumber", e.target.value.toUpperCase())}
-                          placeholder="ABCDE1234F"
-                          maxLength={10}
-                          className="mt-2"
-                        />
-                        <p className="text-xs text-muted-foreground mt-1">Format: 5 letters, 4 digits, 1 letter</p>
-                      </div>
-
-                      <div>
                         <Label htmlFor="aadharNumber">Aadhar Number *</Label>
                         <Input
                           id="aadharNumber"
@@ -491,6 +517,69 @@ const PartnerSignup = () => {
                         />
                         <p className="text-xs text-muted-foreground mt-1">12-digit Aadhar number</p>
                       </div>
+
+                      <div>
+                        <Label htmlFor="correspondenceAddress">Correspondence Address *</Label>
+                        <Input
+                          id="correspondenceAddress"
+                          value={formData.correspondenceAddress}
+                          onChange={(e) => updateFormData("correspondenceAddress", e.target.value)}
+                          placeholder="Street Address, Area"
+                          className="mt-2"
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                          <Label htmlFor="city">City *</Label>
+                          <Input
+                            id="city"
+                            value={formData.city}
+                            onChange={(e) => updateFormData("city", e.target.value)}
+                            placeholder="Mumbai"
+                            className="mt-2"
+                          />
+                        </div>
+
+                        <div>
+                          <Label htmlFor="state">State *</Label>
+                          <Input
+                            id="state"
+                            value={formData.state}
+                            onChange={(e) => updateFormData("state", e.target.value)}
+                            placeholder="Maharashtra"
+                            className="mt-2"
+                          />
+                        </div>
+
+                        <div>
+                          <Label htmlFor="pincode">Pincode *</Label>
+                          <Input
+                            id="pincode"
+                            value={formData.pincode}
+                            onChange={(e) => updateFormData("pincode", e.target.value.replace(/\D/g, ''))}
+                            placeholder="400001"
+                            maxLength={6}
+                            className="mt-2"
+                          />
+                        </div>
+                      </div>
+
+                      <FileUploadInput
+                        id="panCard"
+                        accept="application/pdf,image/jpeg,image/png"
+                        onChange={(file) => updateFormData("panCard", file)}
+                        file={formData.panCard}
+                        label="PAN Card"
+                      />
+
+                      <FileUploadInput
+                        id="aadharCard"
+                        accept="application/pdf,image/jpeg,image/png"
+                        onChange={(file) => updateFormData("aadharCard", file)}
+                        file={formData.aadharCard}
+                        label="Aadhar Card"
+                      />
 
                       <FileUploadInput
                         id="passportPhoto"
@@ -517,34 +606,6 @@ const PartnerSignup = () => {
                           placeholder="ABC Financial Services"
                           className="mt-2"
                         />
-                      </div>
-
-                      <div>
-                        <Label>Business Type *</Label>
-                        <RadioGroup
-                          value={formData.businessType}
-                          onValueChange={(value) => updateFormData("businessType", value)}
-                          className="mt-2 space-y-2"
-                        >
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="dsa" id="dsa" />
-                            <Label htmlFor="dsa" className="font-normal cursor-pointer">
-                              Direct Selling Agent (DSA)
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="connector" id="connector" />
-                            <Label htmlFor="connector" className="font-normal cursor-pointer">
-                              Connector
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="financial-advisor" id="financial-advisor" />
-                            <Label htmlFor="financial-advisor" className="font-normal cursor-pointer">
-                              Financial Advisor
-                            </Label>
-                          </div>
-                        </RadioGroup>
                       </div>
 
                       <div>
@@ -594,6 +655,43 @@ const PartnerSignup = () => {
                         file={formData.companyDocument}
                         label="Company Document"
                       />
+
+                      <div>
+                        <Label htmlFor="additionalDocuments">Additional Documents (Optional)</Label>
+                        <div className="border-2 border-dashed rounded-lg p-6 text-center hover:border-primary transition-colors cursor-pointer mt-2">
+                          <input
+                            id="additionalDocuments"
+                            type="file"
+                            accept="application/pdf,image/jpeg,image/png"
+                            multiple
+                            onChange={(e) => {
+                              const files = Array.from(e.target.files || []);
+                              updateFormData("additionalDocuments", files);
+                            }}
+                            className="hidden"
+                          />
+                          <label htmlFor="additionalDocuments" className="cursor-pointer block">
+                            <Upload className="mx-auto h-12 w-12 text-muted-foreground mb-2" />
+                            <p className="text-sm font-medium">
+                              {formData.additionalDocuments.length > 0 
+                                ? `${formData.additionalDocuments.length} file(s) selected` 
+                                : 'Click to upload multiple documents'}
+                            </p>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              PDF, JPG or PNG, max 5MB each
+                            </p>
+                          </label>
+                        </div>
+                        {formData.additionalDocuments.length > 0 && (
+                          <div className="mt-2 space-y-1">
+                            {formData.additionalDocuments.map((file, index) => (
+                              <p key={index} className="text-xs text-muted-foreground">
+                                {index + 1}. {file.name}
+                              </p>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     </div>
                   )}
 
@@ -693,39 +791,56 @@ const PartnerSignup = () => {
                     <div className="space-y-6">
                       <h2 className="text-2xl font-semibold mb-4">Reference Details & Terms</h2>
                       
-                      <div>
-                        <Label htmlFor="referenceName">Reference Name (Optional)</Label>
-                        <Input
-                          id="referenceName"
-                          value={formData.referenceName}
-                          onChange={(e) => updateFormData("referenceName", e.target.value)}
-                          placeholder="Reference person's name"
-                          className="mt-2"
-                        />
+                      <div className="bg-muted/30 p-4 rounded-lg space-y-4">
+                        <h3 className="font-semibold text-sm">First Reference *</h3>
+                        <div>
+                          <Label htmlFor="referenceName">Reference Name *</Label>
+                          <Input
+                            id="referenceName"
+                            value={formData.referenceName}
+                            onChange={(e) => updateFormData("referenceName", e.target.value)}
+                            placeholder="Reference person's name"
+                            className="mt-2"
+                          />
+                        </div>
+
+                        <div>
+                          <Label htmlFor="referencePhone">Reference Phone *</Label>
+                          <Input
+                            id="referencePhone"
+                            type="tel"
+                            value={formData.referencePhone}
+                            onChange={(e) => updateFormData("referencePhone", e.target.value)}
+                            placeholder="+91 98765 43210"
+                            className="mt-2"
+                          />
+                        </div>
                       </div>
 
-                      <div>
-                        <Label htmlFor="referencePhone">Reference Phone (Optional)</Label>
-                        <Input
-                          id="referencePhone"
-                          type="tel"
-                          value={formData.referencePhone}
-                          onChange={(e) => updateFormData("referencePhone", e.target.value)}
-                          placeholder="+91 98765 43210"
-                          className="mt-2"
-                        />
-                      </div>
+                      <div className="bg-muted/30 p-4 rounded-lg space-y-4">
+                        <h3 className="font-semibold text-sm">Second Reference *</h3>
+                        <div>
+                          <Label htmlFor="reference2Name">Reference Name *</Label>
+                          <Input
+                            id="reference2Name"
+                            value={formData.reference2Name}
+                            onChange={(e) => updateFormData("reference2Name", e.target.value)}
+                            placeholder="Reference person's name"
+                            className="mt-2"
+                          />
+                        </div>
 
-                      <div>
-                        <Label htmlFor="referenceEmail">Reference Email (Optional)</Label>
-                        <Input
-                          id="referenceEmail"
-                          type="email"
-                          value={formData.referenceEmail}
-                          onChange={(e) => updateFormData("referenceEmail", e.target.value)}
-                          placeholder="reference@example.com"
-                          className="mt-2"
-                        />
+                        <div>
+                          <Label htmlFor="reference2Phone">Reference Phone *</Label>
+                          <Input
+                            id="reference2Phone"
+                            type="tel"
+                            value={formData.reference2Phone}
+                            onChange={(e) => updateFormData("reference2Phone", e.target.value)}
+                            placeholder="+91 98765 43210"
+                            className="mt-2"
+                          />
+                        </div>
                       </div>
 
                       <div className="flex items-start space-x-2 pt-4">
