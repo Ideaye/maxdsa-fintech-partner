@@ -13,6 +13,7 @@ const Header = () => {
     { name: "Services", href: "/services" },
     { name: "About Us", href: "/about" },
     { name: "Why Partner With Us", href: "/why-partner" },
+    { name: "Loan Calculators", href: "/loan-calculators" },
     { name: "Contact Us", href: "/contact" },
   ];
 
