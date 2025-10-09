@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
+import { LoanCalculatorSection } from "@/components/LoanCalculatorSection";
 import { Button } from "@/components/ui/button";
 import { 
   Accordion,
@@ -399,6 +400,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Loan Calculator Section */}
+      <LoanCalculatorSection />
 
       {/* Testimonials Section */}
       <section className="py-20 bg-white">
