@@ -17,7 +17,7 @@ const Footer = () => {
               leadership experience driving ₹500+ Crore transactions for 250+ customers.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="https://www.linkedin.com/company/maxdsa" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                 <Linkedin className="h-5 w-5" />
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
@@ -63,7 +63,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center">
                 <Phone className="h-4 w-4 mr-2 text-gray-400" />
-                <span className="text-sm text-gray-300">+91 9876543210</span>
+                <span className="text-sm text-gray-300">+91 9042384395</span>
               </div>
               <div className="flex items-start">
                 <MapPin className="h-4 w-4 mr-2 mt-1 text-gray-400" />
