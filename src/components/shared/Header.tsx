@@ -2,14 +2,6 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Download } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import maxdsaLogo from "@/assets/maxdsa-logo.png";
 
 const Header = () => {
@@ -62,30 +54,12 @@ const Header = () => {
 
           {/* Downloads & Sign In Buttons */}
           <div className="hidden md:flex items-center gap-3">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="border-primary text-primary hover:bg-primary hover:text-white">
-                  <Download className="h-4 w-4 mr-2" />
-                  Downloads
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56 bg-white z-50">
-                <DropdownMenuLabel>Loan Checklists</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="cursor-pointer">
-                  <span>Home Loan Checklist</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
-                  <span>Personal Loan Checklist</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
-                  <span>Gold Loan Checklist</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
-                  <span>Vehicle Loan Checklist</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Link to="/downloads">
+              <Button variant="outline" size="sm" className="border-primary text-primary hover:bg-primary hover:text-white">
+                <Download className="h-4 w-4 mr-2" />
+                Downloads
+              </Button>
+            </Link>
             
             <a href="https://bridge.hyperfin.tech/" target="_blank" rel="noopener noreferrer">
               <Button variant="outline" size="sm" className="border-primary text-primary hover:bg-primary hover:text-white">
