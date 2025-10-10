@@ -99,6 +99,14 @@ export default {
             transform: "translateX(-50%)",
           },
         },
+        "scroll-right": {
+          "0%": {
+            transform: "translateX(-50%)",
+          },
+          "100%": {
+            transform: "translateX(0)",
+          },
+        },
         "slide-horizontal": {
           "0%, 100%": {
             transform: "translateX(0)",
@@ -111,7 +119,8 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "scroll-left": "scroll-left 20s linear infinite",
+        "scroll-left": "scroll-left 30s linear infinite",
+        "scroll-right": "scroll-right 30s linear infinite",
       },
     },
   },

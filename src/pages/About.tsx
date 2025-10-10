@@ -7,6 +7,7 @@ import { Users, TrendingUp, Award, Clock, Target, Lightbulb, Shield, Rocket } fr
 import teamPhoto from "@/assets/team-photo.jpg";
 import partnershipImage from "@/assets/partnership-handshake.jpg";
 import aboutHero from "@/assets/about-hero.jpg";
+import promoterPhoto from "@/assets/promoter-photo.jpg";
 
 const About = () => {
   const milestones = [
@@ -191,24 +192,39 @@ const About = () => {
       {/* About the Promoter Section */}
       <section className="py-20 bg-gray-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
+          <div className="mb-12">
             <Badge variant="secondary" className="mb-4">ABOUT THE PROMOTER</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
               Visionary Leadership
             </h2>
-            <div className="space-y-4 text-muted-foreground">
-              <p>
-                <strong className="text-foreground">Arun Kumar Manickam</strong> is a visionary banking leader and the driving force behind MaxDSA.com, a pioneering platform designed to create India's largest knowledge-sharing and networking ecosystem for professionals in banking, NBFC, and fintech sectors.
-              </p>
-              <p>
-                With over 20 years of rich experience across premier financial institutions—including State Bank of India, IDBI Bank, ICICI Bank, and Cholamandalam DBS—Arun brings a unique blend of strategic insight and hands-on operational expertise to his initiatives.
-              </p>
-              <p>
-                He holds a Master's degree in Management from the Bharathiar School of Management and Entrepreneur Development (BSMED), Coimbatore, and has further strengthened his leadership acumen through executive programs at the Indian Institute of Management, Ahmedabad (IIM-A).
-              </p>
-              <p>
-                With more than 10 years' experience in retail loan distribution business, we have successfully acquired more than 250 Customers with about 500 Cr of Successful transactions.
-              </p>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="order-2 lg:order-1">
+              <div className="space-y-4 text-muted-foreground">
+                <p>
+                  <strong className="text-foreground">Arun Kumar Manickam</strong> is a visionary banking leader and the driving force behind MaxDSA.com, a pioneering platform designed to create India's largest knowledge-sharing and networking ecosystem for professionals in banking, NBFC, and fintech sectors.
+                </p>
+                <p>
+                  With over 20 years of rich experience across premier financial institutions—including State Bank of India, IDBI Bank, ICICI Bank, and Cholamandalam DBS—Arun brings a unique blend of strategic insight and hands-on operational expertise to his initiatives.
+                </p>
+                <p>
+                  He holds a Master's degree in Management from the Bharathiar School of Management and Entrepreneur Development (BSMED), Coimbatore, and has further strengthened his leadership acumen through executive programs at the Indian Institute of Management, Ahmedabad (IIM-A).
+                </p>
+                <p>
+                  With more than 10 years' experience in retail loan distribution business, we have successfully acquired more than 250 Customers with about 500 Cr of Successful transactions.
+                </p>
+              </div>
+            </div>
+            
+            <div className="order-1 lg:order-2">
+              <div className="relative">
+                <img 
+                  src={promoterPhoto} 
+                  alt="Arun Kumar Manickam - Founder of MaxDSA" 
+                  className="rounded-lg shadow-xl w-full h-auto object-cover"
+                />
+              </div>
             </div>
           </div>
         </div>

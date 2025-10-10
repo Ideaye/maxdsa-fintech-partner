@@ -1,40 +1,41 @@
-import { Download } from "lucide-react";
+import { Download, Home, CreditCard, Coins, Car, Briefcase, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
+import * as LucideIcons from "lucide-react";
 
 const Downloads = () => {
   const loanTypes = [
     {
       title: "Home Loan",
       keywords: ["Property Documents", "Income Proof", "Identity Verification"],
-      icon: "🏠",
+      icon: "Home",
     },
     {
       title: "Personal Loan",
       keywords: ["Income Statements", "Bank Details", "Credit Score"],
-      icon: "💳",
+      icon: "CreditCard",
     },
     {
       title: "Gold Loan",
       keywords: ["Gold Valuation", "Ownership Proof", "Identity Documents"],
-      icon: "🪙",
+      icon: "Coins",
     },
     {
       title: "Vehicle Loan",
       keywords: ["Vehicle Details", "Insurance Papers", "Income Proof"],
-      icon: "🚗",
+      icon: "Car",
     },
     {
       title: "Business Loan",
       keywords: ["Business License", "Financial Statements", "Tax Returns"],
-      icon: "💼",
+      icon: "Briefcase",
     },
     {
       title: "Education Loan",
       keywords: ["Admission Letter", "Fee Structure", "Co-applicant Details"],
-      icon: "🎓",
+      icon: "GraduationCap",
     },
   ];
 
@@ -167,33 +168,37 @@ const Downloads = () => {
       <section className="py-16 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {loanTypes.map((loan, index) => (
-              <Card
-                key={index}
-                className="relative overflow-hidden group hover:shadow-lg transition-all duration-300"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-primary/5 group-hover:from-primary/20 group-hover:to-primary/10 transition-all duration-300" />
-                <CardContent className="relative p-6 flex flex-col h-full min-h-[200px]">
-                  <div className="text-4xl mb-4">{loan.icon}</div>
-                  <h3 className="text-xl font-semibold mb-4">{loan.title}</h3>
-                  <div className="flex-1">
-                    <p className="text-sm text-muted-foreground">
-                      {loan.keywords.join(" • ")}
-                    </p>
-                  </div>
-                  <div className="flex justify-end mt-4">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => handleDownload(loan.title)}
-                      className="hover:bg-primary/10"
-                    >
-                      <Download className="h-5 w-5" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+            {loanTypes.map((loan, index) => {
+              const IconComponent = LucideIcons[loan.icon as keyof typeof LucideIcons] as React.ComponentType<{ className?: string }>;
+              return (
+                <Card
+                  key={index}
+                  className="relative overflow-hidden group hover:shadow-lg transition-all duration-300"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-primary/5 group-hover:from-primary/20 group-hover:to-primary/10 transition-all duration-300" />
+                  <CardContent className="relative p-6 flex flex-col h-full min-h-[200px]">
+                    <IconComponent className="h-10 w-10 mb-4 text-primary" />
+                    <h3 className="text-xl font-semibold mb-4">{loan.title}</h3>
+                    <div className="flex-1">
+                      <p className="text-sm text-muted-foreground">
+                        {loan.keywords.join(" • ")}
+                      </p>
+                    </div>
+                    <div className="flex justify-end items-center gap-2 mt-4">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDownload(loan.title)}
+                        className="hover:bg-primary/10 flex items-center gap-2"
+                      >
+                        <Download className="h-4 w-4" />
+                        <span className="text-sm">Download</span>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -219,7 +224,7 @@ const Downloads = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-16 px-4 bg-muted/20">
+      <section className="py-16 px-4 bg-muted/20 overflow-hidden">
         <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-12">
             <p className="text-sm font-semibold text-primary mb-2">Testimonials</p>
@@ -228,25 +233,52 @@ const Downloads = () => {
             </h2>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="h-full">
-                <CardContent className="p-6 flex flex-col h-full">
-                  <p className="text-sm text-muted-foreground mb-4 flex-1">
-                    {testimonial.text}
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center text-white font-semibold">
-                      {testimonial.name.charAt(0)}
+          {/* First Row - Auto Scroll Left to Right */}
+          <div className="relative mb-6 overflow-hidden">
+            <div className="flex gap-6 animate-scroll-left">
+              {[...testimonials.slice(0, 8), ...testimonials.slice(0, 8)].map((testimonial, index) => (
+                <Card key={index} className="min-w-[300px] flex-shrink-0">
+                  <CardContent className="p-6 flex flex-col h-full">
+                    <p className="text-sm text-muted-foreground mb-4 flex-1">
+                      {testimonial.text}
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center text-white font-semibold">
+                        {testimonial.name.charAt(0)}
+                      </div>
+                      <div>
+                        <p className="font-semibold text-sm">{testimonial.name}</p>
+                        <p className="text-xs text-muted-foreground">{testimonial.role}</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-semibold text-sm">{testimonial.name}</p>
-                      <p className="text-xs text-muted-foreground">{testimonial.role}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          {/* Second Row - Auto Scroll Right to Left */}
+          <div className="relative overflow-hidden">
+            <div className="flex gap-6 animate-scroll-right">
+              {[...testimonials.slice(8, 16), ...testimonials.slice(8, 16)].map((testimonial, index) => (
+                <Card key={index} className="min-w-[300px] flex-shrink-0">
+                  <CardContent className="p-6 flex flex-col h-full">
+                    <p className="text-sm text-muted-foreground mb-4 flex-1">
+                      {testimonial.text}
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center text-white font-semibold">
+                        {testimonial.name.charAt(0)}
+                      </div>
+                      <div>
+                        <p className="font-semibold text-sm">{testimonial.name}</p>
+                        <p className="text-xs text-muted-foreground">{testimonial.role}</p>
+                      </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
       </section>
