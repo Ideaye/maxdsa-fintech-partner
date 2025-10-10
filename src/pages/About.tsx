@@ -144,8 +144,78 @@ const About = () => {
         </div>
       </section>
 
-      {/* Our Approach Section */}
+      {/* Stats Section */}
+      <section className="py-16 bg-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Users className="w-8 h-8 text-primary" />
+                </div>
+              </div>
+              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">125</div>
+              <p className="text-sm text-muted-foreground">Happy Clients</p>
+            </div>
+            <div className="text-center">
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                  <TrendingUp className="w-8 h-8 text-primary" />
+                </div>
+              </div>
+              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">175</div>
+              <p className="text-sm text-muted-foreground">Disbursements</p>
+            </div>
+            <div className="text-center">
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Clock className="w-8 h-8 text-primary" />
+                </div>
+              </div>
+              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">12</div>
+              <p className="text-sm text-muted-foreground">Financier Tieups</p>
+            </div>
+            <div className="text-center">
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Award className="w-8 h-8 text-primary" />
+                </div>
+              </div>
+              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">15</div>
+              <p className="text-sm text-muted-foreground">Years of experience</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About the Promoter Section */}
       <section className="py-20 bg-gray-50">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <Badge variant="secondary" className="mb-4">ABOUT THE PROMOTER</Badge>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">
+              Visionary Leadership
+            </h2>
+            <div className="space-y-4 text-muted-foreground">
+              <p>
+                <strong className="text-foreground">Arun Kumar Manickam</strong> is a visionary banking leader and the driving force behind MaxDSA.com, a pioneering platform designed to create India's largest knowledge-sharing and networking ecosystem for professionals in banking, NBFC, and fintech sectors.
+              </p>
+              <p>
+                With over 20 years of rich experience across premier financial institutions—including State Bank of India, IDBI Bank, ICICI Bank, and Cholamandalam DBS—Arun brings a unique blend of strategic insight and hands-on operational expertise to his initiatives.
+              </p>
+              <p>
+                He holds a Master's degree in Management from the Bharathiar School of Management and Entrepreneur Development (BSMED), Coimbatore, and has further strengthened his leadership acumen through executive programs at the Indian Institute of Management, Ahmedabad (IIM-A).
+              </p>
+              <p>
+                With more than 10 years' experience in retail loan distribution business, we have successfully acquired more than 250 Customers with about 500 Cr of Successful transactions.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Approach Section */}
+      <section className="py-20 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             {/* Left Content */}
@@ -237,7 +307,7 @@ const About = () => {
       </section>
 
       {/* Mission Statement */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-gray-50">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">
             Empowering DSA Success Through Digital Innovation: Our Mission at MaxDSA
@@ -271,7 +341,7 @@ const About = () => {
       </section>
 
       {/* Team Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
@@ -331,7 +401,7 @@ const About = () => {
       </section>
 
       {/* Testimonial */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-gray-50">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <div className="mb-8">
             <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">

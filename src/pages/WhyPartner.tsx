@@ -251,6 +251,62 @@ const WhyPartner = () => {
         </div>
       </section>
 
+      {/* Innovative Offerings Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="text-sm text-primary font-semibold mb-2 uppercase tracking-wide">
+              Adding Value Further
+            </p>
+            <h2 className="text-3xl font-bold text-primary-dark mb-4">
+              Innovative Offerings and Services
+            </h2>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-primary text-white rounded-lg p-8 hover-lift">
+              <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mb-4">
+                <Users className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Banking the Unbanked</h3>
+              <p className="text-white/90 text-sm">
+                Are you not having any Income Proofs? Is your Bank not ready to Fund you?
+              </p>
+            </div>
+            
+            <div className="bg-white border-2 border-gray-200 rounded-lg p-8 hover-lift">
+              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                <TrendingUp className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-foreground">CIBIL Issues Funding Support</h3>
+              <p className="text-muted-foreground text-sm">
+                Specialized solutions for customers with credit challenges
+              </p>
+            </div>
+            
+            <div className="bg-white border-2 border-gray-200 rounded-lg p-8 hover-lift">
+              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                <Shield className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-foreground">Corporate Dispute Management</h3>
+              <p className="text-muted-foreground text-sm">
+                Expert handling of complex corporate financial disputes
+              </p>
+            </div>
+            
+            <div className="bg-white border-2 border-gray-200 rounded-lg p-8 hover-lift">
+              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                <CheckCircle className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-foreground">Vendor Support System</h3>
+              <p className="text-muted-foreground text-sm">
+                Comprehensive support for vendor financing and management
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Testimonials Section */}
       <section className="py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
