@@ -43,7 +43,7 @@ const Index = () => {
   const [currentPartner, setCurrentPartner] = useState(0);
 
   const stats = [
-    { value: "Manyears", label: "Collective Experience" },
+    { value: "300+", label: "Many Years of Collective Experience" },
     { value: "₹500+", label: "Crore Transactions" },
     { value: "250+", label: "Happy Customers" },
     { value: "15+", label: "Bank Partners" }
@@ -285,7 +285,7 @@ const Index = () => {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <div className="text-sm font-semibold text-red-500 mb-2 tracking-wide uppercase">Our Impact</div>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 leading-tight tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 leading-tight tracking-tight">
               <span className="text-gray-500">Our focus is simple</span><br />
               <span className="text-black">Design to convert</span>
             </h2>
@@ -352,9 +352,9 @@ const Index = () => {
 
             {/* Experience Card */}
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <div className="text-4xl font-bold text-black mb-2">Manyears</div>
-              <p className="text-gray-600 text-sm">Collective Experience</p>
-              <p className="text-gray-500 text-xs mt-2">Combined expertise of our team</p>
+              <div className="text-4xl font-bold text-black mb-2">300+</div>
+              <p className="text-gray-600 text-sm">Many Years</p>
+              <p className="text-gray-500 text-xs mt-2">Of combined banking and financial expertise across our leadership team</p>
             </div>
           </div>
         </div>
@@ -364,7 +364,7 @@ const Index = () => {
       <section className="py-20 bg-white overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-6 leading-tight tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-black mb-6 leading-tight tracking-tight">
               Our Banking Partners
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto text-lg">
@@ -408,7 +408,7 @@ const Index = () => {
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
               <div>
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-6 leading-tight tracking-tight">
+                <h2 className="text-3xl md:text-4xl font-bold text-black mb-6 leading-tight tracking-tight">
                   Explore our comprehensive service offerings
                 </h2>
                 <p className="text-gray-600 text-lg leading-relaxed mb-8">
@@ -492,7 +492,7 @@ const Index = () => {
       <section className="py-20 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-6 leading-tight tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-black mb-6 leading-tight tracking-tight">
               Read reviews,<br />
               ride with confidence.
             </h2>
@@ -583,7 +583,7 @@ const Index = () => {
           <div className="mb-16">
             <p className="text-sm font-semibold text-primary uppercase tracking-wider mb-4">HOW IT WORKS</p>
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black leading-tight max-w-2xl">
+              <h2 className="text-3xl md:text-4xl font-bold text-black leading-tight max-w-2xl">
                 Get Started with MaxDSA in Four Steps
               </h2>
               <p className="text-base md:text-lg text-gray-600">
@@ -592,15 +592,15 @@ const Index = () => {
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 max-w-5xl mx-auto">
             {/* Step 1 */}
-            <div className="relative rounded-3xl overflow-hidden h-64 group">
+            <div className="relative rounded-3xl overflow-hidden h-64 group cursor-pointer">
               <img 
                 src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&h=600&fit=crop" 
                 alt="Share Details" 
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/80 to-primary/60"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/80 to-primary/60 transition-colors duration-300 group-hover:from-blue-600/90 group-hover:to-blue-500/70"></div>
               <div className="relative h-full p-8 flex flex-col justify-between">
                 <div className="text-8xl md:text-9xl font-bold text-white/20">01</div>
                 <div className="text-white">
@@ -613,13 +613,13 @@ const Index = () => {
             </div>
 
             {/* Step 2 */}
-            <div className="relative rounded-3xl overflow-hidden h-64 group">
+            <div className="relative rounded-3xl overflow-hidden h-64 group cursor-pointer">
               <img 
                 src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&h=600&fit=crop" 
                 alt="Get Quote" 
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/50"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/50 transition-colors duration-300 group-hover:from-blue-600/90 group-hover:to-blue-500/70"></div>
               <div className="relative h-full p-8 flex flex-col justify-between">
                 <div className="text-8xl md:text-9xl font-bold text-white/20">02</div>
                 <div className="text-white">
@@ -632,13 +632,13 @@ const Index = () => {
             </div>
 
             {/* Step 3 */}
-            <div className="relative rounded-3xl overflow-hidden h-64 group">
+            <div className="relative rounded-3xl overflow-hidden h-64 group cursor-pointer">
               <img 
                 src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&h=600&fit=crop" 
                 alt="We Process" 
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/50"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/50 transition-colors duration-300 group-hover:from-blue-600/90 group-hover:to-blue-500/70"></div>
               <div className="relative h-full p-8 flex flex-col justify-between">
                 <div className="text-8xl md:text-9xl font-bold text-white/20">03</div>
                 <div className="text-white">
@@ -651,13 +651,13 @@ const Index = () => {
             </div>
 
             {/* Step 4 */}
-            <div className="relative rounded-3xl overflow-hidden h-64 group">
+            <div className="relative rounded-3xl overflow-hidden h-64 group cursor-pointer">
               <img 
                 src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=600&fit=crop" 
                 alt="You Relax" 
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/50"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/50 transition-colors duration-300 group-hover:from-blue-600/90 group-hover:to-blue-500/70"></div>
               <div className="relative h-full p-8 flex flex-col justify-between">
                 <div className="text-8xl md:text-9xl font-bold text-white/20">04</div>
                 <div className="text-white">
@@ -680,7 +680,7 @@ const Index = () => {
             </div>
             <Link to="/partner-signup">
               <Button variant="cta" size="lg" className="group whitespace-nowrap">
-                View Our Pricing
+                Sign Up
                 <ArrowRight01Icon size={16} className="ml-2 group-hover:translate-x-1 transition-transform text-white" />
               </Button>
             </Link>
@@ -692,8 +692,8 @@ const Index = () => {
       <section className="py-20 bg-white">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-black leading-tight tracking-tight">
-              Frequently Ask Questions
+            <h2 className="text-3xl md:text-4xl font-bold text-black leading-tight tracking-tight">
+              Frequently Asked Questions
             </h2>
           </div>
           
@@ -716,6 +716,15 @@ const Index = () => {
                   Commission rates vary by product type and loan amount, typically ranging from 0.5% to 2% of the sanctioned amount. We offer competitive payouts with transparent calculations and timely disbursements.
                 </AccordionContent>
               </AccordionItem>
+
+              <AccordionItem value="item-5" className="border border-gray-200 rounded-lg px-6 mb-4">
+                <AccordionTrigger className="text-left font-semibold hover:no-underline">
+                  What types of loans can I distribute as a DSA partner?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600 pt-2">
+                  As a MaxDSA partner, you can distribute various loan products including home loans, personal loans, business loans, loan against property, car loans, and more. Our multi-bank network ensures you have access to diverse product portfolios.
+                </AccordionContent>
+              </AccordionItem>
             </Accordion>
 
             <Accordion type="single" collapsible className="w-full">
@@ -734,6 +743,15 @@ const Index = () => {
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-600 pt-2">
                   Yes, we provide comprehensive training on loan products, sales techniques, and our AI-powered platform. You'll also have access to dedicated relationship managers and 24/7 technical support.
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-6" className="border border-gray-200 rounded-lg px-6 mb-4">
+                <AccordionTrigger className="text-left font-semibold hover:no-underline">
+                  How does the AI-powered platform help my DSA business?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600 pt-2">
+                  Our AI platform provides intelligent lead scoring, automated document verification, real-time application tracking, and predictive analytics. This helps you focus on high-quality leads, reduce processing time, and improve your conversion rates significantly.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
