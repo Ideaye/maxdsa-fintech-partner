@@ -357,60 +357,45 @@ const About = () => {
       </section>
 
       {/* Team Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-gradient-to-b from-secondary/30 to-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left Content */}
-            <div>
-              <Badge variant="secondary" className="mb-4">OUR TEAM</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                Our Team of Experts
-              </h2>
-              <p className="text-muted-foreground mb-8">
-                Want to shape the future of DSA services? Our experienced team combines deep banking 
-                knowledge with innovative technology to deliver exceptional results for our partners.
-              </p>
-              
-              <div className="space-y-4 mb-8">
-                <div className="flex items-center space-x-3">
-                  <div className="w-3 h-3 bg-primary rounded-full"></div>
-                  <span className="text-muted-foreground">Banking Industry Veterans</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-3 h-3 bg-primary rounded-full"></div>
-                  <span className="text-muted-foreground">Technology Innovation Leaders</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-3 h-3 bg-primary rounded-full"></div>
-                  <span className="text-muted-foreground">Customer Success Specialists</span>
-                </div>
+          <div className="card-elegant bg-card rounded-3xl p-8 md:p-12">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
+              <div>
+                <div className="text-sm font-semibold text-primary mb-2 tracking-wide uppercase">Our Backbone</div>
+                <h2 className="text-3xl md:text-4xl font-bold text-primary-dark">
+                  Behind your Business<br />Success and ours
+                </h2>
               </div>
-              
-              <Button variant="cta">
-                Join Our Team
-              </Button>
+              <div className="flex gap-4 mt-6 md:mt-0">
+                <Link to="/contact">
+                  <Button variant="cta" size="lg">Learn More</Button>
+                </Link>
+                <Link to="/contact">
+                  <Button variant="outline" size="lg">Book a Call</Button>
+                </Link>
+              </div>
             </div>
-            
-            {/* Right Content - Team Photo */}
-            <div className="relative">
-              <div className="bg-white p-8 rounded-2xl shadow-lg">
-                <img 
-                  src={teamPhoto} 
-                  alt="MaxDSA Leadership Team" 
-                  className="w-full h-64 object-cover rounded-xl mb-6"
-                />
-                <div className="text-center">
-                  <h3 className="font-bold text-foreground mb-2">Leadership Team</h3>
-                  <p className="text-muted-foreground text-sm mb-4">
-                    300+ years of combined banking and fintech experience
-                  </p>
-                  <div className="flex justify-center space-x-2">
-                    <div className="w-2 h-2 bg-primary rounded-full"></div>
-                    <div className="w-2 h-2 bg-primary/40 rounded-full"></div>
-                    <div className="w-2 h-2 bg-primary/40 rounded-full"></div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { name: "Team Member 1", role: "Leadership Position" },
+                { name: "Team Member 2", role: "Key Role" },
+                { name: "Team Member 3", role: "Strategic Position" }
+              ].map((member, index) => (
+                <div key={index} className="group relative overflow-hidden rounded-2xl aspect-[3/4]">
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/70"></div>
+                  <img 
+                    src={teamPhoto}
+                    alt={member.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <h3 className="text-xl font-bold mb-1">{member.name}</h3>
+                    <p className="text-white/80 text-sm">{member.role}</p>
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>

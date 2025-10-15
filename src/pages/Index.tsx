@@ -196,11 +196,95 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Vision and Mission Section */}
+      <section className="py-20 bg-gradient-to-b from-background to-secondary/30">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <div className="text-sm font-semibold text-primary mb-4 tracking-wide uppercase">About Us</div>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-6">
+              Unveiling Our Identity,<br />Vision and Values
+            </h2>
+            <p className="text-muted-foreground max-w-3xl mx-auto text-lg">
+              We're passionate about financial innovation. With years of experience in the industry, 
+              we've established ourselves as leaders in providing high-quality DSA solutions.
+            </p>
+          </div>
+
+          {/* Core Values Pills */}
+          <div className="bg-gradient-to-r from-primary to-fintech-blue rounded-3xl p-8 mb-12 max-w-4xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center text-white">
+              <div className="flex flex-col items-center">
+                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-3">
+                  <CheckmarkCircle01Icon size={28} className="text-white" />
+                </div>
+                <p className="font-semibold">Safety</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-3">
+                  <FlashIcon size={28} className="text-white" />
+                </div>
+                <p className="font-semibold">Efficient</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-3">
+                  <StarIcon size={28} className="text-white" />
+                </div>
+                <p className="font-semibold">Precision</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-3">
+                  <RoboticIcon size={28} className="text-white" />
+                </div>
+                <p className="font-semibold">Innovation</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Vision and Mission Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-8">
+            <div className="card-elegant bg-card rounded-2xl p-8">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center mr-4">
+                  <StarIcon size={24} className="text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-card-foreground">Vision</h3>
+              </div>
+              <p className="text-muted-foreground leading-relaxed">
+                To lead the way in DSA business by delivering innovative, sustainable, 
+                and cost-effective solutions that empower partners and drive financial inclusion across India.
+              </p>
+            </div>
+
+            <div className="card-elegant bg-card rounded-2xl p-8">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center mr-4">
+                  <ArrowUpRight01Icon size={24} className="text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-card-foreground">Mission</h3>
+              </div>
+              <p className="text-muted-foreground leading-relaxed">
+                To leverage our expertise, resources, and technology to provide DSA services 
+                that exceed industry standards and create lasting value for our partners and their customers.
+              </p>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <Link to="/about">
+              <Button variant="cta" size="lg" className="group">
+                Know More About Us
+                <ArrowRight01Icon size={16} className="ml-2 group-hover:translate-x-1 transition-transform text-white" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Stats Section */}
       <section className="py-20 bg-gray-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <div className="text-sm font-semibold text-red-500 mb-2 tracking-wide uppercase">MISSION</div>
+            <div className="text-sm font-semibold text-red-500 mb-2 tracking-wide uppercase">Our Impact</div>
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 leading-tight tracking-tight">
               <span className="text-gray-500">Our focus is simple</span><br />
               <span className="text-black">Design to convert</span>
