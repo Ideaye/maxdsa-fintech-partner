@@ -578,71 +578,109 @@ const Index = () => {
       </section>
 
       {/* Process Section - Redesigned */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-6 leading-tight tracking-tight">
-              The DSA Partnership Process Is<br />
-              Designed for Maximum Success
-            </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Our streamlined approach ensures quick onboarding and immediate results. 
-              Payout Guaranteed, Seamless TDS & GST Processing, Dedicated Relationship Manager
-            </p>
+          <div className="mb-16">
+            <p className="text-sm font-semibold text-primary uppercase tracking-wider mb-4">HOW IT WORKS</p>
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black leading-tight max-w-2xl">
+                Get Started with MaxDSA in Four Steps
+              </h2>
+              <p className="text-base md:text-lg text-gray-600">
+                And sometimes, in as little as 24 hours.
+              </p>
+            </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
             {/* Step 1 */}
-            <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-lg transition-shadow">
-              <div className="text-center">
-                <div className="text-6xl font-bold text-primary mb-4">01</div>
-                <h3 className="text-xl font-semibold text-black mb-4">Quick Registration</h3>
-                <p className="text-gray-600 mb-6 leading-relaxed">
-                  Complete your DSA registration with our streamlined digital process. Submit documents and get verified within minutes.
-                </p>
-                <div className="flex flex-wrap gap-2 justify-center">
-                  <span className="text-sm font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">#DigitalOnboarding</span>
-                  <span className="text-sm font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">#QuickVerification</span>
+            <div className="relative rounded-3xl overflow-hidden h-64 group">
+              <img 
+                src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&h=600&fit=crop" 
+                alt="Share Details" 
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/80 to-primary/60"></div>
+              <div className="relative h-full p-8 flex flex-col justify-between">
+                <div className="text-8xl md:text-9xl font-bold text-white/20">01</div>
+                <div className="text-white">
+                  <h3 className="text-2xl font-bold mb-2">Share Details</h3>
+                  <p className="text-white/90 text-sm leading-relaxed">
+                    Fill out a quick form with details about your space, schedule, and preferences.
+                  </p>
                 </div>
               </div>
             </div>
 
             {/* Step 2 */}
-            <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-lg transition-shadow">
-              <div className="text-center">
-                <div className="text-6xl font-bold text-primary mb-4">02</div>
-                <h3 className="text-xl font-semibold text-black mb-4">Platform Integration</h3>
-                <p className="text-gray-600 mb-6 leading-relaxed">
-                  Connect with our multi-bank platform and access AI-powered tools. Configure preferences for optimal performance.
-                </p>
-                <div className="flex flex-wrap gap-2 justify-center">
-                  <span className="text-sm font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">#AITools</span>
-                  <span className="text-sm font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">#MultiBank</span>
+            <div className="relative rounded-3xl overflow-hidden h-64 group">
+              <img 
+                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&h=600&fit=crop" 
+                alt="Get Quote" 
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/50"></div>
+              <div className="relative h-full p-8 flex flex-col justify-between">
+                <div className="text-8xl md:text-9xl font-bold text-white/20">02</div>
+                <div className="text-white">
+                  <h3 className="text-2xl font-bold mb-2">Get Quote</h3>
+                  <p className="text-white/90 text-sm leading-relaxed">
+                    We'll send you a personalized estimate, no hidden fees, no upselling.
+                  </p>
                 </div>
               </div>
             </div>
 
             {/* Step 3 */}
-            <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-lg transition-shadow">
-              <div className="text-center">
-                <div className="text-6xl font-bold text-primary mb-4">03</div>
-                <h3 className="text-xl font-semibold text-black mb-4">Start Earning</h3>
-                <p className="text-gray-600 mb-6 leading-relaxed">
-                  Begin processing loan applications immediately with guaranteed payouts. Track progress and maximize conversions.
-                </p>
-                <div className="flex flex-wrap gap-2 justify-center">
-                  <span className="text-sm font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">#GuaranteedPayout</span>
-                  <span className="text-sm font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">#ImmediateEarnings</span>
+            <div className="relative rounded-3xl overflow-hidden h-64 group">
+              <img 
+                src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&h=600&fit=crop" 
+                alt="We Process" 
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/50"></div>
+              <div className="relative h-full p-8 flex flex-col justify-between">
+                <div className="text-8xl md:text-9xl font-bold text-white/20">03</div>
+                <div className="text-white">
+                  <h3 className="text-2xl font-bold mb-2">We Process</h3>
+                  <p className="text-white/90 text-sm leading-relaxed">
+                    Our team arrives on time, equipped, and ready to process thoroughly.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Step 4 */}
+            <div className="relative rounded-3xl overflow-hidden h-64 group">
+              <img 
+                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=600&fit=crop" 
+                alt="You Relax" 
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/50"></div>
+              <div className="relative h-full p-8 flex flex-col justify-between">
+                <div className="text-8xl md:text-9xl font-bold text-white/20">04</div>
+                <div className="text-white">
+                  <h3 className="text-2xl font-bold mb-2">You Relax</h3>
+                  <p className="text-white/90 text-sm leading-relaxed">
+                    Enjoy a spotless home or workspace that looks, feels, and smells truly clean.
+                  </p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Bottom CTA */}
-          <div className="text-center mt-12">
+          <div className="bg-white rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg">
+            <div>
+              <h3 className="text-2xl md:text-3xl font-bold text-black mb-2">READY TO GET STARTED?</h3>
+              <p className="text-gray-600">
+                Simple pricing, no hidden fees - see what works for your space.
+              </p>
+            </div>
             <Link to="/partner-signup">
-              <Button variant="cta" size="lg" className="group">
-                Start Your DSA Journey
+              <Button variant="cta" size="lg" className="group whitespace-nowrap">
+                View Our Pricing
                 <ArrowRight01Icon size={16} className="ml-2 group-hover:translate-x-1 transition-transform text-white" />
               </Button>
             </Link>
