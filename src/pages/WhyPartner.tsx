@@ -14,6 +14,7 @@ import {
   CheckCircle
 } from "lucide-react";
 import handshakeIcon from "@/assets/icons/handshake-icon.png";
+import growthIcon from "@/assets/growth-icon.png";
 
 const WhyPartner = () => {
   const advantages = [
@@ -342,11 +343,11 @@ const WhyPartner = () => {
       <section className="py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="relative bg-gradient-to-r from-primary to-fintech-blue rounded-3xl p-16 md:p-20 overflow-hidden">
-            {/* Handshake Icon */}
+            {/* Growth Icon */}
             <div className="absolute right-8 top-1/2 -translate-y-1/2 opacity-20 pointer-events-none">
               <img 
-                src={handshakeIcon} 
-                alt="Partnership handshake" 
+                src={growthIcon} 
+                alt="Business growth" 
                 className="w-64 h-64 md:w-80 md:h-80 object-contain"
               />
             </div>

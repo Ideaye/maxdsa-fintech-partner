@@ -600,29 +600,31 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Testimonials Grid */}
-            <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-6">
-              {testimonials.map((testimonial, index) => (
-                <div key={index} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
-                  <div className="flex mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <StarIcon key={i} size={16} className="text-yellow-400 mr-0.5" />
-                    ))}
-                  </div>
-                  <p className="text-gray-700 text-sm mb-6 leading-relaxed">
-                    {testimonial.content}
-                  </p>
-                  <div className="flex items-center">
-                    <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold text-sm mr-3">
-                      {testimonial.name.charAt(0)}
+            {/* Testimonials Scrollable Container */}
+            <div className="flex-1 overflow-hidden">
+              <div className="flex gap-6 overflow-x-auto pb-4 scroll-smooth scrollbar-hide">
+                {testimonials.map((testimonial, index) => (
+                  <div key={index} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow min-w-[300px] md:min-w-[350px] flex-shrink-0">
+                    <div className="flex mb-4">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <StarIcon key={i} size={16} className="text-yellow-400 mr-0.5" />
+                      ))}
                     </div>
-                    <div>
-                      <div className="font-semibold text-black text-sm">{testimonial.name}</div>
-                      <div className="text-gray-500 text-xs">{testimonial.role}</div>
+                    <p className="text-gray-700 text-sm mb-6 leading-relaxed">
+                      {testimonial.content}
+                    </p>
+                    <div className="flex items-center">
+                      <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold text-sm mr-3">
+                        {testimonial.name.charAt(0)}
+                      </div>
+                      <div>
+                        <div className="font-semibold text-black text-sm">{testimonial.name}</div>
+                        <div className="text-gray-500 text-xs">{testimonial.role}</div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
 

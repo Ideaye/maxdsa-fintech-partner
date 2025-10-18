@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, MessageSquare, Users, Building2 } from "lucide-react";
 import handshakeIcon from "@/assets/icons/handshake-icon.png";
+import growthIcon from "@/assets/growth-icon.png";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -154,53 +157,108 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Office Locations Section with Map */}
-      <section className="py-20 bg-secondary">
+      {/* Get In Touch Section */}
+      <section className="py-20 bg-gray-900">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary-dark mb-4">
-              Visit Our Offices
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Located in key business districts, our offices are easily accessible. Click on any location to view it on the map.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-            {/* Interactive Location Cards */}
-            {officeAddresses.map((office, index) => (
-              <div 
-                key={index}
-                onClick={() => setSelectedLocation(office.coordinates)}
-                className="card-elegant bg-card rounded-2xl p-8 cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-[1.02]"
-              >
-                <div className="flex items-start">
-                  <MapPin className="h-6 w-6 text-primary mr-3 mt-1 flex-shrink-0" />
-                  <div>
-                    <h3 className="text-xl font-bold text-card-foreground mb-2">{office.name}</h3>
-                    <p className="text-muted-foreground mb-3">{office.address}</p>
-                    {index === 0 && (
-                      <div className="space-y-2">
-                        <div className="flex items-center text-sm">
-                          <Phone className="h-4 w-4 text-primary mr-2" />
-                          <p className="text-card-foreground">+91 9042385395</p>
-                        </div>
-                        <div className="flex items-center text-sm">
-                          <Mail className="h-4 w-4 text-primary mr-2" />
-                          <p className="text-card-foreground">partner@maxdsa.com</p>
-                        </div>
-                      </div>
-                    )}
-                    <p className="text-xs text-primary mt-3 font-medium">Click to view on map →</p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Left Column - Form */}
+            <div>
+              <div className="mb-8">
+                <p className="text-gray-400 text-sm mb-2 uppercase tracking-wide">Contact Us</p>
+                <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                  Get In Touch
+                </h2>
+              </div>
+
+              <form className="space-y-6">
+                <div>
+                  <label className="text-gray-400 text-sm mb-2 block">Name</label>
+                  <Input 
+                    placeholder="Your Name..." 
+                    className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-gray-400 text-sm mb-2 block">Email</label>
+                  <Input 
+                    type="email"
+                    placeholder="example@youremail.com" 
+                    className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-gray-400 text-sm mb-2 block">Subject</label>
+                  <Input 
+                    placeholder="Hei..." 
+                    className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-gray-400 text-sm mb-2 block">Message</label>
+                  <Textarea 
+                    placeholder="Type here..." 
+                    className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-500 min-h-[120px]"
+                  />
+                </div>
+
+                <Button 
+                  type="submit" 
+                  className="w-full bg-white text-gray-900 hover:bg-gray-100 font-medium"
+                >
+                  Send Now
+                </Button>
+              </form>
+            </div>
+
+            {/* Right Column - Contact Info and Map */}
+            <div className="space-y-8">
+              <p className="text-gray-400 leading-relaxed">
+                In tempus mauris turpis, at ultricies dui eleifend a. Quisque et quam vel nunc consectetur pharetra euismod ac elit. Morbi nisl turpis, ullamcorper id purus eu, rhoncus consequat velit.
+              </p>
+
+              {/* Contact Info Grid */}
+              <div className="grid grid-cols-2 gap-6">
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <Phone className="h-6 w-6 text-white" />
                   </div>
+                  <p className="text-white font-medium mb-1">Phone Number</p>
+                  <p className="text-gray-400 text-sm">+9762 4022 567</p>
+                </div>
+
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <Mail className="h-6 w-6 text-white" />
+                  </div>
+                  <p className="text-white font-medium mb-1">Email Address</p>
+                  <p className="text-gray-400 text-sm">Example@Email.Com</p>
+                </div>
+
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <MessageSquare className="h-6 w-6 text-white" />
+                  </div>
+                  <p className="text-white font-medium mb-1">Whatsapp</p>
+                  <p className="text-gray-400 text-sm">082 245 7250</p>
+                </div>
+
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <MapPin className="h-6 w-6 text-white" />
+                  </div>
+                  <p className="text-white font-medium mb-1">Our Office</p>
+                  <p className="text-gray-400 text-sm">2448 Oak Ridge Omaha, QA 45065</p>
                 </div>
               </div>
-            ))}
-          </div>
 
-          {/* Map Container */}
-          <div className="card-elegant bg-card rounded-2xl overflow-hidden">
-            <div ref={mapContainer} className="w-full h-[500px]" />
+              {/* Map */}
+              <div className="rounded-lg overflow-hidden h-[300px]">
+                <div ref={mapContainer} className="w-full h-full" />
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -209,11 +267,11 @@ const Contact = () => {
       <section className="py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="relative bg-gradient-to-r from-primary to-fintech-blue rounded-3xl p-20 overflow-hidden">
-            {/* Handshake Icon */}
+            {/* Growth Icon */}
             <div className="absolute right-8 top-1/2 -translate-y-1/2 opacity-20 pointer-events-none">
               <img 
-                src={handshakeIcon} 
-                alt="Partnership handshake" 
+                src={growthIcon} 
+                alt="Business growth" 
                 className="w-64 h-64 md:w-80 md:h-80 object-contain"
               />
             </div>
