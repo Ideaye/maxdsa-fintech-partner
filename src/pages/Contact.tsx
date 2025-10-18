@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import OffersBanner from "@/components/shared/OffersBanner";
 import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, MessageSquare, Users, Building2 } from "lucide-react";
 import handshakeIcon from "@/assets/icons/handshake-icon.png";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import MapUpdater from '@/components/MapUpdater';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -20,7 +21,6 @@ L.Icon.Default.mergeOptions({
 
 const Contact = () => {
   const [selectedLocation, setSelectedLocation] = useState<{lng: number, lat: number}>({ lng: 77.6412, lat: 12.9141 }); // Default to Bengaluru
-  const mapRef = useRef<L.Map | null>(null);
 
   const contactInfo = [
     {
@@ -60,14 +60,6 @@ const Contact = () => {
       coordinates: { lng: 55.5136, lat: 25.4052 }
     }
   ];
-
-  useEffect(() => {
-    if (mapRef.current) {
-      mapRef.current.flyTo([selectedLocation.lat, selectedLocation.lng], 12, {
-        duration: 2
-      });
-    }
-  }, [selectedLocation]);
 
   const supportOptions = [
     {
@@ -176,7 +168,8 @@ const Contact = () => {
 
           {/* Map Container */}
           <div className="card-elegant bg-card rounded-2xl overflow-hidden">
-            <MapContainer center={[selectedLocation.lat, selectedLocation.lng]} zoom={12} className="w-full h-[500px]" ref={mapRef}>
+            <MapContainer center={[selectedLocation.lat, selectedLocation.lng]} zoom={12} className="w-full h-[500px]">
+              <MapUpdater center={[selectedLocation.lat, selectedLocation.lng]} zoom={12} />
               <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
               {officeAddresses.map((office, index) => (
                 <Marker key={index} position={[office.coordinates.lat, office.coordinates.lng]}>
