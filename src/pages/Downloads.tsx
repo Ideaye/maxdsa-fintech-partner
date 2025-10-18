@@ -405,17 +405,34 @@ const Downloads = () => {
       </section>
 
       {/* Download All Section */}
-      <section className="py-16 px-4 bg-muted/20">
-        <div className="container mx-auto max-w-4xl text-center">
-          <p className="text-lg text-muted-foreground">
-            Get instant access to all loan checklists in one comprehensive package.{" "}
-            <button 
-              onClick={handleDownloadAll}
-              className="text-primary font-semibold hover:underline cursor-pointer"
-            >
-              Click here to download
-            </button>
-          </p>
+      <section className="py-20 px-4 bg-muted/20">
+        <div className="container mx-auto max-w-4xl">
+          <div className="text-center space-y-6">
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Get instant access to all loan checklists in one comprehensive package.{" "}
+              <button 
+                onClick={handleDownloadAll}
+                className="text-primary font-semibold hover:underline cursor-pointer inline-flex items-center gap-1"
+              >
+                Click here to download
+                <Download className="w-4 h-4" />
+              </button>
+            </p>
+            
+            <div className="pt-4 border-t border-border/40 mt-8">
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Download the{" "}
+                <a 
+                  href="/downloads/NBFCsandARCs10012023.pdf"
+                  download
+                  className="text-primary font-semibold hover:underline cursor-pointer inline-flex items-center gap-1"
+                >
+                  List of Associated NBFCs
+                  <Download className="w-4 h-4" />
+                </a>
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
