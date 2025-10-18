@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
+import downloadsHeroBg from "@/assets/downloads-hero-bg.png";
 
 const Downloads = () => {
   const loanChecklists = [
@@ -317,10 +318,18 @@ const Downloads = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 bg-gradient-to-br from-primary via-primary/90 to-primary/80 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxIDAgNiAyLjY5IDYgNnMtMi42OSA2LTYgNi02LTIuNjktNi02IDIuNjktNiA2LTZ6TTI0IDQyYzMuMzEgMCA2IDIuNjkgNiA2cy0yLjY5IDYtNiA2LTYtMi42OS02LTYgMi42OS02IDYtNnoiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLW9wYWNpdHk9Ii4xIiBzdHJva2Utd2lkdGg9IjIiLz48L2c+PC9zdmc+')] opacity-30" />
+      <section 
+        className="relative pt-32 pb-20 px-4 overflow-hidden"
+        style={{
+          backgroundImage: `url(${downloadsHeroBg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <div className="absolute inset-0 bg-primary/60" />
         <div className="container mx-auto max-w-5xl text-center relative z-10">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
             Loan Document Checklists
           </h1>
           <p className="text-lg md:text-xl text-white/90 mb-8 max-w-3xl mx-auto">
@@ -331,7 +340,7 @@ const Downloads = () => {
 
       {/* Checklists Section */}
       <section className="py-20 px-4 bg-gradient-to-b from-background to-muted/20">
-        <div className="container mx-auto max-w-5xl">
+        <div className="container mx-auto max-w-7xl">
           <div className="mb-12 text-center">
             <p className="text-sm font-semibold text-primary mb-2 uppercase tracking-wider">Complete Documentation</p>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -342,52 +351,52 @@ const Downloads = () => {
             </p>
           </div>
 
-          <Accordion type="single" collapsible className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {loanChecklists.map((loan, index) => {
               const IconComponent = loan.icon;
               return (
-                <AccordionItem
-                  key={loan.id}
-                  value={loan.id}
-                  className="border rounded-2xl overflow-hidden bg-card hover:shadow-lg transition-all duration-300"
-                >
-                  <AccordionTrigger className="px-6 py-5 hover:no-underline group">
-                    <div className="flex items-center gap-4 w-full text-left">
-                      <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/10 group-hover:bg-primary/20 flex items-center justify-center transition-colors">
-                        <IconComponent className="h-6 w-6 text-primary" />
+                <Accordion key={loan.id} type="single" collapsible>
+                  <AccordionItem
+                    value={loan.id}
+                    className="border rounded-xl overflow-hidden bg-card hover:shadow-lg transition-all duration-300"
+                  >
+                    <AccordionTrigger className="px-4 py-4 hover:no-underline group">
+                      <div className="flex items-center gap-3 w-full text-left">
+                        <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 group-hover:bg-primary/20 flex items-center justify-center transition-colors">
+                          <IconComponent className="h-5 w-5 text-primary" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-base font-semibold mb-0.5 group-hover:text-primary transition-colors line-clamp-1">
+                            {loan.title}
+                          </h3>
+                          <p className="text-xs text-muted-foreground line-clamp-1">
+                            {loan.subtitle}
+                          </p>
+                        </div>
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <h3 className="text-lg font-semibold mb-1 group-hover:text-primary transition-colors">
-                          {loan.title}
-                        </h3>
-                        <p className="text-sm text-muted-foreground">
-                          {loan.subtitle}
+                    </AccordionTrigger>
+                    <AccordionContent className="px-4 pb-4 pt-1">
+                      <div className="bg-muted/50 rounded-lg p-4">
+                        <p className="text-xs font-semibold text-primary mb-3 uppercase tracking-wide">
+                          Required Documents:
                         </p>
+                        <ul className="space-y-2 max-h-64 overflow-y-auto scrollbar-thin">
+                          {loan.items.map((item, itemIndex) => (
+                            <li key={itemIndex} className="flex items-start gap-2 text-xs">
+                              <div className="flex-shrink-0 w-4 h-4 rounded-full bg-primary/20 flex items-center justify-center mt-0.5">
+                                <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                              </div>
+                              <span className="flex-1 leading-relaxed">{item}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-                      <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-all group-hover:translate-x-1" />
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-6 pt-2">
-                    <div className="bg-muted/50 rounded-xl p-6">
-                      <p className="text-sm font-semibold text-primary mb-4 uppercase tracking-wide">
-                        Required Documents:
-                      </p>
-                      <ul className="space-y-3">
-                        {loan.items.map((item, itemIndex) => (
-                          <li key={itemIndex} className="flex items-start gap-3 text-sm">
-                            <div className="flex-shrink-0 w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center mt-0.5">
-                              <div className="w-2 h-2 rounded-full bg-primary" />
-                            </div>
-                            <span className="flex-1 leading-relaxed">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               );
             })}
-          </Accordion>
+          </div>
         </div>
       </section>
 
