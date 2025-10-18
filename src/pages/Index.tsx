@@ -424,7 +424,8 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="relative">
+          {/* Desktop: Single row scrolling */}
+          <div className="relative hidden md:block">
             <div className="flex animate-scroll-left">
               {/* First set of logos */}
               {partnerBanks.map((bank, index) => (
@@ -443,6 +444,55 @@ const Index = () => {
                     src={bank.logo} 
                     alt={bank.name}
                     className="max-h-12 max-w-full object-contain transition-all duration-300"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile: Two-row scrolling */}
+          <div className="relative md:hidden space-y-4">
+            {/* First row */}
+            <div className="flex animate-scroll-left">
+              {partnerBanks.slice(0, 4).map((bank, index) => (
+                <div key={`mobile-row1-first-${index}`} className="flex items-center justify-center h-16 min-w-[140px] mx-4">
+                  <img 
+                    src={bank.logo} 
+                    alt={bank.name}
+                    className="max-h-14 max-w-full object-contain transition-all duration-300"
+                  />
+                </div>
+              ))}
+              {/* Duplicate for seamless loop */}
+              {partnerBanks.slice(0, 4).map((bank, index) => (
+                <div key={`mobile-row1-second-${index}`} className="flex items-center justify-center h-16 min-w-[140px] mx-4">
+                  <img 
+                    src={bank.logo} 
+                    alt={bank.name}
+                    className="max-h-14 max-w-full object-contain transition-all duration-300"
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Second row */}
+            <div className="flex animate-scroll-left" style={{ animationDelay: '1.5s' }}>
+              {partnerBanks.slice(4, 8).map((bank, index) => (
+                <div key={`mobile-row2-first-${index}`} className="flex items-center justify-center h-16 min-w-[140px] mx-4">
+                  <img 
+                    src={bank.logo} 
+                    alt={bank.name}
+                    className="max-h-14 max-w-full object-contain transition-all duration-300"
+                  />
+                </div>
+              ))}
+              {/* Duplicate for seamless loop */}
+              {partnerBanks.slice(4, 8).map((bank, index) => (
+                <div key={`mobile-row2-second-${index}`} className="flex items-center justify-center h-16 min-w-[140px] mx-4">
+                  <img 
+                    src={bank.logo} 
+                    alt={bank.name}
+                    className="max-h-14 max-w-full object-contain transition-all duration-300"
                   />
                 </div>
               ))}

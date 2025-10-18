@@ -6,14 +6,21 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, MessageSquare, Users, Building2 } from "lucide-react";
 import handshakeIcon from "@/assets/icons/handshake-icon.png";
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+
+// Fix default marker icon issue with Leaflet
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
 
 const Contact = () => {
-  const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<mapboxgl.Map | null>(null);
   const [selectedLocation, setSelectedLocation] = useState<{lng: number, lat: number}>({ lng: 77.6412, lat: 12.9141 }); // Default to Bengaluru
-  const markers = useRef<mapboxgl.Marker[]>([]);
+  const mapRef = useRef<L.Map | null>(null);
 
   const contactInfo = [
     {
@@ -55,45 +62,9 @@ const Contact = () => {
   ];
 
   useEffect(() => {
-    if (!mapContainer.current || map.current) return;
-
-    // Initialize map
-    mapboxgl.accessToken = 'pk.eyJ1IjoibG92YWJsZS1haS1kZXYiLCJhIjoiY200MWttZjgzMDhiYjJscHRyaDVqNjRueiJ9.RD8RHJHzlLPFmxexKDQRpA';
-    
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v12',
-      center: [selectedLocation.lng, selectedLocation.lat],
-      zoom: 12,
-    });
-
-    // Add navigation controls
-    map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
-
-    // Add markers for all locations
-    officeAddresses.forEach((office) => {
-      const marker = new mapboxgl.Marker({ color: '#3b82f6' })
-        .setLngLat([office.coordinates.lng, office.coordinates.lat])
-        .setPopup(new mapboxgl.Popup().setHTML(`<h3 class="font-semibold">${office.name}</h3><p class="text-sm">${office.address}</p>`))
-        .addTo(map.current!);
-      markers.current.push(marker);
-    });
-
-    // Cleanup
-    return () => {
-      if (map.current) {
-        map.current.remove();
-        map.current = null;
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (map.current) {
-      map.current.flyTo({
-        center: [selectedLocation.lng, selectedLocation.lat],
-        zoom: 12,
-        duration: 2000
+    if (mapRef.current) {
+      mapRef.current.flyTo([selectedLocation.lat, selectedLocation.lng], 12, {
+        duration: 2
       });
     }
   }, [selectedLocation]);
@@ -205,7 +176,30 @@ const Contact = () => {
 
           {/* Map Container */}
           <div className="card-elegant bg-card rounded-2xl overflow-hidden">
-            <div ref={mapContainer} className="w-full h-[500px]" />
+            <MapContainer 
+              center={[selectedLocation.lat, selectedLocation.lng]} 
+              zoom={12} 
+              className="w-full h-[500px]"
+              ref={mapRef}
+            >
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              {officeAddresses.map((office, index) => (
+                <Marker 
+                  key={index} 
+                  position={[office.coordinates.lat, office.coordinates.lng]}
+                >
+                  <Popup>
+                    <div>
+                      <h3 className="font-semibold">{office.name}</h3>
+                      <p className="text-sm">{office.address}</p>
+                    </div>
+                  </Popup>
+                </Marker>
+              ))}
+            </MapContainer>
           </div>
         </div>
       </section>

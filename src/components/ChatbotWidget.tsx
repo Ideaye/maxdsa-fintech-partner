@@ -201,7 +201,7 @@ const ChatbotWidget = () => {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 w-[380px] h-[600px] bg-background border border-border rounded-lg shadow-2xl z-50 flex flex-col animate-scale-in">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-[calc(100vw-2rem)] sm:w-[380px] max-w-[380px] h-[calc(100vh-8rem)] sm:h-[600px] max-h-[600px] bg-background border border-border rounded-lg shadow-2xl z-50 flex flex-col animate-scale-in">
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-border bg-gradient-to-r from-primary to-primary/80">
         <div className="flex items-center gap-2">
