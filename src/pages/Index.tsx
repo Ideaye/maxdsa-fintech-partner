@@ -32,6 +32,7 @@ import {
 import heroVideo from "@/assets/hero-video.mp4";
 import ctaBackground from "@/assets/cta-background.png";
 import paperPlaneIcon from "@/assets/paper-plane-icon.png";
+import servicesImage from "@/assets/services-image.jpg";
 
 // Import bank logos - using the AI-generated ones from bank-logos folder
 import hdfcLogo from "@/assets/bank-logos/hdfc-bank-logo.png";
@@ -474,7 +475,8 @@ const Index = () => {
                 </Link>
               </div>
               
-              <div className="grid grid-cols-2 gap-4">
+              {/* Right Side - Service Cards */}
+              <div className="lg:col-span-4 grid grid-cols-2 gap-4">
                 {/* AI-Powered Analytics - Large Card */}
                 <div className="col-span-2 bg-blue-600 rounded-2xl p-8 text-white relative overflow-hidden">
                   <div className="absolute top-6 right-6 w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
