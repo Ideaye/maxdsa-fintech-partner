@@ -4,13 +4,53 @@ import Footer from "@/components/shared/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
-import { Users, TrendingUp, Award, Clock, Target, Lightbulb, Shield, Rocket } from "lucide-react";
+import { Users, TrendingUp, Award, Clock, Target, Lightbulb, Shield, Rocket, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
 import teamPhoto from "@/assets/team-photo.jpg";
 import partnershipImage from "@/assets/partnership-handshake.jpg";
 import aboutHero from "@/assets/about-hero.jpg";
 import promoterPhoto from "@/assets/promoter-photo.jpg";
+import padmanabhanPhoto from "@/assets/padmanabhan-photo.jpg";
 
 const About = () => {
+  const [currentPartner, setCurrentPartner] = useState(0);
+
+  const partners = [
+    {
+      name: "Arun Kumar Manickam",
+      image: promoterPhoto,
+      content: [
+        "Arun Kumar Manickam is a visionary banking leader and the driving force behind MaxDSA.com, a pioneering platform designed to create India's largest knowledge-sharing and networking ecosystem for professionals in banking, NBFC, and fintech sectors.",
+        "With over 20 years of rich experience across premier financial institutions—including State Bank of India, IDBI Bank, ICICI Bank, and Cholamandalam DBS—Arun brings a unique blend of strategic insight and hands-on operational expertise to his initiatives.",
+        "He holds a Master's degree in Management from the Bharathiar School of Management and Entrepreneur Development (BSMED), Coimbatore, and has further strengthened his leadership acumen through executive programs at the Indian Institute of Management, Ahmedabad (IIM-A).",
+        "With more than 10 years' experience in retail loan distribution business, we have successfully acquired more than 250 Customers with about 500 Cr of Successful transactions."
+      ]
+    },
+    {
+      name: "R Padmanabhan (M.C.A)",
+      titles: [
+        "Managing Director - Yuva 2.0 School of Human Excellence",
+        "C.E.O - International strategic consultants",
+        "Director - Yuva Foundation"
+      ],
+      image: padmanabhanPhoto,
+      content: [
+        "R Padmanabhan is a distinguished social activist and educational entrepreneur with a deep commitment to empowering communities through education and social reform. His multifaceted career spans across educational leadership, strategic consultancy, and philanthropic endeavors.",
+        "As the Managing Director of Yuva 2.0 School of Human Excellence, he has pioneered innovative approaches to holistic education that focus on developing well-rounded individuals equipped for the challenges of the modern world. His vision extends beyond traditional academics to encompass character development and life skills.",
+        "Through his role as CEO of International Strategic Consultants, he provides strategic guidance to organizations seeking sustainable growth and social impact. His expertise in organizational development and community engagement has helped numerous institutions achieve their mission-driven goals.",
+        "As Director of Yuva Foundation, he leads various initiatives focused on youth empowerment, education access, and community development. His work has touched countless lives, creating opportunities for underprivileged sections of society and fostering a culture of giving back to the community."
+      ]
+    }
+  ];
+
+  const nextPartner = () => {
+    setCurrentPartner((prev) => (prev + 1) % partners.length);
+  };
+
+  const prevPartner = () => {
+    setCurrentPartner((prev) => (prev - 1 + partners.length) % partners.length);
+  };
+
   const milestones = [
     {
       icon: Users,
@@ -191,42 +231,93 @@ const About = () => {
         </div>
       </section>
 
-      {/* About the Promoter Section */}
+      {/* Partner Profiles Slider Section */}
       <section className="py-20 bg-gray-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
-            <Badge variant="secondary" className="mb-4">ABOUT THE PROMOTER</Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
               Visionary Leadership
             </h2>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            <div className="order-2 lg:order-1">
-              <div className="space-y-4 text-muted-foreground">
-                <p>
-                  <strong className="text-foreground">Arun Kumar Manickam</strong> is a visionary banking leader and the driving force behind MaxDSA.com, a pioneering platform designed to create India's largest knowledge-sharing and networking ecosystem for professionals in banking, NBFC, and fintech sectors.
-                </p>
-                <p>
-                  With over 20 years of rich experience across premier financial institutions—including State Bank of India, IDBI Bank, ICICI Bank, and Cholamandalam DBS—Arun brings a unique blend of strategic insight and hands-on operational expertise to his initiatives.
-                </p>
-                <p>
-                  He holds a Master's degree in Management from the Bharathiar School of Management and Entrepreneur Development (BSMED), Coimbatore, and has further strengthened his leadership acumen through executive programs at the Indian Institute of Management, Ahmedabad (IIM-A).
-                </p>
-                <p>
-                  With more than 10 years' experience in retail loan distribution business, we have successfully acquired more than 250 Customers with about 500 Cr of Successful transactions.
-                </p>
+          <div className="relative">
+            <div key={currentPartner} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start animate-fade-in">
+              <div className="order-2 lg:order-1">
+                <h3 className="text-2xl font-bold text-foreground mb-2">
+                  {partners[currentPartner].name}
+                </h3>
+                
+                {partners[currentPartner].titles && (
+                  <div className="mb-6 space-y-1">
+                    {partners[currentPartner].titles.map((title, idx) => (
+                      <p key={idx} className="text-sm font-medium text-primary">
+                        {title}
+                      </p>
+                    ))}
+                  </div>
+                )}
+                
+                <div className="space-y-4 text-muted-foreground overflow-hidden">
+                  {partners[currentPartner].content.map((paragraph, idx) => (
+                    <p key={idx} className="line-clamp-6">
+                      {idx === 0 && !partners[currentPartner].titles ? (
+                        <>
+                          <strong className="text-foreground">{partners[currentPartner].name.split(' (')[0]}</strong>
+                          {paragraph.substring(partners[currentPartner].name.split(' (')[0].length)}
+                        </>
+                      ) : (
+                        paragraph
+                      )}
+                    </p>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="order-1 lg:order-2">
+                <div className="relative max-w-sm mx-auto lg:mx-0">
+                  <img 
+                    src={partners[currentPartner].image} 
+                    alt={partners[currentPartner].name} 
+                    className="rounded-lg shadow-xl w-full h-auto object-cover max-h-[500px]"
+                  />
+                </div>
               </div>
             </div>
             
-            <div className="order-1 lg:order-2">
-              <div className="relative max-w-md mx-auto lg:mx-0">
-                <img 
-                  src={promoterPhoto} 
-                  alt="Arun Kumar Manickam - Founder of MaxDSA" 
-                  className="rounded-lg shadow-xl w-full h-auto object-cover"
-                />
+            {/* Navigation Controls */}
+            <div className="flex items-center justify-center gap-4 mt-8">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={prevPartner}
+                className="rounded-full"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              
+              <div className="flex gap-2">
+                {partners.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentPartner(idx)}
+                    className={`h-2 rounded-full transition-all ${
+                      idx === currentPartner 
+                        ? 'w-8 bg-primary' 
+                        : 'w-2 bg-primary/30 hover:bg-primary/50'
+                    }`}
+                    aria-label={`Go to partner ${idx + 1}`}
+                  />
+                ))}
               </div>
+              
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={nextPartner}
+                className="rounded-full"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
             </div>
           </div>
         </div>
@@ -353,51 +444,6 @@ const About = () => {
                 Every feature we build, every process we streamline, and every partnership we forge 
                 is designed with one goal in mind: your success as a DSA partner.
               </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Team Section */}
-      <section className="py-20 bg-gradient-to-b from-secondary/30 to-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="card-elegant bg-card rounded-3xl p-8 md:p-12">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
-              <div>
-                <div className="text-sm font-semibold text-primary mb-2 tracking-wide uppercase">Our Backbone</div>
-                <h2 className="text-3xl md:text-4xl font-bold text-primary-dark">
-                  Behind your Business<br />Success and ours
-                </h2>
-              </div>
-              <div className="flex gap-4 mt-6 md:mt-0">
-                <Link to="/contact">
-                  <Button variant="cta" size="lg">Learn More</Button>
-                </Link>
-                <Link to="/contact">
-                  <Button variant="outline" size="lg">Book a Call</Button>
-                </Link>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                { name: "Team Member 1", role: "Leadership Position" },
-                { name: "Team Member 2", role: "Key Role" },
-                { name: "Team Member 3", role: "Strategic Position" }
-              ].map((member, index) => (
-                <div key={index} className="group relative overflow-hidden rounded-2xl aspect-[3/4]">
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/70"></div>
-                  <img 
-                    src={teamPhoto}
-                    alt={member.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                    <h3 className="text-xl font-bold mb-1">{member.name}</h3>
-                    <p className="text-white/80 text-sm">{member.role}</p>
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         </div>
