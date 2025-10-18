@@ -17,6 +17,7 @@ import {
   Handshake,
   TrendingUp
  } from "lucide-react";
+import backgroundVideo from "@/assets/background-video.mp4";
 // Updated imports for Huge Icons - cache refresh
 import { 
   ArrowUpRight01Icon,
@@ -46,7 +47,7 @@ const Index = () => {
   const [currentPartner, setCurrentPartner] = useState(0);
 
   const stats = [
-    { value: "300+", label: "Many Years of Collective Experience" },
+    { value: "Many", label: "Years of Collective Experience" },
     { value: "₹500+", label: "Crore Transactions" },
     { value: "250+", label: "Happy Customers" },
     { value: "15+", label: "Bank Partners" }
@@ -272,39 +273,56 @@ const Index = () => {
       {/* About Us Section */}
       <section className="py-20 bg-gradient-to-b from-background to-secondary/30">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-r from-[#6B2C5E] via-[#3B4B7C] to-[#2B5F8F] rounded-3xl p-8 md:p-12 shadow-2xl">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 md:divide-x divide-white/20">
-              {/* Our Vision */}
-              <div className="text-white md:pr-8">
-                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-6">
-                  <Eye className="w-8 h-8 text-white" />
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+            {/* Video Background */}
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+            >
+              <source src={backgroundVideo} type="video/mp4" />
+            </video>
+            
+            {/* Dark overlay for text readability */}
+            <div className="absolute inset-0 bg-black/50"></div>
+            
+            {/* Content */}
+            <div className="relative z-10 p-8 md:p-12">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 md:divide-x divide-white/20">
+                {/* Our Vision */}
+                <div className="text-white md:pr-8">
+                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-6">
+                    <Eye className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4">Our Vision</h3>
+                  <p className="text-white/90 leading-relaxed">
+                    To be India's most trusted partner for MSME transformation, creating a thriving ecosystem where small and medium enterprises become globally competitive, technologically advanced, and sustainably profitable.
+                  </p>
                 </div>
-                <h3 className="text-2xl font-bold mb-4">Our Vision</h3>
-                <p className="text-white/90 leading-relaxed">
-                  To be India's most trusted partner for MSME transformation, creating a thriving ecosystem where small and medium enterprises become globally competitive, technologically advanced, and sustainably profitable.
-                </p>
-              </div>
 
-              {/* Our Commitment */}
-              <div className="text-white md:px-8">
-                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-6">
-                  <Handshake className="w-8 h-8 text-white" />
+                {/* Our Commitment */}
+                <div className="text-white md:px-8">
+                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-6">
+                    <Handshake className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4">Our Commitment</h3>
+                  <p className="text-white/90 leading-relaxed">
+                    We are committed to delivering personalised solutions that address the unique challenges faced by MSMEs, fostering innovation, building capabilities, and ensuring long-term business sustainability in an ever-evolving market.
+                  </p>
                 </div>
-                <h3 className="text-2xl font-bold mb-4">Our Commitment</h3>
-                <p className="text-white/90 leading-relaxed">
-                  We are committed to delivering personalised solutions that address the unique challenges faced by MSMEs, fostering innovation, building capabilities, and ensuring long-term business sustainability in an ever-evolving market.
-                </p>
-              </div>
 
-              {/* Our Impact */}
-              <div className="text-white md:pl-8">
-                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-6">
-                  <TrendingUp className="w-8 h-8 text-white" />
+                {/* Our Impact */}
+                <div className="text-white md:pl-8">
+                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-6">
+                    <TrendingUp className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4">Our Impact</h3>
+                  <p className="text-white/90 leading-relaxed">
+                    Through strategic consulting, operational excellence, and digital transformation initiatives, we empower businesses to scale efficiently, compete globally, and contribute meaningfully to India's economic growth and development.
+                  </p>
                 </div>
-                <h3 className="text-2xl font-bold mb-4">Our Impact</h3>
-                <p className="text-white/90 leading-relaxed">
-                  Through strategic consulting, operational excellence, and digital transformation initiatives, we empower businesses to scale efficiently, compete globally, and contribute meaningfully to India's economic growth and development.
-                </p>
               </div>
             </div>
           </div>
@@ -392,8 +410,8 @@ const Index = () => {
 
             {/* Experience Card */}
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <div className="text-4xl font-bold text-black mb-2">300+</div>
-              <p className="text-gray-600 text-sm">Many Years</p>
+              <div className="text-4xl font-bold text-black mb-2">Many</div>
+              <p className="text-gray-600 text-sm">Years of Experience</p>
               <p className="text-gray-500 text-xs mt-2">Of combined banking and financial expertise across our leadership team</p>
             </div>
           </div>
@@ -529,7 +547,7 @@ const Index = () => {
       <LoanCalculatorSection />
 
       {/* Testimonials Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-black mb-6 leading-tight tracking-tight">
@@ -547,72 +565,70 @@ const Index = () => {
           
           <div className="flex items-start gap-8 max-w-6xl mx-auto">
             {/* Left Side Quote */}
-            <div className="hidden lg:flex flex-col items-start">
+            <div className="hidden lg:flex flex-col items-start flex-shrink-0">
               <div className="text-8xl text-gray-300 font-serif leading-none mb-4">"</div>
               <h3 className="text-2xl font-bold text-black">
                 What our<br />
                 partners are<br />
                 saying
               </h3>
-              <div className="flex items-center mt-8">
-                <button 
-                  onClick={() => setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
-                  className="p-2 rounded-full border border-gray-300 hover:bg-gray-50 transition-colors mr-4"
-                >
-                  <ChevronLeft className="h-5 w-5 text-gray-600" />
-                </button>
-                <button 
-                  onClick={() => setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)}
-                  className="p-2 rounded-full border border-gray-300 hover:bg-gray-50 transition-colors"
-                >
-                  <ChevronRight className="h-5 w-5 text-gray-600" />
-                </button>
+            </div>
+
+            {/* Auto-scrolling Testimonials Container */}
+            <div className="flex-1 relative">
+              <div className="overflow-hidden">
+                <div className="flex animate-scroll-left hover:pause-animation">
+                  {/* First set of testimonials */}
+                  {testimonials.map((testimonial, index) => (
+                    <div key={`first-${index}`} className="flex-shrink-0 w-80 mx-3">
+                      <div className="bg-white border border-gray-200 rounded-lg p-6 h-full hover:shadow-lg transition-shadow">
+                        <div className="flex mb-4">
+                          {[...Array(testimonial.rating)].map((_, i) => (
+                            <StarIcon key={i} size={16} className="text-yellow-400 mr-0.5" />
+                          ))}
+                        </div>
+                        <p className="text-gray-700 text-sm mb-6 leading-relaxed">
+                          {testimonial.content}
+                        </p>
+                        <div className="flex items-center">
+                          <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold text-sm mr-3">
+                            {testimonial.name.charAt(0)}
+                          </div>
+                          <div>
+                            <div className="font-semibold text-black text-sm">{testimonial.name}</div>
+                            <div className="text-gray-500 text-xs">{testimonial.role}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  {/* Duplicate set for seamless loop */}
+                  {testimonials.map((testimonial, index) => (
+                    <div key={`second-${index}`} className="flex-shrink-0 w-80 mx-3">
+                      <div className="bg-white border border-gray-200 rounded-lg p-6 h-full hover:shadow-lg transition-shadow">
+                        <div className="flex mb-4">
+                          {[...Array(testimonial.rating)].map((_, i) => (
+                            <StarIcon key={i} size={16} className="text-yellow-400 mr-0.5" />
+                          ))}
+                        </div>
+                        <p className="text-gray-700 text-sm mb-6 leading-relaxed">
+                          {testimonial.content}
+                        </p>
+                        <div className="flex items-center">
+                          <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold text-sm mr-3">
+                            {testimonial.name.charAt(0)}
+                          </div>
+                          <div>
+                            <div className="font-semibold text-black text-sm">{testimonial.name}</div>
+                            <div className="text-gray-500 text-xs">{testimonial.role}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-
-            {/* Testimonials Grid */}
-            <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-6">
-              {testimonials.map((testimonial, index) => (
-                <div key={index} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
-                  <div className="flex mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <StarIcon key={i} size={16} className="text-yellow-400 mr-0.5" />
-                    ))}
-                  </div>
-                  <p className="text-gray-700 text-sm mb-6 leading-relaxed">
-                    {testimonial.content}
-                  </p>
-                  <div className="flex items-center">
-                    <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold text-sm mr-3">
-                      {testimonial.name.charAt(0)}
-                    </div>
-                    <div>
-                      <div className="font-semibold text-black text-sm">{testimonial.name}</div>
-                      <div className="text-gray-500 text-xs">{testimonial.role}</div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Mobile Navigation */}
-          <div className="flex justify-center items-center mt-8 lg:hidden">
-            <button 
-              onClick={() => setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
-              className="p-2 rounded-full border border-gray-300 hover:bg-gray-50 transition-colors mr-4"
-            >
-              <ChevronLeft className="h-5 w-5 text-gray-600" />
-            </button>
-            <span className="text-sm text-gray-500 mx-4">
-              {currentTestimonial + 1} of {testimonials.length}
-            </span>
-            <button 
-              onClick={() => setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)}
-              className="p-2 rounded-full border border-gray-300 hover:bg-gray-50 transition-colors"
-            >
-              <ChevronRight className="h-5 w-5 text-gray-600" />
-            </button>
           </div>
         </div>
       </section>

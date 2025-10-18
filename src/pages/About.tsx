@@ -13,8 +13,8 @@ const About = () => {
   const milestones = [
     {
       icon: Users,
-      value: "300+",
-      label: "Years Collective Experience",
+      value: "Many",
+      label: "Years of Banking Excellence",
       description: "Banking veterans with deep industry knowledge"
     },
     {
@@ -40,7 +40,7 @@ const About = () => {
   const values = [
     {
       title: "Expertise",
-      description: "Deep banking industry knowledge with 300+ years of collective leadership experience driving innovation in DSA services."
+      description: "Deep banking industry knowledge with many years of collective leadership experience driving innovation in DSA services."
     },
     {
       title: "Innovation",

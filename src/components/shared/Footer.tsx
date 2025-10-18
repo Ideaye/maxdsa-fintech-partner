@@ -13,7 +13,7 @@ const Footer = () => {
               <img src={maxdsaLogoWhite} alt="MaxDSA" className="h-10 w-auto" />
             </div>
             <p className="text-sm text-gray-300 mb-4 max-w-md">
-              Redefining DSA excellence with AI & expertise. Over 300 years of collective 
+              Redefining DSA excellence with AI & expertise. Many years of collective 
               leadership experience driving ₹500+ Crore transactions for 250+ customers.
             </p>
             <div className="flex space-x-4">

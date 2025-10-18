@@ -20,7 +20,7 @@ const WhyPartner = () => {
     {
       icon: Users,
       title: "Experienced Leadership",
-      description: "300+ years of collective banking experience with deep industry knowledge and proven track record.",
+      description: "Many years of collective banking experience with deep industry knowledge and proven track record.",
       benefits: ["Veteran Leadership Team", "Industry Expertise", "Strategic Guidance"]
     },
     {
@@ -90,7 +90,7 @@ const WhyPartner = () => {
 
   const comparisonFeatures = [
     { feature: "AI-Powered Tools", maxdsa: true, others: false },
-    { feature: "300+ Years Experience", maxdsa: true, others: false },
+    { feature: "Many Years Experience", maxdsa: true, others: false },
     { feature: "15+ Bank Partners", maxdsa: true, others: false },
     { feature: "24/7 Support", maxdsa: true, others: true },
     { feature: "Quick Onboarding", maxdsa: true, others: false },
