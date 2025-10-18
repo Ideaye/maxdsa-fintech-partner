@@ -4,23 +4,11 @@ import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Mail, Phone, MapPin, MessageSquare, Users, Building2 } from "lucide-react";
+import { Mail, Phone, MapPin, Building2 } from "lucide-react";
 import handshakeIcon from "@/assets/icons/handshake-icon.png";
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import MapUpdater from '@/components/MapUpdater';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
-
-// Fix default marker icon issue with Leaflet
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
-  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-});
 
 const Contact = () => {
-  const [selectedLocation, setSelectedLocation] = useState<{lng: number, lat: number}>({ lng: 77.6412, lat: 12.9141 }); // Default to Bengaluru
+  const [selectedLocation, setSelectedLocation] = useState<{lng: number, lat: number}>({ lng: 77.6412, lat: 12.9141 });
 
   const contactInfo = [
     {
@@ -58,27 +46,6 @@ const Contact = () => {
       name: "UAE Office", 
       address: "License no 41620, BLV -1F-SF15420, Ajman Boulevard- A- Building, Ajman Free Zone, UAE",
       coordinates: { lng: 55.5136, lat: 25.4052 }
-    }
-  ];
-
-  const supportOptions = [
-    {
-      icon: MessageSquare,
-      title: "General Inquiry",
-      description: "Questions about our services or partnership opportunities",
-      action: "Send Message"
-    },
-    {
-      icon: Users,
-      title: "Partnership Request",
-      description: "Ready to become a MaxDSA partner? Let's discuss!",
-      action: "Request Partnership"
-    },
-    {
-      icon: Phone,
-      title: "Technical Support", 
-      description: "Need help with our platform or experiencing issues?",
-      action: "Get Support"
     }
   ];
 
@@ -167,19 +134,20 @@ const Contact = () => {
           </div>
 
           {/* Map Container */}
-          <div className="card-elegant bg-card rounded-2xl overflow-hidden">
-            <MapContainer center={[selectedLocation.lat, selectedLocation.lng]} zoom={12} className="w-full h-[500px]">
-              <MapUpdater center={[selectedLocation.lat, selectedLocation.lng]} zoom={12} />
-              <TileLayer 
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' 
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
-              />
+          <div className="card-elegant bg-card rounded-2xl overflow-hidden p-8 text-center">
+            <div className="mb-4">
+              <MapPin className="h-12 w-12 text-primary mx-auto mb-4" />
+              <h3 className="text-xl font-bold text-card-foreground mb-2">Visit Our Offices</h3>
+              <p className="text-muted-foreground">Interactive map will be available soon</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
               {officeAddresses.map((office, index) => (
-                <Marker key={index} position={[office.coordinates.lat, office.coordinates.lng]}>
-                  <Popup><div><h3 className="font-semibold">{office.name}</h3><p className="text-sm">{office.address}</p></div></Popup>
-                </Marker>
+                <div key={index} className="text-left p-4 bg-secondary rounded-lg">
+                  <h4 className="font-semibold text-sm text-card-foreground mb-1">{office.name}</h4>
+                  <p className="text-xs text-muted-foreground">{office.address}</p>
+                </div>
               ))}
-            </MapContainer>
+            </div>
           </div>
         </div>
       </section>
