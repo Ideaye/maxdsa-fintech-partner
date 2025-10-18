@@ -54,7 +54,7 @@ const Contact = () => {
   ];
 
   useEffect(() => {
-    if (!mapContainer.current) return;
+    if (!mapContainer.current || map.current) return;
 
     // Initialize map
     mapboxgl.accessToken = 'pk.eyJ1IjoibG92YWJsZS1haS1kZXYiLCJhIjoiY200MWttZjgzMDhiYjJscHRyaDVqNjRueiJ9.RD8RHJHzlLPFmxexKDQRpA';
@@ -80,7 +80,10 @@ const Contact = () => {
 
     // Cleanup
     return () => {
-      map.current?.remove();
+      if (map.current) {
+        map.current.remove();
+        map.current = null;
+      }
     };
   }, []);
 

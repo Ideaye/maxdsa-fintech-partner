@@ -199,7 +199,7 @@ const About = () => {
             </h2>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <div className="order-2 lg:order-1">
               <div className="space-y-4 text-muted-foreground">
                 <p>
@@ -218,7 +218,7 @@ const About = () => {
             </div>
             
             <div className="order-1 lg:order-2">
-              <div className="relative">
+              <div className="relative max-w-md mx-auto lg:mx-0">
                 <img 
                   src={promoterPhoto} 
                   alt="Arun Kumar Manickam - Founder of MaxDSA" 
