@@ -12,7 +12,6 @@ import WhyPartner from "./pages/WhyPartner";
 import Contact from "./pages/Contact";
 import PartnerSignup from "./pages/PartnerSignup";
 import Downloads from "./pages/Downloads";
-import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,7 +30,6 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/why-partner" element={<WhyPartner />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/auth" element={<Auth />} />
           <Route path="/partner-signup" element={<PartnerSignup />} />
           <Route path="/downloads" element={<Downloads />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
