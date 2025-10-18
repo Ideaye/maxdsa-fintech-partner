@@ -70,6 +70,76 @@ const Index = () => {
       content: "The automation tools have transformed how I operate. Processing time reduced by 60% with better accuracy.",
       rating: 5,
       image: "/api/placeholder/60/60"
+    },
+    {
+      name: "Neha Desai",
+      role: "DSA Partner, Pune",
+      content: "Outstanding platform with seamless bank integrations. My monthly earnings have doubled since joining MaxDSA!",
+      rating: 5,
+      image: "/api/placeholder/60/60"
+    },
+    {
+      name: "Vikram Singh",
+      role: "DSA Partner, Bangalore",
+      content: "The dedicated relationship manager and 24/7 support have been game changers. Highly recommended!",
+      rating: 5,
+      image: "/api/placeholder/60/60"
+    },
+    {
+      name: "Sunita Reddy",
+      role: "DSA Partner, Hyderabad",
+      content: "MaxDSA's training programs are top-notch. I went from beginner to processing ₹10 crore in loans within a year.",
+      rating: 5,
+      image: "/api/placeholder/60/60"
+    },
+    {
+      name: "Karan Malhotra",
+      role: "DSA Partner, Chandigarh",
+      content: "The AI-powered lead scoring helps me focus on high-quality prospects. My conversion rate has skyrocketed!",
+      rating: 5,
+      image: "/api/placeholder/60/60"
+    },
+    {
+      name: "Anjali Gupta",
+      role: "DSA Partner, Jaipur",
+      content: "Transparent commission structure and quick payouts. MaxDSA delivers on every promise they make.",
+      rating: 5,
+      image: "/api/placeholder/60/60"
+    },
+    {
+      name: "Rahul Joshi",
+      role: "DSA Partner, Indore",
+      content: "Access to 15+ banks means I can offer the best rates to my clients. Customer satisfaction has never been higher!",
+      rating: 5,
+      image: "/api/placeholder/60/60"
+    },
+    {
+      name: "Meera Iyer",
+      role: "DSA Partner, Chennai",
+      content: "The automated documentation process saves me hours every day. I can now handle 3x more clients effortlessly.",
+      rating: 5,
+      image: "/api/placeholder/60/60"
+    },
+    {
+      name: "Arjun Nair",
+      role: "DSA Partner, Kochi",
+      content: "From onboarding to ongoing support, MaxDSA has exceeded my expectations at every step. True partners in success!",
+      rating: 5,
+      image: "/api/placeholder/60/60"
+    },
+    {
+      name: "Pooja Mehta",
+      role: "DSA Partner, Surat",
+      content: "The real-time tracking dashboard is brilliant. I always know exactly where each application stands.",
+      rating: 5,
+      image: "/api/placeholder/60/60"
+    },
+    {
+      name: "Deepak Verma",
+      role: "DSA Partner, Lucknow",
+      content: "MaxDSA's platform is so intuitive even my team members picked it up in days. Efficiency has improved drastically!",
+      rating: 5,
+      image: "/api/placeholder/60/60"
     }
   ];
 
@@ -577,116 +647,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Process Section - Redesigned */}
-      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-16">
-            <p className="text-sm font-semibold text-primary uppercase tracking-wider mb-4">HOW IT WORKS</p>
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-              <h2 className="text-3xl md:text-4xl font-bold text-black leading-tight max-w-2xl">
-                Get Started with MaxDSA in Four Steps
-              </h2>
-              <p className="text-base md:text-lg text-gray-600">
-                And sometimes, in as little as 24 hours.
-              </p>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 max-w-5xl mx-auto">
-            {/* Step 1 */}
-            <div className="relative rounded-3xl overflow-hidden h-64 group cursor-pointer">
-              <img 
-                src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&h=600&fit=crop" 
-                alt="Share Details" 
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/80 to-primary/60 transition-colors duration-300 group-hover:from-blue-600/90 group-hover:to-blue-500/70"></div>
-              <div className="relative h-full p-8 flex flex-col justify-between">
-                <div className="text-8xl md:text-9xl font-bold text-white/20">01</div>
-                <div className="text-white">
-                  <h3 className="text-2xl font-bold mb-2">Share Details</h3>
-                  <p className="text-white/90 text-sm leading-relaxed">
-                    Fill out a quick form with details about your space, schedule, and preferences.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Step 2 */}
-            <div className="relative rounded-3xl overflow-hidden h-64 group cursor-pointer">
-              <img 
-                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&h=600&fit=crop" 
-                alt="Get Quote" 
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/50 transition-colors duration-300 group-hover:from-blue-600/90 group-hover:to-blue-500/70"></div>
-              <div className="relative h-full p-8 flex flex-col justify-between">
-                <div className="text-8xl md:text-9xl font-bold text-white/20">02</div>
-                <div className="text-white">
-                  <h3 className="text-2xl font-bold mb-2">Get Quote</h3>
-                  <p className="text-white/90 text-sm leading-relaxed">
-                    We'll send you a personalized estimate, no hidden fees, no upselling.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Step 3 */}
-            <div className="relative rounded-3xl overflow-hidden h-64 group cursor-pointer">
-              <img 
-                src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&h=600&fit=crop" 
-                alt="We Process" 
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/50 transition-colors duration-300 group-hover:from-blue-600/90 group-hover:to-blue-500/70"></div>
-              <div className="relative h-full p-8 flex flex-col justify-between">
-                <div className="text-8xl md:text-9xl font-bold text-white/20">03</div>
-                <div className="text-white">
-                  <h3 className="text-2xl font-bold mb-2">We Process</h3>
-                  <p className="text-white/90 text-sm leading-relaxed">
-                    Our team arrives on time, equipped, and ready to process thoroughly.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Step 4 */}
-            <div className="relative rounded-3xl overflow-hidden h-64 group cursor-pointer">
-              <img 
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=600&fit=crop" 
-                alt="You Relax" 
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/50 transition-colors duration-300 group-hover:from-blue-600/90 group-hover:to-blue-500/70"></div>
-              <div className="relative h-full p-8 flex flex-col justify-between">
-                <div className="text-8xl md:text-9xl font-bold text-white/20">04</div>
-                <div className="text-white">
-                  <h3 className="text-2xl font-bold mb-2">You Relax</h3>
-                  <p className="text-white/90 text-sm leading-relaxed">
-                    Enjoy a spotless home or workspace that looks, feels, and smells truly clean.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom CTA */}
-          <div className="bg-white rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg">
-            <div>
-              <h3 className="text-2xl md:text-3xl font-bold text-black mb-2">READY TO GET STARTED?</h3>
-              <p className="text-gray-600">
-                Simple pricing, no hidden fees - see what works for your space.
-              </p>
-            </div>
-            <Link to="/partner-signup">
-              <Button variant="cta" size="lg" className="group whitespace-nowrap">
-                Sign Up
-                <ArrowRight01Icon size={16} className="ml-2 group-hover:translate-x-1 transition-transform text-white" />
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
 
       {/* FAQ Section */}
       <section className="py-20 bg-white">

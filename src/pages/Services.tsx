@@ -2,7 +2,9 @@ import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Bot, Zap, Shield, TrendingUp, Users, Clock } from "lucide-react";
+import { Bot, Zap, Shield, TrendingUp, Users, Clock, ArrowRight } from "lucide-react";
+import ctaBackground from "@/assets/cta-background.png";
+import paperPlaneIcon from "@/assets/paper-plane-icon.png";
 
 const Services = () => {
   const services = [
@@ -296,26 +298,55 @@ const Services = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 gradient-hero">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Ready to Transform Your DSA Business?
-          </h2>
-          <p className="text-xl text-gray-200 mb-8">
-            Join 250+ successful DSA partners who trust MaxDSA for their business growth.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/contact">
-              <Button variant="cta" size="lg">
-                Get Started Now
-              </Button>
-            </Link>
-            <Link to="/why-partner">
-              <Button variant="outline-corporate" size="lg" className="border-white text-white hover:bg-white hover:text-primary-dark">
-                Learn More
-              </Button>
-            </Link>
+      {/* Get In Touch Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div 
+            className="relative overflow-hidden rounded-3xl"
+            style={{
+              backgroundImage: `url(${ctaBackground})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
+            
+            <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-center p-8 md:p-12 lg:p-16">
+              {/* Left Content */}
+              <div className="text-white">
+                <div className="mb-4">
+                  <span className="text-sm font-medium text-white/80 tracking-wide uppercase">
+                    GET IN TOUCH
+                  </span>
+                </div>
+                
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-relaxed">
+                  Ready to Transform Your DSA Business?<br />
+                  <span className="font-light text-white/90">Let's Connect</span>
+                </h2>
+                
+                <p className="text-lg text-white/90 mb-8 max-w-xl leading-relaxed">
+                  Connect with our team to discover how MaxDSA can accelerate your growth and maximize your revenue potential.
+                </p>
+                
+                <Link to="/contact">
+                  <Button className="bg-white hover:bg-gray-100 text-black px-8 py-6 rounded-full text-lg font-semibold group">
+                    Contact Us
+                    <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
+              </div>
+
+              {/* Right Icon */}
+              <div className="hidden lg:flex justify-center items-center">
+                <img 
+                  src={paperPlaneIcon} 
+                  alt="Paper plane" 
+                  className="w-80 h-80 object-contain opacity-90 animate-[slide-horizontal_3s_ease-in-out_infinite]"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>

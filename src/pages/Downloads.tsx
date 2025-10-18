@@ -4,6 +4,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
 import downloadsHeroBg from "@/assets/downloads-hero-bg.png";
+import ctaBackground from "@/assets/cta-background.png";
+import paperPlaneIcon from "@/assets/paper-plane-icon.png";
 
 const Downloads = () => {
   const loanChecklists = [
@@ -427,23 +429,57 @@ const Downloads = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 px-4 bg-gradient-to-b from-background to-muted/20">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Need Help with Your Loan Application?
-          </h2>
-          <p className="text-lg text-muted-foreground mb-8">
-            Our expert team is ready to guide you through every step of the loan process. Get personalized assistance today.
-          </p>
-          <Button
-            size="lg"
-            onClick={() => window.location.href = '/contact'}
-            className="px-8 py-6 h-auto text-lg"
+      {/* Get In Touch Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div 
+            className="relative overflow-hidden rounded-3xl"
+            style={{
+              backgroundImage: `url(${ctaBackground})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
+            }}
           >
-            Contact Us Now
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
+            
+            <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-center p-8 md:p-12 lg:p-16">
+              {/* Left Content */}
+              <div className="text-white">
+                <div className="mb-4">
+                  <span className="text-sm font-medium text-white/80 tracking-wide uppercase">
+                    GET IN TOUCH
+                  </span>
+                </div>
+                
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-relaxed">
+                  Ready to Transform Your DSA Business?<br />
+                  <span className="font-light text-white/90">Let's Connect</span>
+                </h2>
+                
+                <p className="text-lg text-white/90 mb-8 max-w-xl leading-relaxed">
+                  Connect with our team to discover how MaxDSA can accelerate your growth and maximize your revenue potential.
+                </p>
+                
+                <Button 
+                  onClick={() => window.location.href = '/contact'}
+                  className="bg-white hover:bg-gray-100 text-black px-8 py-6 rounded-full text-lg font-semibold group"
+                >
+                  Contact Us
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </div>
+
+              {/* Right Icon */}
+              <div className="hidden lg:flex justify-center items-center">
+                <img 
+                  src={paperPlaneIcon} 
+                  alt="Paper plane" 
+                  className="w-80 h-80 object-contain opacity-90 animate-[slide-horizontal_3s_ease-in-out_infinite]"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
