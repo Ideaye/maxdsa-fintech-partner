@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import OffersBanner from "@/components/shared/OffersBanner";
 import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
@@ -6,9 +6,22 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Building2 } from "lucide-react";
 import handshakeIcon from "@/assets/icons/handshake-icon.png";
+import Map from "ol/Map";
+import View from "ol/View";
+import TileLayer from "ol/layer/Tile";
+import OSM from "ol/source/OSM";
+import { Feature } from "ol";
+import { Point } from "ol/geom";
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
+import { fromLonLat } from "ol/proj";
+import { Style, Icon } from "ol/style";
+import "ol/ol.css";
 
 const Contact = () => {
   const [selectedLocation, setSelectedLocation] = useState<{lng: number, lat: number}>({ lng: 77.6412, lat: 12.9141 });
+  const mapRef = useRef<HTMLDivElement>(null);
+  const mapInstanceRef = useRef<Map | null>(null);
 
   const contactInfo = [
     {
@@ -48,6 +61,67 @@ const Contact = () => {
       coordinates: { lng: 55.5136, lat: 25.4052 }
     }
   ];
+
+  useEffect(() => {
+    if (!mapRef.current) return;
+
+    // Initialize map
+    const map = new Map({
+      target: mapRef.current,
+      layers: [
+        new TileLayer({
+          source: new OSM(),
+        }),
+      ],
+      view: new View({
+        center: fromLonLat([selectedLocation.lng, selectedLocation.lat]),
+        zoom: 13,
+      }),
+    });
+
+    // Add markers for all offices
+    const markers = officeAddresses.map(office => {
+      const marker = new Feature({
+        geometry: new Point(fromLonLat([office.coordinates.lng, office.coordinates.lat])),
+        name: office.name,
+      });
+
+      marker.setStyle(new Style({
+        image: new Icon({
+          anchor: [0.5, 1],
+          src: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="%23e94560"><path d="M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"/></svg>',
+          scale: 1,
+        }),
+      }));
+
+      return marker;
+    });
+
+    const vectorSource = new VectorSource({
+      features: markers,
+    });
+
+    const vectorLayer = new VectorLayer({
+      source: vectorSource,
+    });
+
+    map.addLayer(vectorLayer);
+    mapInstanceRef.current = map;
+
+    return () => {
+      map.setTarget(undefined);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.getView().animate({
+        center: fromLonLat([selectedLocation.lng, selectedLocation.lat]),
+        zoom: 13,
+        duration: 1000,
+      });
+    }
+  }, [selectedLocation]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -134,20 +208,8 @@ const Contact = () => {
           </div>
 
           {/* Map Container */}
-          <div className="card-elegant bg-card rounded-2xl overflow-hidden p-8 text-center">
-            <div className="mb-4">
-              <MapPin className="h-12 w-12 text-primary mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-card-foreground mb-2">Visit Our Offices</h3>
-              <p className="text-muted-foreground">Interactive map will be available soon</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-              {officeAddresses.map((office, index) => (
-                <div key={index} className="text-left p-4 bg-secondary rounded-lg">
-                  <h4 className="font-semibold text-sm text-card-foreground mb-1">{office.name}</h4>
-                  <p className="text-xs text-muted-foreground">{office.address}</p>
-                </div>
-              ))}
-            </div>
+          <div className="card-elegant bg-card rounded-2xl overflow-hidden">
+            <div ref={mapRef} style={{ width: '100%', height: '500px' }} />
           </div>
         </div>
       </section>
