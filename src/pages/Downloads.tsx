@@ -424,7 +424,8 @@ const Downloads = () => {
                 Download the{" "}
                 <a 
                   href="/downloads/NBFCsandARCs10012023.pdf"
-                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-primary font-semibold hover:underline cursor-pointer inline-flex items-center gap-1"
                 >
                   List of Associated NBFCs
