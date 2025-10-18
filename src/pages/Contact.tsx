@@ -170,15 +170,13 @@ const Contact = () => {
           <div className="card-elegant bg-card rounded-2xl overflow-hidden">
             <MapContainer center={[selectedLocation.lat, selectedLocation.lng]} zoom={12} className="w-full h-[500px]">
               <MapUpdater center={[selectedLocation.lat, selectedLocation.lng]} zoom={12} />
-              <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              <TileLayer 
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' 
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
+              />
               {officeAddresses.map((office, index) => (
                 <Marker key={index} position={[office.coordinates.lat, office.coordinates.lng]}>
-                  <Popup>
-                    <div>
-                      <h3 className="font-semibold">{office.name}</h3>
-                      <p className="text-sm">{office.address}</p>
-                    </div>
-                  </Popup>
+                  <Popup><div><h3 className="font-semibold">{office.name}</h3><p className="text-sm">{office.address}</p></div></Popup>
                 </Marker>
               ))}
             </MapContainer>
