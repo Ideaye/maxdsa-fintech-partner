@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import OffersBanner from "@/components/shared/OffersBanner";
 import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
@@ -18,7 +18,41 @@ const PartnerSignup = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({});
+  const [userId, setUserId] = useState<string | null>(null);
   const { toast } = useToast();
+  const navigate = useNavigate();
+
+  // Check authentication on mount
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        toast({
+          title: "Authentication Required",
+          description: "Please sign in to submit a partner application",
+          variant: "destructive",
+        });
+        navigate('/auth', { state: { from: '/partner-signup' } });
+        return;
+      }
+      
+      setUserId(session.user.id);
+    };
+
+    checkAuth();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (!session) {
+        navigate('/auth', { state: { from: '/partner-signup' } });
+      } else {
+        setUserId(session.user.id);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate, toast]);
   
   const [formData, setFormData] = useState({
     fullName: "",
@@ -250,10 +284,11 @@ const PartnerSignup = () => {
         return;
       }
 
-      // Insert into database
+      // Insert into database with user_id
       const { error: dbError } = await supabase
         .from('partner_applications')
         .insert([{
+          user_id: userId, // Add the authenticated user's ID
           full_name: formData.fullName,
           email: formData.email,
           phone: formData.phone,
