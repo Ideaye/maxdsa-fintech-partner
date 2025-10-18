@@ -133,21 +133,14 @@ const Contact = () => {
             ))}
           </div>
 
-          {/* Map Container */}
-          <div className="card-elegant bg-card rounded-2xl overflow-hidden p-8 text-center">
-            <div className="mb-4">
-              <MapPin className="h-12 w-12 text-primary mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-card-foreground mb-2">Visit Our Offices</h3>
-              <p className="text-muted-foreground">Interactive map will be available soon</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-              {officeAddresses.map((office, index) => (
-                <div key={index} className="text-left p-4 bg-secondary rounded-lg">
-                  <h4 className="font-semibold text-sm text-card-foreground mb-1">{office.name}</h4>
-                  <p className="text-xs text-muted-foreground">{office.address}</p>
-                </div>
-              ))}
-            </div>
+          {/* Office Address Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {officeAddresses.map((office, index) => (
+              <div key={index} className="card-elegant bg-card rounded-lg p-6">
+                <h4 className="font-semibold text-card-foreground mb-2">{office.name}</h4>
+                <p className="text-sm text-muted-foreground">{office.address}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
