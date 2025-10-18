@@ -172,7 +172,7 @@ const WhyPartner = () => {
                 Partnership Testimonials
               </span>
             </div>
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary-dark mb-6 animate-fade-in">
+            <h1 className="text-4xl md:text-5xl font-bold text-primary-dark mb-6 animate-fade-in">
               Trusted by leaders <br />
               <span className="text-muted-foreground">from various industries</span>
             </h1>
@@ -212,7 +212,7 @@ const WhyPartner = () => {
       <section className="py-20 bg-secondary">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary-dark mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
               MaxDSA vs Others
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -258,7 +258,7 @@ const WhyPartner = () => {
             <p className="text-sm text-primary font-semibold mb-2 uppercase tracking-wide">
               Adding Value Further
             </p>
-            <h2 className="text-3xl font-bold text-primary-dark mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
               Innovative Offerings and Services
             </h2>
           </div>
@@ -311,7 +311,7 @@ const WhyPartner = () => {
       <section className="py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary-dark mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
               What Our Partners Say
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">

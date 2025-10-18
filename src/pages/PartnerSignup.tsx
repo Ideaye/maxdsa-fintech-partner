@@ -434,7 +434,7 @@ const PartnerSignup = () => {
           ) : (
             <>
               <div className="text-center mb-8">
-                <h1 className="text-4xl font-bold mb-4">Partner With MaxDSA</h1>
+                <h1 className="text-4xl md:text-5xl font-bold mb-4">Partner With MaxDSA</h1>
                 <p className="text-muted-foreground text-lg">
                   Join our network and accelerate your business growth
                 </p>
