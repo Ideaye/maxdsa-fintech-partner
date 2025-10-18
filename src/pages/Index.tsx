@@ -12,7 +12,10 @@ import {
 } from "@/components/ui/accordion";
 import { 
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Eye,
+  Handshake,
+  TrendingUp
  } from "lucide-react";
 // Updated imports for Huge Icons - cache refresh
 import { 
@@ -266,80 +269,47 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Vision and Mission Section */}
+      {/* About Us Section */}
       <section className="py-20 bg-gradient-to-b from-background to-secondary/30">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="text-sm font-semibold text-primary mb-4 tracking-wide uppercase">About Us</div>
-            <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-6">
-              Unveiling Our Identity,<br />Vision and Values
-            </h2>
-            <p className="text-muted-foreground max-w-3xl mx-auto text-lg">
-              We're passionate about financial innovation. With years of experience in the industry, 
-              we've established ourselves as leaders in providing high-quality DSA solutions.
-            </p>
-          </div>
+          <div className="bg-gradient-to-r from-[#6B2C5E] via-[#3B4B7C] to-[#2B5F8F] rounded-3xl p-8 md:p-12 shadow-2xl">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 md:divide-x divide-white/20">
+              {/* Our Vision */}
+              <div className="text-white md:pr-8">
+                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-6">
+                  <Eye className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold mb-4">Our Vision</h3>
+                <p className="text-white/90 leading-relaxed">
+                  To be India's most trusted partner for MSME transformation, creating a thriving ecosystem where small and medium enterprises become globally competitive, technologically advanced, and sustainably profitable.
+                </p>
+              </div>
 
-          {/* Core Values Pills */}
-          <div className="bg-gradient-to-r from-primary to-fintech-blue rounded-3xl p-8 mb-12 max-w-4xl mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center text-white">
-              <div className="flex flex-col items-center">
-                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-3">
-                  <CheckmarkCircle01Icon size={28} className="text-white" />
+              {/* Our Commitment */}
+              <div className="text-white md:px-8">
+                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-6">
+                  <Handshake className="w-8 h-8 text-white" />
                 </div>
-                <p className="font-semibold">Safety</p>
+                <h3 className="text-2xl font-bold mb-4">Our Commitment</h3>
+                <p className="text-white/90 leading-relaxed">
+                  We are committed to delivering personalised solutions that address the unique challenges faced by MSMEs, fostering innovation, building capabilities, and ensuring long-term business sustainability in an ever-evolving market.
+                </p>
               </div>
-              <div className="flex flex-col items-center">
-                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-3">
-                  <FlashIcon size={28} className="text-white" />
+
+              {/* Our Impact */}
+              <div className="text-white md:pl-8">
+                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-6">
+                  <TrendingUp className="w-8 h-8 text-white" />
                 </div>
-                <p className="font-semibold">Efficient</p>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-3">
-                  <StarIcon size={28} className="text-white" />
-                </div>
-                <p className="font-semibold">Precision</p>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-3">
-                  <RoboticIcon size={28} className="text-white" />
-                </div>
-                <p className="font-semibold">Innovation</p>
+                <h3 className="text-2xl font-bold mb-4">Our Impact</h3>
+                <p className="text-white/90 leading-relaxed">
+                  Through strategic consulting, operational excellence, and digital transformation initiatives, we empower businesses to scale efficiently, compete globally, and contribute meaningfully to India's economic growth and development.
+                </p>
               </div>
             </div>
           </div>
 
-          {/* Vision and Mission Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-8">
-            <div className="card-elegant bg-card rounded-2xl p-8">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center mr-4">
-                  <StarIcon size={24} className="text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-card-foreground">Vision</h3>
-              </div>
-              <p className="text-muted-foreground leading-relaxed">
-                To lead the way in DSA business by delivering innovative, sustainable, 
-                and cost-effective solutions that empower partners and drive financial inclusion across India.
-              </p>
-            </div>
-
-            <div className="card-elegant bg-card rounded-2xl p-8">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center mr-4">
-                  <ArrowUpRight01Icon size={24} className="text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-card-foreground">Mission</h3>
-              </div>
-              <p className="text-muted-foreground leading-relaxed">
-                To leverage our expertise, resources, and technology to provide DSA services 
-                that exceed industry standards and create lasting value for our partners and their customers.
-              </p>
-            </div>
-          </div>
-
-          <div className="text-center">
+          <div className="text-center mt-12">
             <Link to="/about">
               <Button variant="cta" size="lg" className="group">
                 Know More About Us
