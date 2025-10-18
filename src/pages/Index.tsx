@@ -29,7 +29,7 @@ import {
   FlashIcon,
   CheckmarkCircle01Icon
 } from "hugeicons-react";
-import heroBackground from "@/assets/hero-background.jpg";
+import heroVideo from "@/assets/hero-video.mp4";
 import ctaBackground from "@/assets/cta-background.png";
 import paperPlaneIcon from "@/assets/paper-plane-icon.png";
 
@@ -216,16 +216,17 @@ const Index = () => {
       <Header />
       
       {/* Hero Section */}
-      <section 
-        className="relative min-h-screen flex items-center overflow-hidden"
-        style={{
-          backgroundImage: `url(${heroBackground})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
-        <div className="absolute inset-0 bg-black/40"></div>
+      <section className="relative min-h-screen flex items-center overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src={heroVideo} type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-black/50"></div>
         
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
