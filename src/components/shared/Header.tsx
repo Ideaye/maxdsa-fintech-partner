@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { Menu, X, Download } from "lucide-react";
 import maxdsaLogo from "@/assets/maxdsa-logo.png";
 
@@ -105,13 +106,15 @@ const Header = () => {
                   </Button>
                 </Link>
                 
+                <Separator className="my-2" />
+                
                 <a href="https://bridge.hyperfin.tech/" target="_blank" rel="noopener noreferrer">
                   <Button variant="outline" size="sm" className="w-full border-primary text-primary hover:bg-primary hover:text-white">
                     Sign In
                   </Button>
                 </a>
 
-                <Link to="/partner-signup" onClick={() => setIsMenuOpen(false)}>
+                <Link to="/partner-signup" onClick={() => setIsMenuOpen(false)} className="block pt-2">
                   <Button variant="corporate" size="sm" className="w-full">
                     Partner With Us
                   </Button>
