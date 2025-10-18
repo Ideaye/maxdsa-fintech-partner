@@ -97,8 +97,21 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
-              <div className="px-3 pt-4">
-                <Link to="/partner-signup">
+              <div className="px-3 pt-4 space-y-3 border-t border-border">
+                <Link to="/downloads" onClick={() => setIsMenuOpen(false)}>
+                  <Button variant="ghost" size="sm" className="w-full text-primary hover:bg-primary hover:text-white">
+                    <Download className="h-5 w-5 mr-2" />
+                    Downloads
+                  </Button>
+                </Link>
+                
+                <a href="https://bridge.hyperfin.tech/" target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" size="sm" className="w-full border-primary text-primary hover:bg-primary hover:text-white">
+                    Sign In
+                  </Button>
+                </a>
+
+                <Link to="/partner-signup" onClick={() => setIsMenuOpen(false)}>
                   <Button variant="corporate" size="sm" className="w-full">
                     Partner With Us
                   </Button>

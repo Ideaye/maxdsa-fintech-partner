@@ -254,6 +254,7 @@ const PartnerSignup = () => {
       const { error: dbError } = await supabase
         .from('partner_applications')
         .insert([{
+          user_id: null, // Anonymous application submission
           full_name: formData.fullName,
           email: formData.email,
           phone: formData.phone,
