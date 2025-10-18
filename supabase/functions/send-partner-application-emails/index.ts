@@ -4,8 +4,8 @@ import { Resend } from "npm:resend@2.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
-// Base64 encoded MaxDSA logo for email embedding (white version for dark backgrounds)
-const MAXDSA_LOGO_BASE64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAACXBIWXMAAAsTAAALEwEAmpwYAAAF8WlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNy4yLWMwMDAgNzkuMWI2NWE3OWI0LCAyMDIyLzA2LzEzLTIyOjAxOjAxICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgMjMuNSAoTWFjaW50b3NoKSIgeG1wOkNyZWF0ZURhdGU9IjIwMjUtMTAtMDRUMTg6NDU6MzcrMDU6MzAiIHhtcDpNb2RpZnlEYXRlPSIyMDI1LTEwLTA0VDE4OjQ2OjA4KzA1OjMwIiB4bXA6TWV0YWRhdGFEYXRlPSIyMDI1LTEwLTA0VDE4OjQ2OjA4KzA1OjMwIiBkYzpmb3JtYXQ9ImltYWdlL3BuZyIgcGhvdG9zaG9wOkNvbG9yTW9kZT0iMyIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo2YTJhNjQxZi1kZTYyLTRjNDctYjg3Yi04YmVjMjZhN2IyOTAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NmEyYTY0MWYtZGU2Mi00YzQ3LWI4N2ItOGJlYzI2YTdiMjkwIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6NmEyYTY0MWYtZGU2Mi00YzQ3LWI4N2ItOGJlYzI2YTdiMjkwIj4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo2YTJhNjQxZi1kZTYyLTRjNDctYjg3Yi04YmVjMjZhN2IyOTAiIHN0RXZ0OndoZW49IjIwMjUtMTAtMDRUMTg6NDU6MzcrMDU6MzAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCAyMy41IChNYWNpbnRvc2gpIi8+IDwvcmRmOlNlcT4gPC94bXBNTTpIaXN0b3J5PiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pue7kH4AABdASURBVHic7N1prF1Vvfjxn5k5zz3nnHPPPb23Zy5tKYVSbJlEpqIgMhgQJUQF/zExEhOj8QUxMUZ9YXzh/2V8wQtNjDEaEzUaERCZZygz/Ak+McYYE2OM8YUvfGGM8b9+z73nts7tnOfce84+Z+21Pv+/7f+/v//v7/ufv/7v/u+1v/u7/zAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+// Simple text-based logo for email embedding
+const MAXDSA_LOGO = "MaxDSA";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -132,7 +132,7 @@ const handler = async (req: Request): Promise<Response> => {
               <!-- Header Section -->
               <div class="header">
                 <div style="margin-bottom: 15px;">
-                  <img src="${MAXDSA_LOGO_BASE64}" alt="MaxDSA" style="height: 50px; width: auto; display: inline-block;" />
+                  <h2 style="color: #ffffff; font-size: 32px; font-weight: 700; margin: 0;">${MAXDSA_LOGO}</h2>
                 </div>
                 <div class="header-icon">🎉</div>
                 <h1>Thank You, ${fullName}!</h1>
@@ -257,7 +257,7 @@ const handler = async (req: Request): Promise<Response> => {
               <!-- Footer Section -->
               <div class="footer">
                 <div class="logo-container">
-                  <img src="${MAXDSA_LOGO_BASE64}" alt="MaxDSA" style="height: 32px; width: auto; margin-bottom: 10px; display: inline-block;" />
+                  <h3 style="color: #1a56db; font-size: 24px; font-weight: 700; margin: 0 0 10px 0;">${MAXDSA_LOGO}</h3>
                 </div>
                 
                 <div class="button-container">
@@ -321,7 +321,7 @@ const handler = async (req: Request): Promise<Response> => {
             <div class="email-container">
               <div class="header">
                 <div style="margin-bottom: 10px;">
-                  <img src="${MAXDSA_LOGO_BASE64}" alt="MaxDSA" style="height: 40px; width: auto; display: inline-block;" />
+                  <h2 style="color: #ffffff; font-size: 28px; font-weight: 700; margin: 0;">${MAXDSA_LOGO}</h2>
                 </div>
                 <h1>🎉 New Partner Application Received</h1>
               </div>
