@@ -404,28 +404,16 @@ const Downloads = () => {
 
       {/* Download All Section */}
       <section className="py-16 px-4 bg-muted/20">
-        <div className="container mx-auto max-w-4xl">
-          <div className="bg-gradient-to-br from-primary to-primary/80 rounded-3xl p-8 md:p-12 text-center text-white relative overflow-hidden">
-            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxIDAgNiAyLjY5IDYgNnMtMi42OSA2LTYgNi02LTIuNjktNi02IDIuNjktNiA2LTZ6TTI0IDQyYzMuMzEgMCA2IDIuNjkgNiA2cy0yLjY5IDYtNiA2LTYtMi42OS02LTYgMi42OS02IDYtNnoiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLW9wYWNpdHk9Ii4xIiBzdHJva2Utd2lkdGg9IjIiLz48L2c+PC9zdmc+')] opacity-20" />
-            <div className="relative z-10">
-              <Download className="h-16 w-16 mx-auto mb-6 opacity-90" />
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Download All Checklists
-              </h2>
-              <p className="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-                Get instant access to all loan checklists in one comprehensive package. Perfect for keeping all documentation requirements at your fingertips.
-              </p>
-              <Button
-                size="lg"
-                variant="secondary"
-                onClick={handleDownloadAll}
-                className="bg-white text-primary hover:bg-white/90 font-semibold px-8 py-6 h-auto text-lg"
-              >
-                <Download className="h-5 w-5 mr-2" />
-                Download Complete Package
-              </Button>
-            </div>
-          </div>
+        <div className="container mx-auto max-w-4xl text-center">
+          <p className="text-lg text-muted-foreground">
+            Get instant access to all loan checklists in one comprehensive package.{" "}
+            <button 
+              onClick={handleDownloadAll}
+              className="text-primary font-semibold hover:underline cursor-pointer"
+            >
+              Click here to download
+            </button>
+          </p>
         </div>
       </section>
 
