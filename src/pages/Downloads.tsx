@@ -1,6 +1,7 @@
 import { Download, Home, CreditCard, Coins, Car, Briefcase, GraduationCap, Building2, Landmark, ShoppingCart, FileText, TrendingUp, Receipt, Cake, FileStack, Tractor, Package, BadgeDollarSign, ArrowRight, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import OffersBanner from "@/components/shared/OffersBanner";
 import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
 import downloadsHeroBg from "@/assets/downloads-hero-bg.png";
@@ -317,6 +318,7 @@ const Downloads = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <OffersBanner />
       <Header />
       
       {/* Hero Section */}

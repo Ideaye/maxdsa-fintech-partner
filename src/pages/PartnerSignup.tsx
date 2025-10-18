@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import OffersBanner from "@/components/shared/OffersBanner";
 import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
 import { Button } from "@/components/ui/button";
@@ -393,6 +394,7 @@ const PartnerSignup = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <OffersBanner />
       <Header />
       
       <main className="flex-1 bg-gradient-to-b from-background to-secondary/20">

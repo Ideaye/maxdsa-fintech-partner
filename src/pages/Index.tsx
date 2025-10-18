@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import OffersBanner from "@/components/shared/OffersBanner";
 import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
 import { LoanCalculatorSection } from "@/components/LoanCalculatorSection";
@@ -211,6 +212,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <OffersBanner />
       <Header />
       
       {/* Hero Section */}
@@ -325,15 +327,6 @@ const Index = () => {
                 </div>
               </div>
             </div>
-          </div>
-
-          <div className="text-center mt-12">
-            <Link to="/about">
-              <Button variant="cta" size="lg" className="group">
-                Know More About Us
-                <ArrowRight01Icon size={16} className="ml-2 group-hover:translate-x-1 transition-transform text-white" />
-              </Button>
-            </Link>
           </div>
         </div>
       </section>

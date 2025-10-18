@@ -55,9 +55,8 @@ const Header = () => {
           {/* Downloads & Sign In Buttons */}
           <div className="hidden md:flex items-center gap-3">
             <Link to="/downloads">
-              <Button variant="outline" size="sm" className="border-primary text-primary hover:bg-primary hover:text-white">
-                <Download className="h-4 w-4 mr-2" />
-                Downloads
+              <Button variant="ghost" size="sm" className="text-primary hover:bg-primary hover:text-white">
+                <Download className="h-5 w-5" />
               </Button>
             </Link>
             

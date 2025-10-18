@@ -1,3 +1,4 @@
+import OffersBanner from "@/components/shared/OffersBanner";
 import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
 import { Button } from "@/components/ui/button";
@@ -101,6 +102,7 @@ const WhyPartner = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <OffersBanner />
       <Header />
       
       {/* Hero Section */}
