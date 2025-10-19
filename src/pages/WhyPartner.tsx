@@ -91,12 +91,13 @@ const WhyPartner = () => {
 
   const comparisonFeatures = [
     { feature: "AI-Powered Tools", maxdsa: true, others: false },
-    { feature: "Many Years Experience", maxdsa: true, others: false },
-    { feature: "15+ Bank Partners", maxdsa: true, others: false },
+    { feature: "300 Man years of Experience", maxdsa: true, others: false },
+    { feature: "15+ Bank Partners", maxdsa: true, others: true },
     { feature: "24/7 Support", maxdsa: true, others: true },
     { feature: "Quick Onboarding", maxdsa: true, others: false },
     { feature: "Real-time Analytics", maxdsa: true, others: false },
     { feature: "Automated Processing", maxdsa: true, others: false },
+    { feature: "Quick Hassle free Payout Process", maxdsa: true, others: false },
     { feature: "Training Programs", maxdsa: true, others: false }
   ];
 

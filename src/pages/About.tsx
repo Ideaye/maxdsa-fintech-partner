@@ -20,18 +20,13 @@ const About = () => {
       name: "Arun Kumar Manickam",
       image: promoterPhoto,
       content: [
-        "Arun Kumar Manickam is a visionary banking leader and the driving force behind MaxDSA.com, a pioneering platform designed to create India's largest knowledge-sharing and networking ecosystem for professionals in banking, NBFC, and fintech sectors.",
-        "With over 20 years of rich experience across premier financial institutions—including State Bank of India, IDBI Bank, ICICI Bank, and Cholamandalam DBS—Arun brings a unique blend of strategic insight and hands-on operational expertise to his initiatives.",
-        "He holds a Master's degree in Management from the Bharathiar School of Management and Entrepreneur Development (BSMED), Coimbatore, and has further strengthened his leadership acumen through executive programs at the Indian Institute of Management, Ahmedabad (IIM-A).",
-        "With more than 10 years' experience in retail loan distribution business, we have successfully acquired more than 250 Customers with about 500 Cr of Successful transactions."
+        "Arun Kumar Manickam is a visionary banking leader and the driving force behind MaxDSA.com, a pioneering platform designed to create India's largest networking ecosystem for Channel partners especially in banking, NBFC, and fintech sectors."
       ]
     },
     {
-      name: "R Padmanabhan (M.C.A)",
+      name: "R Padmanabhan",
       titles: [
-        "Managing Director - Yuva 2.0 School of Human Excellence",
-        "C.E.O - International strategic consultants",
-        "Director - Yuva Foundation"
+        "Chief Strategic Officer"
       ],
       image: padmanabhanPhoto,
       content: [
