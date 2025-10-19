@@ -19,7 +19,7 @@ import { Style, Icon } from "ol/style";
 import "ol/ol.css";
 
 const Contact = () => {
-  const [selectedLocation, setSelectedLocation] = useState<{lng: number, lat: number}>({ lng: 77.6412, lat: 12.9141 });
+  const [selectedLocation, setSelectedLocation] = useState<{lng: number, lat: number}>({ lng: 76.9558, lat: 11.0168 });
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<Map | null>(null);
 
@@ -46,17 +46,17 @@ const Contact = () => {
 
   const officeAddresses = [
     {
-      name: "Head Office - Bengaluru",
+      name: "Head Office - Coimbatore",
+      address: "4A, Sreevatsa Swagat Apartment, Patel Road, RamNagar, Coimbatore 641009 (Near North Coimbatore Flyover)",
+      coordinates: { lng: 76.9558, lat: 11.0168 }
+    },
+    {
+      name: "Branch Office - Bengaluru",
       address: "1st floor, Urban Vault, 19, 18th Cross Rd, Sector 6, HSR Layout, Bengaluru, Karnataka 560102",
       coordinates: { lng: 77.6412, lat: 12.9141 }
     },
     {
-      name: "Coimbatore Office",
-      address: "Old No 607, New Number 254, Dr RadhaKrishnan Road, Tata Bad, Coimbatore 641012",
-      coordinates: { lng: 76.9558, lat: 11.0168 }
-    },
-    {
-      name: "UAE Office", 
+      name: "Branch Office - UAE", 
       address: "License no 41620, BLV -1F-SF15420, Ajman Boulevard- A- Building, Ajman Free Zone, UAE",
       coordinates: { lng: 55.5136, lat: 25.4052 }
     }

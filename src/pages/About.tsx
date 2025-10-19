@@ -4,7 +4,7 @@ import Footer from "@/components/shared/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
-import { Users, TrendingUp, Award, Clock, Target, Lightbulb, Shield, Rocket, ChevronLeft, ChevronRight } from "lucide-react";
+import { Users, TrendingUp, Award, Clock, Target, Lightbulb, Shield, Rocket, ChevronLeft, ChevronRight, Bot, Zap } from "lucide-react";
 import { useState } from "react";
 import teamPhoto from "@/assets/team-photo.jpg";
 import partnershipImage from "@/assets/partnership-handshake.jpg";
@@ -127,20 +127,20 @@ const About = () => {
           {/* Statistics Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">95%</div>
-              <p className="text-sm text-muted-foreground">Customer satisfaction rate, reflecting our dedication</p>
+              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">250</div>
+              <p className="text-sm text-muted-foreground">Clients</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">15+</div>
-              <p className="text-sm text-muted-foreground">Banking partnerships providing diverse solutions</p>
+              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">350</div>
+              <p className="text-sm text-muted-foreground">Disbursements</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">₹500Cr</div>
-              <p className="text-sm text-muted-foreground">Platform has ensured secure and efficient financial</p>
+              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">150</div>
+              <p className="text-sm text-muted-foreground">Financier tie ups</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">250+</div>
-              <p className="text-sm text-muted-foreground">DSAs nationwide, providing them with financial solutions</p>
+              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">150+</div>
+              <p className="text-sm text-muted-foreground">Bank Partners</p>
             </div>
           </div>
         </div>
@@ -197,8 +197,8 @@ const About = () => {
                   <Users className="w-8 h-8 text-primary" />
                 </div>
               </div>
-              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">125</div>
-              <p className="text-sm text-muted-foreground">Happy Clients</p>
+              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">250</div>
+              <p className="text-sm text-muted-foreground">Clients</p>
             </div>
             <div className="text-center">
               <div className="flex justify-center mb-4">
@@ -206,7 +206,7 @@ const About = () => {
                   <TrendingUp className="w-8 h-8 text-primary" />
                 </div>
               </div>
-              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">175</div>
+              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">350</div>
               <p className="text-sm text-muted-foreground">Disbursements</p>
             </div>
             <div className="text-center">
@@ -215,8 +215,8 @@ const About = () => {
                   <Clock className="w-8 h-8 text-primary" />
                 </div>
               </div>
-              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">12</div>
-              <p className="text-sm text-muted-foreground">Financier Tieups</p>
+              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">150</div>
+              <p className="text-sm text-muted-foreground">Financier tie ups</p>
             </div>
             <div className="text-center">
               <div className="flex justify-center mb-4">
@@ -224,8 +224,8 @@ const About = () => {
                   <Award className="w-8 h-8 text-primary" />
                 </div>
               </div>
-              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">15</div>
-              <p className="text-sm text-muted-foreground">Years of experience</p>
+              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">150+</div>
+              <p className="text-sm text-muted-foreground">Bank Partners</p>
             </div>
           </div>
         </div>
@@ -318,6 +318,89 @@ const About = () => {
               >
                 <ChevronRight className="h-4 w-4" />
               </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Story Timeline Section */}
+      <section className="py-20 bg-secondary/30">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div>
+              <div className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-6">
+                Our story
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">
+                From Concept to{" "}
+                <span className="block">Global Impact</span>
+              </h2>
+            </div>
+            
+            <div className="space-y-8">
+              {/* Timeline Item 1 */}
+              <div className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+                    <Bot className="w-6 h-6 text-white" />
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <div className="text-primary font-medium text-sm mb-1">2020 • December</div>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">Idea And Initial Concept</h3>
+                  <p className="text-muted-foreground">
+                    MaxDSA was born as a simple concept to bridge gaps in DSA management and financial workflow coordination.
+                  </p>
+                </div>
+              </div>
+
+              {/* Timeline Item 2 */}
+              <div className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+                    <Zap className="w-6 h-6 text-white" />
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <div className="text-primary font-medium text-sm mb-1">2021 • February</div>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">Beta Launch</h3>
+                  <p className="text-muted-foreground">
+                    Launched our beta platform with core DSA functionalities and established partnerships with our first banking partners.
+                  </p>
+                </div>
+              </div>
+
+              {/* Timeline Item 3 */}
+              <div className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+                    <Shield className="w-6 h-6 text-white" />
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <div className="text-primary font-medium text-sm mb-1">2022 • September</div>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">Introducing Automation</h3>
+                  <p className="text-muted-foreground">
+                    Revolutionized DSA operations with AI-driven automation tools and streamlined loan processing workflows.
+                  </p>
+                </div>
+              </div>
+
+              {/* Timeline Item 4 */}
+              <div className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+                    <TrendingUp className="w-6 h-6 text-white" />
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <div className="text-primary font-medium text-sm mb-1">2023 • December</div>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">Going Global</h3>
+                  <p className="text-muted-foreground">
+                    Expanded our platform nationally with 150+ banking partners and 250+ active DSA agents across India.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

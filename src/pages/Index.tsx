@@ -248,11 +248,11 @@ const Index = () => {
             {/* Center Content */}
             <div className="text-white max-w-4xl">
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
-                India's First Assisted Corporate DSA
+                India's First Digitally Assisted Corporate DSA
                 <span className="block text-white">Disrupting the Lending Distribution Business</span>
               </h1>
               <p className="text-lg md:text-xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
-                MaxDSA leverages manyears of banking expertise and AI-driven tools to accelerate your business growth, streamline loan distribution, and power outstanding results.
+                MaxDSA leverages 300+ man years of banking expertise and AI-driven tools to accelerate your business growth, streamline loan distribution, and power outstanding results.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/partner-signup">
@@ -263,7 +263,7 @@ const Index = () => {
                 </Link>
                 <Link to="/services">
                   <Button variant="hero" size="lg">
-                    See Our Services
+                    Our Services
                   </Button>
                 </Link>
               </div>
@@ -299,9 +299,9 @@ const Index = () => {
                   <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-6">
                     <Eye className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold mb-4">Our Vision</h3>
+                  <h3 className="text-2xl font-bold mb-4">Vision</h3>
                   <p className="text-white/90 leading-relaxed">
-                    To be India's most trusted partner for MSME transformation, creating a thriving ecosystem where small and medium enterprises become globally competitive, technologically advanced, and sustainably profitable.
+                    To build a trusted and technology-driven ecosystem that empowers channel partners with knowledge, tools, and opportunities to achieve sustainable growth and deliver world-class financial services.
                   </p>
                 </div>
 
@@ -312,18 +312,18 @@ const Index = () => {
                   </div>
                   <h3 className="text-2xl font-bold mb-4">Our Commitment</h3>
                   <p className="text-white/90 leading-relaxed">
-                    We are committed to delivering personalised solutions that address the unique challenges faced by MSMEs, fostering innovation, building capabilities, and ensuring long-term business sustainability in an ever-evolving market.
+                    We are committed to delivering personalised solutions that address the unique challenges faced by Channel partners, fostering innovation, building capabilities, and ensuring long-term business sustainability in an ever-evolving market.
                   </p>
                 </div>
 
-                {/* Our Impact */}
+                {/* Mission */}
                 <div className="text-white md:pl-8">
                   <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-6">
                     <TrendingUp className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold mb-4">Our Impact</h3>
+                  <h3 className="text-2xl font-bold mb-4">Mission</h3>
                   <p className="text-white/90 leading-relaxed">
-                    Through strategic consulting, operational excellence, and digital transformation initiatives, we empower businesses to scale efficiently, compete globally, and contribute meaningfully to India's economic growth and development.
+                    To empower channel partners by providing innovative AI-driven financial tools, seamless processes, and a collaborative ecosystem that enhances efficiency, strengthens relationships, and drives sustainable growth in the retail loan distribution industry.
                   </p>
                 </div>
               </div>
@@ -356,7 +356,7 @@ const Index = () => {
                   <div className="w-8 h-8 bg-red-400 rounded-full border-2 border-white"></div>
                   <div className="w-8 h-8 bg-purple-400 rounded-full border-2 border-white"></div>
                 </div>
-                <span className="ml-3 text-sm font-medium text-gray-600">15+ PARTNERS</span>
+                <span className="ml-3 text-sm font-medium text-gray-600">150+ Banking Partners</span>
               </div>
               <p className="text-gray-700 text-sm">
                 Through our custom-tailored funnel systems
@@ -404,8 +404,8 @@ const Index = () => {
 
             {/* Experience Card */}
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <div className="text-4xl font-bold text-black mb-2">Many</div>
-              <p className="text-gray-600 text-sm">Years of Experience</p>
+              <div className="text-4xl font-bold text-black mb-2">300</div>
+              <p className="text-gray-600 text-sm">Man Years</p>
               <p className="text-gray-500 text-xs mt-2">Of combined banking and financial expertise across our leadership team</p>
             </div>
           </div>

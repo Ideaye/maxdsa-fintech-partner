@@ -74,22 +74,10 @@ const calculateEMI = (principal: number, rate: number, tenure: number): LoanResu
 };
 
 export const LoanCalculatorSection = () => {
-  const [loanType, setLoanType] = useState<string>("home");
-  const [amount, setAmount] = useState(loanConfigs.home.defaultAmount);
-  const [rate, setRate] = useState(loanConfigs.home.defaultRate);
-  const [tenure, setTenure] = useState(loanConfigs.home.defaultTenure);
+  const [amount, setAmount] = useState(5000000);
+  const [rate, setRate] = useState(8.5);
+  const [tenure, setTenure] = useState(20);
   const [result, setResult] = useState<LoanResult | null>(null);
-
-  const currentConfig = loanConfigs[loanType];
-
-  const handleLoanTypeChange = (newType: string) => {
-    setLoanType(newType);
-    const config = loanConfigs[newType];
-    setAmount(config.defaultAmount);
-    setRate(config.defaultRate);
-    setTenure(config.defaultTenure);
-    setResult(null);
-  };
 
   const handleCalculate = () => {
     const calculatedResult = calculateEMI(amount, rate, tenure);
@@ -108,31 +96,13 @@ export const LoanCalculatorSection = () => {
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Calculate Your Loan EMI</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">EMI Calculator</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Use our easy loan calculator to estimate your monthly EMI payments for different types of loans
+            Use our easy EMI calculator to estimate your monthly payments for all types of loans
           </p>
         </div>
 
         <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
-          <div className="mb-8">
-            <Label htmlFor="loan-type" className="text-base font-semibold mb-2 block">
-              Select Loan Type
-            </Label>
-            <Select value={loanType} onValueChange={handleLoanTypeChange}>
-              <SelectTrigger id="loan-type" className="w-full bg-background">
-                <SelectValue placeholder="Select loan type" />
-              </SelectTrigger>
-              <SelectContent className="bg-background z-50">
-                {Object.entries(loanConfigs).map(([key, config]) => (
-                  <SelectItem key={key} value={key}>
-                    {config.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div className="space-y-4">
               <Label htmlFor="amount" className="text-base font-semibold">
@@ -149,12 +119,12 @@ export const LoanCalculatorSection = () => {
                 value={[amount]}
                 onValueChange={([value]) => setAmount(value)}
                 min={10000}
-                max={currentConfig.maxAmount}
+                max={50000000}
                 step={10000}
                 className="w-full"
               />
               <p className="text-sm text-muted-foreground">
-                Range: ₹10,000 - {formatCurrency(currentConfig.maxAmount)}
+                Range: ₹10,000 - {formatCurrency(50000000)}
               </p>
             </div>
 
@@ -196,12 +166,12 @@ export const LoanCalculatorSection = () => {
                 value={[tenure]}
                 onValueChange={([value]) => setTenure(value)}
                 min={1}
-                max={currentConfig.maxTenure}
+                max={30}
                 step={1}
                 className="w-full"
               />
               <p className="text-sm text-muted-foreground">
-                Range: 1 - {currentConfig.maxTenure} years
+                Range: 1 - 30 years
               </p>
             </div>
           </div>

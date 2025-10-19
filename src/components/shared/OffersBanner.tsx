@@ -1,9 +1,10 @@
 const OffersBanner = () => {
   const offers = [
-    "🎉 Limited Time: Zero Processing Fee on Business Loans up to ₹50 Lakhs",
-    "⚡ Quick Approval: Get Working Capital in 48 Hours",
-    "🏆 Special Rate: 8.5% p.a. on Term Loans for Manufacturing Sector",
-    "💼 New Partner Benefit: Earn Up to 2% Commission on Every Loan",
+    "Unsecured Loan against Insurance Surrender Value",
+    "Unsecured Loan for Kirana Stores & other Merchants",
+    "Free Accident Insurance upto 1 cr",
+    "Digital Assistance for New Channel Partners",
+    "Exclusive Tie up with Mamta Housing Finance",
   ];
 
   // Duplicate offers for seamless infinite scroll
