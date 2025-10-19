@@ -5,7 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { Users, TrendingUp, Award, Clock, Target, Lightbulb, Shield, Rocket, ChevronLeft, ChevronRight, Bot, Zap } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 import teamPhoto from "@/assets/team-photo.jpg";
 import partnershipImage from "@/assets/partnership-handshake.jpg";
 import aboutHero from "@/assets/about-hero.jpg";
@@ -130,26 +132,6 @@ const About = () => {
               alt="MaxDSA team discussing financial solutions in boardroom meeting" 
               className="w-full h-full object-cover object-center"
             />
-          </div>
-          
-          {/* Statistics Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
-            <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">250</div>
-              <p className="text-sm text-muted-foreground">Clients</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">350</div>
-              <p className="text-sm text-muted-foreground">Disbursements</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">150</div>
-              <p className="text-sm text-muted-foreground">Financier tie ups</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">150+</div>
-              <p className="text-sm text-muted-foreground">Bank Partners</p>
-            </div>
           </div>
         </div>
       </section>
@@ -462,10 +444,6 @@ const About = () => {
                   </div>
                 </div>
               </div>
-              
-              <Button variant="outline" className="mt-8">
-                Learn More About Our Process
-              </Button>
             </div>
             
             {/* Right Grid */}
@@ -519,97 +497,130 @@ const About = () => {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
-              <img 
-                src={gallery1} 
-                alt="MaxDSA banking partnership event discussion" 
-                className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </div>
-            
-            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
-              <img 
-                src={gallery2} 
-                alt="Leadership meeting with financial partners" 
-                className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </div>
-            
-            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
-              <img 
-                src={gallery3} 
-                alt="MaxDSA team collaboration and celebration" 
-                className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </div>
-            
-            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
-              <img 
-                src={gallery4} 
-                alt="Industry speaker presenting at MaxDSA event" 
-                className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </div>
-            
-            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
-              <img 
-                src={gallery5} 
-                alt="Banking partnership keynote address" 
-                className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </div>
-            
-            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
-              <img 
-                src={gallery6} 
-                alt="Traditional lamp lighting ceremony at MaxDSA event" 
-                className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </div>
-            
-            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
-              <img 
-                src={gallery7} 
-                alt="MaxDSA leadership team with special guests" 
-                className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </div>
-            
-            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
-              <img 
-                src={gallery8} 
-                alt="Professional networking at MaxDSA partnership event" 
-                className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </div>
-            
-            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
-              <img 
-                src={gallery9} 
-                alt="Financial industry expert speaking at event" 
-                className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </div>
-            
-            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
-              <img 
-                src={gallery10} 
-                alt="MaxDSA team engagement and collaboration" 
-                className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </div>
-          </div>
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            plugins={[
+              Autoplay({
+                delay: 3000,
+              }),
+            ]}
+            className="w-full"
+          >
+            <CarouselContent>
+              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                <div className="group relative overflow-hidden rounded-xl shadow-lg h-80">
+                  <img 
+                    src={gallery1} 
+                    alt="MaxDSA banking partnership event discussion" 
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              </CarouselItem>
+              
+              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                <div className="group relative overflow-hidden rounded-xl shadow-lg h-80">
+                  <img 
+                    src={gallery2} 
+                    alt="Leadership meeting with financial partners" 
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              </CarouselItem>
+              
+              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                <div className="group relative overflow-hidden rounded-xl shadow-lg h-80">
+                  <img 
+                    src={gallery3} 
+                    alt="MaxDSA team collaboration and celebration" 
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              </CarouselItem>
+              
+              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                <div className="group relative overflow-hidden rounded-xl shadow-lg h-80">
+                  <img 
+                    src={gallery4} 
+                    alt="Industry speaker presenting at MaxDSA event" 
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              </CarouselItem>
+              
+              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                <div className="group relative overflow-hidden rounded-xl shadow-lg h-80">
+                  <img 
+                    src={gallery5} 
+                    alt="Banking partnership keynote address" 
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              </CarouselItem>
+              
+              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                <div className="group relative overflow-hidden rounded-xl shadow-lg h-80">
+                  <img 
+                    src={gallery6} 
+                    alt="Traditional lamp lighting ceremony at MaxDSA event" 
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              </CarouselItem>
+              
+              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                <div className="group relative overflow-hidden rounded-xl shadow-lg h-80">
+                  <img 
+                    src={gallery7} 
+                    alt="MaxDSA leadership team with special guests" 
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              </CarouselItem>
+              
+              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                <div className="group relative overflow-hidden rounded-xl shadow-lg h-80">
+                  <img 
+                    src={gallery8} 
+                    alt="Professional networking at MaxDSA partnership event" 
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              </CarouselItem>
+              
+              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                <div className="group relative overflow-hidden rounded-xl shadow-lg h-80">
+                  <img 
+                    src={gallery9} 
+                    alt="Financial industry expert speaking at event" 
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              </CarouselItem>
+              
+              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                <div className="group relative overflow-hidden rounded-xl shadow-lg h-80">
+                  <img 
+                    src={gallery10} 
+                    alt="MaxDSA team engagement and collaboration" 
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              </CarouselItem>
+            </CarouselContent>
+          </Carousel>
         </div>
       </section>
 
