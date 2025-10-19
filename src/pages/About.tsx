@@ -11,6 +11,16 @@ import partnershipImage from "@/assets/partnership-handshake.jpg";
 import aboutHero from "@/assets/about-hero.jpg";
 import promoterPhoto from "@/assets/promoter-photo.jpg";
 import padmanabhanPhoto from "@/assets/padmanabhan-photo.jpg";
+import gallery1 from "@/assets/gallery/JAI2101.jpg";
+import gallery2 from "@/assets/gallery/JAI2065.jpg";
+import gallery3 from "@/assets/gallery/JAI2055.jpg";
+import gallery4 from "@/assets/gallery/JAI1984.jpg";
+import gallery5 from "@/assets/gallery/JAI1922.jpg";
+import gallery6 from "@/assets/gallery/JAI1885.jpg";
+import gallery7 from "@/assets/gallery/JAI1864.jpg";
+import gallery8 from "@/assets/gallery/JAI1860.jpg";
+import gallery9 from "@/assets/gallery/JAI1824.jpg";
+import gallery10 from "@/assets/gallery/JAI1760.jpg";
 
 const About = () => {
   const [currentPartner, setCurrentPartner] = useState(0);
@@ -496,8 +506,115 @@ const About = () => {
         </div>
       </section>
 
-      {/* Mission Statement */}
+      {/* Gallery Section */}
       <section className="py-20 bg-gray-50">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <Badge variant="secondary" className="mb-4">OUR JOURNEY</Badge>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Moments That Define Us
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Capturing the essence of our partnerships, events, and milestones in the financial services industry
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
+              <img 
+                src={gallery1} 
+                alt="MaxDSA banking partnership event discussion" 
+                className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </div>
+            
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
+              <img 
+                src={gallery2} 
+                alt="Leadership meeting with financial partners" 
+                className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </div>
+            
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
+              <img 
+                src={gallery3} 
+                alt="MaxDSA team collaboration and celebration" 
+                className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </div>
+            
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
+              <img 
+                src={gallery4} 
+                alt="Industry speaker presenting at MaxDSA event" 
+                className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </div>
+            
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
+              <img 
+                src={gallery5} 
+                alt="Banking partnership keynote address" 
+                className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </div>
+            
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
+              <img 
+                src={gallery6} 
+                alt="Traditional lamp lighting ceremony at MaxDSA event" 
+                className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </div>
+            
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
+              <img 
+                src={gallery7} 
+                alt="MaxDSA leadership team with special guests" 
+                className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </div>
+            
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
+              <img 
+                src={gallery8} 
+                alt="Professional networking at MaxDSA partnership event" 
+                className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </div>
+            
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
+              <img 
+                src={gallery9} 
+                alt="Financial industry expert speaking at event" 
+                className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </div>
+            
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
+              <img 
+                src={gallery10} 
+                alt="MaxDSA team engagement and collaboration" 
+                className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mission Statement */}
+      <section className="py-20 bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">
             Empowering DSA Success Through Digital Innovation: Our Mission at MaxDSA
