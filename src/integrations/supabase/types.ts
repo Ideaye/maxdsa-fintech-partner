@@ -46,6 +46,7 @@ export type Database = {
           reference_name: string | null
           reference_phone: string | null
           state: string
+          user_id: string | null
         }
         Insert: {
           aadhar_card_url?: string
@@ -78,6 +79,7 @@ export type Database = {
           reference_name?: string | null
           reference_phone?: string | null
           state?: string
+          user_id?: string | null
         }
         Update: {
           aadhar_card_url?: string
@@ -110,6 +112,7 @@ export type Database = {
           reference_name?: string | null
           reference_phone?: string | null
           state?: string
+          user_id?: string | null
         }
         Relationships: []
       }
