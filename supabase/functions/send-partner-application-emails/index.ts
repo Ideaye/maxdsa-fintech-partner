@@ -12,6 +12,16 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// Helper function to convert Uint8Array to base64 (Deno-compatible)
+function uint8ArrayToBase64(uint8Array: Uint8Array): string {
+  let binary = '';
+  const len = uint8Array.byteLength;
+  for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode(uint8Array[i]);
+  }
+  return btoa(binary);
+}
+
 interface PartnerApplicationRequest {
   fullName: string;
   email: string;
@@ -512,16 +522,18 @@ const handler = async (req: Request): Promise<Response> => {
     const attachments: any[] = [];
     
     if (excelBuffer) {
+      console.log('Adding Excel file as attachment');
       attachments.push({
         filename: `${businessName.replace(/[^a-zA-Z0-9]/g, '_')}_Application_${Date.now()}.xlsx`,
-        content: Buffer.from(excelBuffer).toString('base64'),
+        content: uint8ArrayToBase64(new Uint8Array(excelBuffer)),
       });
     }
     
     if (zipBuffer) {
+      console.log('Adding Zip file as attachment');
       attachments.push({
         filename: `${businessName.replace(/[^a-zA-Z0-9]/g, '_')}_Documents_${Date.now()}.zip`,
-        content: Buffer.from(zipBuffer).toString('base64'),
+        content: uint8ArrayToBase64(zipBuffer),
       });
     }
 
