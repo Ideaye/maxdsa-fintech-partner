@@ -43,6 +43,7 @@ const PartnerSignup = () => {
     pincode: "",
     
     // Individual fields
+    panNumber: "",
     aadharNumber: "",
     panCard: null as File | null,
     aadharCard: null as File | null,
@@ -209,6 +210,14 @@ const PartnerSignup = () => {
 
         // Type-specific validation
         if (partnerType === "individual") {
+          if (!formData.panNumber) {
+            toast({ title: "Error", description: "Please enter PAN card number", variant: "destructive" });
+            return false;
+          }
+          if (!validatePAN(formData.panNumber)) {
+            toast({ title: "Error", description: "Please enter a valid PAN card number", variant: "destructive" });
+            return false;
+          }
           if (!formData.aadharNumber || formData.aadharNumber.length !== 12) {
             toast({ title: "Error", description: "Please enter a valid 12-digit Aadhar number", variant: "destructive" });
             return false;
@@ -433,6 +442,7 @@ const PartnerSignup = () => {
       if (partnerType === "individual") {
         insertData = {
           ...insertData,
+          pan_number: formData.panNumber,
           aadhar_number: formData.aadharNumber,
           pan_card_url: primaryDocs[0] || "",
           aadhar_card_url: primaryDocs[1] || "",
@@ -883,6 +893,19 @@ const PartnerSignup = () => {
                       {/* Type-specific fields for Step 1 */}
                       {formData.partnerType === "individual" && (
                         <>
+                          <div>
+                            <Label htmlFor="panNumber">PAN Card Number *</Label>
+                            <Input
+                              id="panNumber"
+                              value={formData.panNumber}
+                              onChange={(e) => updateFormData("panNumber", e.target.value.toUpperCase())}
+                              placeholder="ABCDE1234F"
+                              maxLength={10}
+                              className="mt-2"
+                            />
+                            <p className="text-xs text-muted-foreground mt-1">10-character PAN number</p>
+                          </div>
+
                           <div>
                             <Label htmlFor="aadharNumber">Aadhar Number *</Label>
                             <Input

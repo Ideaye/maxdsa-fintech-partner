@@ -40,6 +40,7 @@ interface PartnerApplicationRequest {
   additionalDocuments?: string[];
   
   // Individual specific
+  panNumber?: string;
   aadharNumber?: string;
   businessName?: string;
   passportPhotoUrl?: string;
@@ -55,6 +56,8 @@ interface PartnerApplicationRequest {
   
   // Partnership specific
   partnerDetails?: any[];
+  partnershipDeedUrl?: string;
+  firmPanCardUrl?: string;
   
   // Private/Public Ltd specific
   companyName?: string;
@@ -64,6 +67,10 @@ interface PartnerApplicationRequest {
   companyDocumentType?: string;
   companyDocumentUrl?: string;
   directorDetails?: any[];
+  moaDocumentUrl?: string;
+  aoaDocumentUrl?: string;
+  coiDocumentUrl?: string;
+  companyPanCardUrl?: string;
   
   // Trust/Society specific
   trustName?: string;
@@ -71,9 +78,12 @@ interface PartnerApplicationRequest {
   trustPanNumber?: string;
   trustOfficeAddress?: string;
   trusteeDetails?: any[];
+  trustDeedUrl?: string;
+  trustPanCardUrl?: string;
   
   // Common documents
   gstRegistrationUrl?: string;
+  udyamCertificateUrl?: string;
 }
 
 async function generateExcelFile(applicationData: PartnerApplicationRequest, documentUrls: any) {
@@ -93,6 +103,10 @@ async function generateExcelFile(applicationData: PartnerApplicationRequest, doc
     ['State', applicationData.state],
     ['Pincode', applicationData.pincode],
   ];
+  
+  if (applicationData.panNumber) {
+    personalData.push(['PAN Number', applicationData.panNumber]);
+  }
   
   if (applicationData.aadharNumber) {
     personalData.push(['Aadhar Number', applicationData.aadharNumber]);
@@ -333,13 +347,36 @@ const handler = async (req: Request): Promise<Response> => {
     // Prepare document paths for zip creation (only include uploaded documents)
     const documentPaths: { path: string; category: string }[] = [];
     
+    // Personal documents
     if (applicationData.passportPhotoUrl) documentPaths.push({ path: applicationData.passportPhotoUrl, category: 'personal' });
     if (applicationData.panCardUrl) documentPaths.push({ path: applicationData.panCardUrl, category: 'personal' });
     if (applicationData.aadharCardUrl) documentPaths.push({ path: applicationData.aadharCardUrl, category: 'personal' });
+    
+    // Business documents - different for each partner type
     if (applicationData.companyDocumentUrl) documentPaths.push({ path: applicationData.companyDocumentUrl, category: 'business' });
     if (applicationData.gstRegistrationUrl) documentPaths.push({ path: applicationData.gstRegistrationUrl, category: 'business' });
+    
+    // Partnership specific documents
+    if (applicationData.partnershipDeedUrl) documentPaths.push({ path: applicationData.partnershipDeedUrl, category: 'business' });
+    if (applicationData.firmPanCardUrl) documentPaths.push({ path: applicationData.firmPanCardUrl, category: 'business' });
+    
+    // Private/Public Ltd specific documents
+    if (applicationData.moaDocumentUrl) documentPaths.push({ path: applicationData.moaDocumentUrl, category: 'business' });
+    if (applicationData.aoaDocumentUrl) documentPaths.push({ path: applicationData.aoaDocumentUrl, category: 'business' });
+    if (applicationData.coiDocumentUrl) documentPaths.push({ path: applicationData.coiDocumentUrl, category: 'business' });
+    if (applicationData.companyPanCardUrl) documentPaths.push({ path: applicationData.companyPanCardUrl, category: 'business' });
+    
+    // Trust/Society specific documents
+    if (applicationData.trustDeedUrl) documentPaths.push({ path: applicationData.trustDeedUrl, category: 'business' });
+    if (applicationData.trustPanCardUrl) documentPaths.push({ path: applicationData.trustPanCardUrl, category: 'business' });
+    
+    // Udyam certificate (common optional)
+    if (applicationData.udyamCertificateUrl) documentPaths.push({ path: applicationData.udyamCertificateUrl, category: 'business' });
+    
+    // Banking documents
     if (applicationData.bankDocumentUrl) documentPaths.push({ path: applicationData.bankDocumentUrl, category: 'banking' });
     
+    // Additional documents
     if (applicationData.additionalDocuments && applicationData.additionalDocuments.length > 0) {
       applicationData.additionalDocuments.forEach(doc => {
         documentPaths.push({ path: doc, category: 'additional' });
