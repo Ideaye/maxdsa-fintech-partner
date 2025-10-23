@@ -383,9 +383,10 @@ const PartnerSignup = () => {
           description: `${label} must be less than 2MB. Please compress or reduce the file size before uploading.`,
           variant: "destructive",
         });
-        // Clear the file input
+        // Clear the file input and state
         const input = document.getElementById(id) as HTMLInputElement;
         if (input) input.value = '';
+        onChange(null);
         return;
       }
 
@@ -396,9 +397,10 @@ const PartnerSignup = () => {
           description: `${label} must be JPG, PNG, or PDF`,
           variant: "destructive",
         });
-        // Clear the file input
+        // Clear the file input and state
         const input = document.getElementById(id) as HTMLInputElement;
         if (input) input.value = '';
+        onChange(null);
         return;
       }
 
