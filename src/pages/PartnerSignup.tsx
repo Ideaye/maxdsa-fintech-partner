@@ -399,82 +399,112 @@ const PartnerSignup = () => {
 
       const uploadResults = await Promise.all([...uploadPromises, ...additionalUploads]);
       
-      // Extract upload paths
-      const [primaryDocPath1, primaryDocPath2, primaryDocPath3, primaryDocPath4, primaryDocPath5, primaryDocPath6, bankDocPath, ...additionalDocPaths] = uploadResults;
+      // Extract upload paths - bank doc is always after primary docs
+      const primaryDocs = uploadResults.slice(0, uploadPromises.length - 1);
+      const bankDocPath = uploadResults[uploadPromises.length - 1];
+      const additionalDocPaths = uploadResults.slice(uploadPromises.length);
+      
+      // Prepare data based on partner type
+      let insertData: any = {
+        user_id: null,
+        partner_type: partnerType,
+        full_name: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        correspondence_address: formData.correspondenceAddress,
+        city: formData.city,
+        state: formData.state,
+        pincode: formData.pincode,
+        bank_account_number: formData.bankAccountNumber,
+        bank_ifsc_code: formData.bankIfscCode,
+        bank_name: formData.bankName,
+        bank_branch: formData.bankBranch || null,
+        bank_document_type: formData.bankDocumentType,
+        bank_document_url: bankDocPath,
+        reference_name: formData.referenceName,
+        reference_phone: formData.referencePhone,
+        reference_2_name: formData.reference2Name,
+        reference_2_phone: formData.reference2Phone,
+        agreed_to_terms: formData.agreedToTerms,
+        additional_documents: additionalDocPaths.filter(p => p !== null),
+      };
+      
+      // Add partner-type-specific fields
+      if (partnerType === "individual") {
+        insertData = {
+          ...insertData,
+          aadhar_number: formData.aadharNumber,
+          pan_card_url: primaryDocs[0] || "",
+          aadhar_card_url: primaryDocs[1] || "",
+          passport_photo_url: primaryDocs[2],
+          business_name: formData.businessName,
+          company_pan_number: formData.companyPanNumber,
+          company_document_type: formData.companyDocumentType,
+          company_document_url: primaryDocs[3],
+          gst_registration_url: primaryDocs[4],
+        };
+      } else if (partnerType === "proprietorship") {
+        insertData = {
+          ...insertData,
+          proprietor_name: formData.proprietorName,
+          firm_name: formData.firmName,
+          firm_gst_number: formData.firmGstNumber,
+          aadhar_number: formData.aadharNumber,
+          pan_card_url: primaryDocs[0] || "",
+          aadhar_card_url: primaryDocs[1] || "",
+          gst_registration_url: primaryDocs[2],
+        };
+      } else if (partnerType === "partnership") {
+        insertData = {
+          ...insertData,
+          firm_name: formData.firmName,
+          firm_pan_number: formData.firmPanNumber,
+          firm_office_address: formData.firmOfficeAddress,
+          partner_details: formData.partnerDetails,
+          pan_card_url: primaryDocs[1] || "",
+          gst_registration_url: primaryDocs[2],
+          company_document_url: primaryDocs[0], // Partnership deed
+          company_document_type: "partnership_deed",
+        };
+      } else if (partnerType === "private_public_ltd") {
+        insertData = {
+          ...insertData,
+          company_name: formData.companyName,
+          company_gst_number: formData.companyGstNumber,
+          company_office_address: formData.companyOfficeAddress,
+          company_pan_number: formData.companyPanNumber,
+          director_details: formData.directorDetails,
+          pan_card_url: primaryDocs[3] || "",
+          gst_registration_url: primaryDocs[4],
+          company_document_url: primaryDocs[0], // MOA
+          company_document_type: "moa",
+        };
+      } else if (partnerType === "trust_society") {
+        insertData = {
+          ...insertData,
+          trust_name: formData.trustName,
+          trust_gst_number: formData.trustGstNumber,
+          trust_pan_number: formData.trustPanNumber,
+          trust_office_address: formData.trustOfficeAddress,
+          trustee_details: formData.trusteeDetails,
+          pan_card_url: primaryDocs[1] || "",
+          gst_registration_url: primaryDocs[2],
+          company_document_url: primaryDocs[0], // Trust deed
+          company_document_type: "trust_deed",
+        };
+      }
 
       // Insert into database
       const { error: dbError } = await supabase
         .from('partner_applications')
-        .insert([{
-          user_id: null,
-          partner_type: partnerType,
-          full_name: formData.fullName,
-          email: formData.email,
-          phone: formData.phone,
-          correspondence_address: formData.correspondenceAddress,
-          city: formData.city,
-          state: formData.state,
-          pincode: formData.pincode,
-          
-          // Individual fields
-          aadhar_number: partnerType === "individual" || partnerType === "proprietorship" ? formData.aadharNumber : null,
-          pan_card_url: partnerType === "individual" || partnerType === "proprietorship" ? primaryDocPath1 : "",
-          aadhar_card_url: partnerType === "individual" || partnerType === "proprietorship" ? primaryDocPath2 : "",
-          passport_photo_url: partnerType === "individual" ? primaryDocPath3 : null,
-          
-          // Proprietorship fields
-          proprietor_name: partnerType === "proprietorship" ? formData.proprietorName : null,
-          firm_name: partnerType === "proprietorship" || partnerType === "partnership" ? formData.firmName : null,
-          firm_gst_number: partnerType === "proprietorship" ? formData.firmGstNumber : null,
-          
-          // Partnership fields
-          firm_pan_number: partnerType === "partnership" ? formData.firmPanNumber : null,
-          firm_office_address: partnerType === "partnership" ? formData.firmOfficeAddress : null,
-          partner_details: partnerType === "partnership" ? (formData.partnerDetails as any) : [],
-          
-          // Private/Public Ltd fields
-          company_name: partnerType === "private_public_ltd" ? formData.companyName : null,
-          company_gst_number: partnerType === "private_public_ltd" ? formData.companyGstNumber : null,
-          company_office_address: partnerType === "private_public_ltd" ? formData.companyOfficeAddress : null,
-          director_details: partnerType === "private_public_ltd" ? (formData.directorDetails as any) : [],
-          
-          // Trust/Society fields
-          trust_name: partnerType === "trust_society" ? formData.trustName : null,
-          trust_gst_number: partnerType === "trust_society" ? formData.trustGstNumber : null,
-          trust_pan_number: partnerType === "trust_society" ? formData.trustPanNumber : null,
-          trust_office_address: partnerType === "trust_society" ? formData.trustOfficeAddress : null,
-          trustee_details: partnerType === "trust_society" ? (formData.trusteeDetails as any) : [],
-          
-          // Business fields
-          business_name: partnerType === "individual" ? formData.businessName : null,
-          company_pan_number: partnerType === "individual" ? formData.companyPanNumber : null,
-          company_document_type: partnerType === "individual" ? formData.companyDocumentType : null,
-          company_document_url: partnerType === "individual" ? primaryDocPath4 : null,
-          gst_registration_url: formData.gstRegistration ? (partnerType === "individual" ? primaryDocPath5 : primaryDocPath3) : null,
-          
-          additional_documents: additionalDocPaths.filter(p => p !== null),
-          
-          // Banking fields
-          bank_account_number: formData.bankAccountNumber,
-          bank_ifsc_code: formData.bankIfscCode,
-          bank_name: formData.bankName,
-          bank_branch: formData.bankBranch || null,
-          bank_document_type: formData.bankDocumentType,
-          bank_document_url: bankDocPath,
-          
-          // References
-          reference_name: formData.referenceName,
-          reference_phone: formData.referencePhone,
-          reference_2_name: formData.reference2Name,
-          reference_2_phone: formData.reference2Phone,
-          agreed_to_terms: formData.agreedToTerms,
-        }]);
+        .insert([insertData]);
 
       if (dbError) {
         console.error("Database error:", dbError);
+        console.error("Full error details:", JSON.stringify(dbError, null, 2));
         toast({
           title: "Submission Error",
-          description: "Failed to submit application. Please try again.",
+          description: `Database error: ${dbError.message || "Please try again"}`,
           variant: "destructive",
         });
         setIsSubmitting(false);
@@ -506,9 +536,11 @@ const PartnerSignup = () => {
       });
     } catch (error) {
       console.error("Submission error:", error);
+      const errorMessage = error instanceof Error ? error.message : "Unknown error";
+      console.error("Error details:", errorMessage);
       toast({
         title: "Submission Error",
-        description: "An unexpected error occurred. Please try again.",
+        description: `Error: ${errorMessage}`,
         variant: "destructive",
       });
       setIsSubmitting(false);
