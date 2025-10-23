@@ -14,20 +14,12 @@ import { Upload, FileText, Image as ImageIcon, Plus, Trash2 } from "lucide-react
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
-type PartnerType = "" | "individual" | "proprietorship" | "partnership" | "private_public_ltd" | "trust_society" | "kirana_stores";
+type PartnerType = "" | "individual" | "proprietorship" | "partnership" | "private_public_ltd" | "trust_society";
 
 interface PartnerDetails {
   name: string;
   panNumber: string;
   aadharNumber: string;
-}
-
-interface ExistingLoan {
-  financierName: string;
-  loanAmount: string;
-  emiAmount: string;
-  tenor: string;
-  loanAvailedDate: string;
 }
 
 const PartnerSignup = () => {
@@ -110,27 +102,6 @@ const PartnerSignup = () => {
     reference2Name: "",
     reference2Phone: "",
     agreedToTerms: false,
-
-    // Kirana Stores fields
-    customerDob: "",
-    retailShopName: "",
-    retailShopAddress: "",
-    residenceAddress: "",
-    geoLocation: "",
-    natureOfRetailShop: "",
-    natureOfShopOwnership: "",
-    natureOfResidenceOwnership: "",
-    shopSize: "",
-    dailyTurnoverRange: "",
-    dailyWalkinsRange: "",
-    udyamNumber: "",
-    retailShopPhoto: null as File | null,
-    bankStatement: null as File | null,
-    itrDocuments: null as File | null,
-    coApplicantName: "",
-    coApplicantDob: "",
-    coApplicantContact: "",
-    existingLoans: [] as ExistingLoan[],
   });
 
   const updateFormData = (field: string, value: any) => {
@@ -226,16 +197,7 @@ const PartnerSignup = () => {
         return true;
       
       case 1:
-        // Kirana Stores validation
-        if (partnerType === "kirana_stores") {
-          if (!formData.fullName || !formData.customerDob || !formData.phone || !formData.retailShopName || !formData.retailShopAddress) {
-            toast({ title: "Error", description: "Please fill in all required fields", variant: "destructive" });
-            return false;
-          }
-          return true;
-        }
-
-        // Common validation for other types
+        // Common validation
         if (!formData.fullName || !formData.email || !formData.phone || !formData.correspondenceAddress || !formData.city || !formData.state || !formData.pincode) {
           toast({ title: "Error", description: "Please fill in all required fields", variant: "destructive" });
           return false;
@@ -302,15 +264,6 @@ const PartnerSignup = () => {
         return true;
       
       case 2:
-        // Kirana Stores validation
-        if (partnerType === "kirana_stores") {
-          if (!formData.natureOfRetailShop || !formData.natureOfShopOwnership || !formData.natureOfResidenceOwnership || !formData.shopSize || !formData.dailyTurnoverRange || !formData.dailyWalkinsRange) {
-            toast({ title: "Error", description: "Please fill in all required fields", variant: "destructive" });
-            return false;
-          }
-          return true;
-        }
-
         // Document validation based on partner type
         if (partnerType === "individual") {
           if (!formData.businessName || !formData.companyPanNumber || !formData.companyDocumentType) {
@@ -434,22 +387,10 @@ const PartnerSignup = () => {
           formData.gstRegistration ? uploadFile(formData.gstRegistration, 'gst-documents', 'GST registration') : Promise.resolve(null),
           formData.udyamCertificate ? uploadFile(formData.udyamCertificate, 'udyam-certificates', 'Udyam Certificate') : Promise.resolve(null),
         ];
-      } else if (partnerType === "kirana_stores") {
-        uploadPromises = [
-          formData.panCard ? uploadFile(formData.panCard, 'pan-cards', 'PAN card') : Promise.resolve(null),
-          formData.aadharCard ? uploadFile(formData.aadharCard, 'aadhar-cards', 'Aadhar card') : Promise.resolve(null),
-          formData.retailShopPhoto ? uploadFile(formData.retailShopPhoto, 'retail-shop-photos', 'Retail shop photo') : Promise.resolve(null),
-          formData.bankStatement ? uploadFile(formData.bankStatement, 'bank-statements', 'Bank statement') : Promise.resolve(null),
-          formData.itrDocuments ? uploadFile(formData.itrDocuments, 'itr-documents', 'ITR documents') : Promise.resolve(null),
-        ];
       }
 
-      // Add bank document (skip for kirana stores if not needed)
-      if (partnerType !== "kirana_stores") {
-        uploadPromises.push(uploadFile(formData.bankDocument!, 'bank-documents', 'bank document'));
-      } else {
-        uploadPromises.push(Promise.resolve(null));
-      }
+      // Add bank document
+      uploadPromises.push(uploadFile(formData.bankDocument!, 'bank-documents', 'bank document'));
 
       // Upload additional documents
       const additionalUploads = formData.additionalDocuments.map((file, index) => 
@@ -550,52 +491,6 @@ const PartnerSignup = () => {
           gst_registration_url: primaryDocs[2],
           company_document_url: primaryDocs[0], // Trust deed
           company_document_type: "trust_deed",
-        };
-      } else if (partnerType === "kirana_stores") {
-        insertData = {
-          user_id: null,
-          partner_type: partnerType,
-          full_name: formData.fullName,
-          email: formData.email || null,
-          phone: formData.phone,
-          customer_dob: formData.customerDob || null,
-          retail_shop_name: formData.retailShopName,
-          retail_shop_address: formData.retailShopAddress,
-          residence_address: formData.residenceAddress || null,
-          correspondence_address: formData.correspondenceAddress || formData.retailShopAddress,
-          city: formData.city || null,
-          state: formData.state || null,
-          pincode: formData.pincode || null,
-          geo_location: formData.geoLocation || null,
-          nature_of_retail_shop: formData.natureOfRetailShop,
-          nature_of_shop_ownership: formData.natureOfShopOwnership,
-          nature_of_residence_ownership: formData.natureOfResidenceOwnership,
-          shop_size: formData.shopSize,
-          daily_turnover_range: formData.dailyTurnoverRange,
-          daily_walkins_range: formData.dailyWalkinsRange,
-          udyam_number: formData.udyamNumber || null,
-          aadhar_number: formData.aadharNumber || null,
-          pan_card_url: primaryDocs[0] || null,
-          aadhar_card_url: primaryDocs[1] || null,
-          retail_shop_photo_url: primaryDocs[2] || null,
-          bank_statement_url: primaryDocs[3] || null,
-          itr_documents_url: primaryDocs[4] || null,
-          co_applicant_name: formData.coApplicantName || null,
-          co_applicant_dob: formData.coApplicantDob || null,
-          co_applicant_contact: formData.coApplicantContact || null,
-          existing_loans: formData.existingLoans,
-          bank_account_number: formData.bankAccountNumber,
-          bank_ifsc_code: formData.bankIfscCode,
-          bank_name: formData.bankName,
-          bank_branch: formData.bankBranch || null,
-          bank_document_type: formData.bankDocumentType,
-          bank_document_url: bankDocPath,
-          reference_name: formData.referenceName,
-          reference_phone: formData.referencePhone,
-          reference_2_name: formData.reference2Name,
-          reference_2_phone: formData.reference2Phone,
-          agreed_to_terms: formData.agreedToTerms,
-          additional_documents: additionalDocPaths.filter(p => p !== null),
         };
       }
 
@@ -916,21 +811,19 @@ const PartnerSignup = () => {
                             <SelectItem value="partnership">Partnership</SelectItem>
                             <SelectItem value="private_public_ltd">Private / Public Ltd</SelectItem>
                             <SelectItem value="trust_society">Trust / Society</SelectItem>
-                            <SelectItem value="kirana_stores">Kirana Stores</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
 
                       {formData.partnerType && (
                         <div className="bg-muted/30 p-4 rounded-lg">
-                          <h3 className="font-semibold mb-2">About {formData.partnerType === "individual" ? "Individual" : formData.partnerType === "proprietorship" ? "Proprietorship" : formData.partnerType === "partnership" ? "Partnership" : formData.partnerType === "private_public_ltd" ? "Private / Public Ltd" : formData.partnerType === "kirana_stores" ? "Kirana Stores" : "Trust / Society"}:</h3>
+                          <h3 className="font-semibold mb-2">About {formData.partnerType === "individual" ? "Individual" : formData.partnerType === "proprietorship" ? "Proprietorship" : formData.partnerType === "partnership" ? "Partnership" : formData.partnerType === "private_public_ltd" ? "Private / Public Ltd" : "Trust / Society"}:</h3>
                           <p className="text-sm text-muted-foreground">
                             {formData.partnerType === "individual" && "For individual professionals looking to partner with MaxDSA"}
                             {formData.partnerType === "proprietorship" && "For sole proprietorship businesses owned and managed by a single individual"}
                             {formData.partnerType === "partnership" && "For businesses owned by two or more partners sharing profits and responsibilities"}
                             {formData.partnerType === "private_public_ltd" && "For registered companies with limited liability"}
                             {formData.partnerType === "trust_society" && "For registered trusts or societies"}
-                            {formData.partnerType === "kirana_stores" && "For retail shop owners looking to partner with MaxDSA"}
                           </p>
                         </div>
                       )}
@@ -945,205 +838,47 @@ const PartnerSignup = () => {
                          formData.partnerType === "proprietorship" ? "Proprietorship Information" :
                          formData.partnerType === "partnership" ? "Partnership Information" :
                          formData.partnerType === "private_public_ltd" ? "Company Information" :
-                         formData.partnerType === "kirana_stores" ? "Personal & Shop Information" :
                          "Trust/Society Information"}
                       </h2>
                       
-                      {/* Kirana Stores Step 1 */}
-                      {formData.partnerType === "kirana_stores" && (
-                        <>
-                          <div>
-                            <Label htmlFor="fullName">Name of the Customer *</Label>
-                            <Input
-                              id="fullName"
-                              value={formData.fullName}
-                              onChange={(e) => updateFormData("fullName", e.target.value)}
-                              placeholder="John Doe"
-                              className="mt-2"
-                            />
-                          </div>
+                      {/* Common fields */}
+                      <div>
+                        <Label htmlFor="fullName">
+                          {formData.partnerType === "individual" ? "Full Name" : 
+                           formData.partnerType === "proprietorship" ? "Contact Person Name" : "Authorized Signatory Name"} *
+                        </Label>
+                        <Input
+                          id="fullName"
+                          value={formData.fullName}
+                          onChange={(e) => updateFormData("fullName", e.target.value)}
+                          placeholder="John Doe"
+                          className="mt-2"
+                        />
+                      </div>
 
-                          <div>
-                            <Label htmlFor="customerDob">Date of Birth *</Label>
-                            <Input
-                              id="customerDob"
-                              type="date"
-                              value={formData.customerDob}
-                              onChange={(e) => updateFormData("customerDob", e.target.value)}
-                              className="mt-2"
-                            />
-                          </div>
+                      <div>
+                        <Label htmlFor="phone">Phone Number *</Label>
+                        <Input
+                          id="phone"
+                          type="tel"
+                          value={formData.phone}
+                          onChange={(e) => updateFormData("phone", e.target.value)}
+                          placeholder="+91 98765 43210"
+                          className="mt-2"
+                        />
+                      </div>
 
-                          <div>
-                            <Label htmlFor="phone">Contact Number *</Label>
-                            <Input
-                              id="phone"
-                              type="tel"
-                              value={formData.phone}
-                              onChange={(e) => updateFormData("phone", e.target.value)}
-                              placeholder="+91 98765 43210"
-                              className="mt-2"
-                            />
-                          </div>
-
-                          <div>
-                            <Label htmlFor="coApplicantName">Co-applicant Name (Optional)</Label>
-                            <Input
-                              id="coApplicantName"
-                              value={formData.coApplicantName}
-                              onChange={(e) => updateFormData("coApplicantName", e.target.value)}
-                              placeholder="Jane Doe"
-                              className="mt-2"
-                            />
-                          </div>
-
-                          <div>
-                            <Label htmlFor="coApplicantDob">Co-applicant Date of Birth (Optional)</Label>
-                            <Input
-                              id="coApplicantDob"
-                              type="date"
-                              value={formData.coApplicantDob}
-                              onChange={(e) => updateFormData("coApplicantDob", e.target.value)}
-                              className="mt-2"
-                            />
-                          </div>
-
-                          <div>
-                            <Label htmlFor="coApplicantContact">Contact Number (Secondary) (Optional)</Label>
-                            <Input
-                              id="coApplicantContact"
-                              type="tel"
-                              value={formData.coApplicantContact}
-                              onChange={(e) => updateFormData("coApplicantContact", e.target.value)}
-                              placeholder="+91 98765 43210"
-                              className="mt-2"
-                            />
-                          </div>
-
-                          <div>
-                            <Label htmlFor="email">Email ID (Optional)</Label>
-                            <Input
-                              id="email"
-                              type="email"
-                              value={formData.email}
-                              onChange={(e) => updateFormData("email", e.target.value)}
-                              placeholder="john@example.com"
-                              className="mt-2"
-                            />
-                          </div>
-
-                          <div>
-                            <Label htmlFor="retailShopName">Name of the Retail Shop *</Label>
-                            <Input
-                              id="retailShopName"
-                              value={formData.retailShopName}
-                              onChange={(e) => updateFormData("retailShopName", e.target.value)}
-                              placeholder="ABC Kirana Store"
-                              className="mt-2"
-                            />
-                          </div>
-
-                          <div>
-                            <Label htmlFor="retailShopAddress">Address of the Retail Shop *</Label>
-                            <Input
-                              id="retailShopAddress"
-                              value={formData.retailShopAddress}
-                              onChange={(e) => updateFormData("retailShopAddress", e.target.value)}
-                              placeholder="123 Main Street, City, State"
-                              className="mt-2"
-                            />
-                          </div>
-
-                          <div>
-                            <Label htmlFor="residenceAddress">Address of the Residence (Optional)</Label>
-                            <Input
-                              id="residenceAddress"
-                              value={formData.residenceAddress}
-                              onChange={(e) => updateFormData("residenceAddress", e.target.value)}
-                              placeholder="456 Home Street, City, State"
-                              className="mt-2"
-                            />
-                          </div>
-
-                          <div>
-                            <Label htmlFor="geoLocation">Geo Tagging of the Location (Optional)</Label>
-                            <Input
-                              id="geoLocation"
-                              value={formData.geoLocation}
-                              onChange={(e) => updateFormData("geoLocation", e.target.value)}
-                              placeholder="Latitude, Longitude or location description"
-                              className="mt-2"
-                            />
-                          </div>
-
-                          <div>
-                            <Label htmlFor="aadharNumber">Aadhar Card Number (Optional)</Label>
-                            <Input
-                              id="aadharNumber"
-                              value={formData.aadharNumber}
-                              onChange={(e) => updateFormData("aadharNumber", e.target.value.replace(/\D/g, ''))}
-                              placeholder="XXXX XXXX XXXX"
-                              maxLength={12}
-                              className="mt-2"
-                            />
-                            <p className="text-xs text-muted-foreground mt-1">12-digit Aadhar number</p>
-                          </div>
-
-                          <div>
-                            <Label htmlFor="udyamNumber">Udyam Number (Optional)</Label>
-                            <Input
-                              id="udyamNumber"
-                              value={formData.udyamNumber}
-                              onChange={(e) => updateFormData("udyamNumber", e.target.value)}
-                              placeholder="UDYAM-XX-00-0000000"
-                              className="mt-2"
-                            />
-                          </div>
-                        </>
-                      )}
-                      
-                      {/* Common fields for other types */}
-                      {formData.partnerType !== "kirana_stores" && (
-                        <>
-                          <div>
-                            <Label htmlFor="fullName">
-                              {formData.partnerType === "individual" ? "Full Name" : 
-                               formData.partnerType === "proprietorship" ? "Contact Person Name" : "Authorized Signatory Name"} *
-                            </Label>
-                            <Input
-                              id="fullName"
-                              value={formData.fullName}
-                              onChange={(e) => updateFormData("fullName", e.target.value)}
-                              placeholder="John Doe"
-                              className="mt-2"
-                            />
-                          </div>
-
-                          <div>
-                            <Label htmlFor="phone">Phone Number *</Label>
-                            <Input
-                              id="phone"
-                              type="tel"
-                              value={formData.phone}
-                              onChange={(e) => updateFormData("phone", e.target.value)}
-                              placeholder="+91 98765 43210"
-                              className="mt-2"
-                            />
-                          </div>
-
-                          <div>
-                            <Label htmlFor="email">Email Address *</Label>
-                            <Input
-                              id="email"
-                              type="email"
-                              value={formData.email}
-                              onChange={(e) => updateFormData("email", e.target.value)}
-                              placeholder="john@example.com"
-                              className="mt-2"
-                            />
-                          </div>
-                        </>
-                      )}
+                      <div>
+                        <Label htmlFor="email">Email Address *</Label>
+                        <Input
+                          id="email"
+                          type="email"
+                          value={formData.email}
+                          onChange={(e) => updateFormData("email", e.target.value)}
+                          placeholder="john@example.com"
+                          className="mt-2"
+                        />
+                      </div>
 
                       {/* Type-specific fields for Step 1 */}
                       {formData.partnerType === "individual" && (
@@ -1499,57 +1234,53 @@ const PartnerSignup = () => {
                         </>
                       )}
 
-                      {/* Common address fields - not for Kirana Stores */}
-                      {formData.partnerType !== "kirana_stores" && (
-                        <>
-                          <div>
-                            <Label htmlFor="correspondenceAddress">Correspondence Address *</Label>
-                            <Input
-                              id="correspondenceAddress"
-                              value={formData.correspondenceAddress}
-                              onChange={(e) => updateFormData("correspondenceAddress", e.target.value)}
-                              placeholder="Street Address, Area"
-                              className="mt-2"
-                            />
-                          </div>
+                      {/* Common address fields */}
+                      <div>
+                        <Label htmlFor="correspondenceAddress">Correspondence Address *</Label>
+                        <Input
+                          id="correspondenceAddress"
+                          value={formData.correspondenceAddress}
+                          onChange={(e) => updateFormData("correspondenceAddress", e.target.value)}
+                          placeholder="Street Address, Area"
+                          className="mt-2"
+                        />
+                      </div>
 
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div>
-                              <Label htmlFor="city">City *</Label>
-                              <Input
-                                id="city"
-                                value={formData.city}
-                                onChange={(e) => updateFormData("city", e.target.value)}
-                                placeholder="Mumbai"
-                                className="mt-2"
-                              />
-                            </div>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                          <Label htmlFor="city">City *</Label>
+                          <Input
+                            id="city"
+                            value={formData.city}
+                            onChange={(e) => updateFormData("city", e.target.value)}
+                            placeholder="Mumbai"
+                            className="mt-2"
+                          />
+                        </div>
 
-                            <div>
-                              <Label htmlFor="state">State *</Label>
-                              <Input
-                                id="state"
-                                value={formData.state}
-                                onChange={(e) => updateFormData("state", e.target.value)}
-                                placeholder="Maharashtra"
-                                className="mt-2"
-                              />
-                            </div>
+                        <div>
+                          <Label htmlFor="state">State *</Label>
+                          <Input
+                            id="state"
+                            value={formData.state}
+                            onChange={(e) => updateFormData("state", e.target.value)}
+                            placeholder="Maharashtra"
+                            className="mt-2"
+                          />
+                        </div>
 
-                            <div>
-                              <Label htmlFor="pincode">Pincode *</Label>
-                              <Input
-                                id="pincode"
-                                value={formData.pincode}
-                                onChange={(e) => updateFormData("pincode", e.target.value.replace(/\D/g, ''))}
-                                placeholder="400001"
-                                maxLength={6}
-                                className="mt-2"
-                              />
-                            </div>
-                          </div>
-                        </>
-                      )}
+                        <div>
+                          <Label htmlFor="pincode">Pincode *</Label>
+                          <Input
+                            id="pincode"
+                            value={formData.pincode}
+                            onChange={(e) => updateFormData("pincode", e.target.value.replace(/\D/g, ''))}
+                            placeholder="400001"
+                            maxLength={6}
+                            className="mt-2"
+                          />
+                        </div>
+                      </div>
                     </div>
                   )}
 
@@ -1561,243 +1292,8 @@ const PartnerSignup = () => {
                          formData.partnerType === "proprietorship" ? "Proprietorship Documents" :
                          formData.partnerType === "partnership" ? "Partnership Documents" :
                          formData.partnerType === "private_public_ltd" ? "Company Documents" :
-                         formData.partnerType === "kirana_stores" ? "Business Metrics & Documents" :
                          "Trust Documents"}
                       </h2>
-
-                      {formData.partnerType === "kirana_stores" && (
-                        <>
-                          <div>
-                            <Label htmlFor="natureOfRetailShop">Nature of Retail Shop *</Label>
-                            <Input
-                              id="natureOfRetailShop"
-                              value={formData.natureOfRetailShop}
-                              onChange={(e) => updateFormData("natureOfRetailShop", e.target.value)}
-                              placeholder="e.g., Grocery, Pharmacy, Hardware Store"
-                              className="mt-2"
-                            />
-                            <p className="text-xs text-muted-foreground mt-1">You can enter multiple categories separated by commas</p>
-                          </div>
-
-                          <div>
-                            <Label>Nature of Shop: Owned/Rented *</Label>
-                            <RadioGroup
-                              value={formData.natureOfShopOwnership}
-                              onValueChange={(value) => updateFormData("natureOfShopOwnership", value)}
-                              className="mt-2 space-y-2"
-                            >
-                              <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="owned" id="shop_owned" />
-                                <Label htmlFor="shop_owned" className="font-normal cursor-pointer">Owned</Label>
-                              </div>
-                              <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="rented" id="shop_rented" />
-                                <Label htmlFor="shop_rented" className="font-normal cursor-pointer">Rented</Label>
-                              </div>
-                            </RadioGroup>
-                          </div>
-
-                          <div>
-                            <Label>Nature of Residence: Owned/Rented *</Label>
-                            <RadioGroup
-                              value={formData.natureOfResidenceOwnership}
-                              onValueChange={(value) => updateFormData("natureOfResidenceOwnership", value)}
-                              className="mt-2 space-y-2"
-                            >
-                              <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="owned" id="residence_owned" />
-                                <Label htmlFor="residence_owned" className="font-normal cursor-pointer">Owned</Label>
-                              </div>
-                              <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="rented" id="residence_rented" />
-                                <Label htmlFor="residence_rented" className="font-normal cursor-pointer">Rented</Label>
-                              </div>
-                            </RadioGroup>
-                          </div>
-
-                          <div>
-                            <Label htmlFor="shopSize">Size of the Shop *</Label>
-                            <Select
-                              value={formData.shopSize}
-                              onValueChange={(value) => updateFormData("shopSize", value)}
-                            >
-                              <SelectTrigger className="mt-2">
-                                <SelectValue placeholder="Select shop size" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="0-200">0-200 sq ft</SelectItem>
-                                <SelectItem value="200-500">200-500 sq ft</SelectItem>
-                                <SelectItem value="500-1000">500-1000 sq ft</SelectItem>
-                                <SelectItem value="1000+">1000+ sq ft</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-
-                          <div>
-                            <Label htmlFor="dailyTurnoverRange">Daily Turnover Range *</Label>
-                            <Select
-                              value={formData.dailyTurnoverRange}
-                              onValueChange={(value) => updateFormData("dailyTurnoverRange", value)}
-                            >
-                              <SelectTrigger className="mt-2">
-                                <SelectValue placeholder="Select daily turnover range" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="0-5000">₹0 - ₹5,000</SelectItem>
-                                <SelectItem value="5000-10000">₹5,000 - ₹10,000</SelectItem>
-                                <SelectItem value="10000-20000">₹10,000 - ₹20,000</SelectItem>
-                                <SelectItem value="20000-50000">₹20,000 - ₹50,000</SelectItem>
-                                <SelectItem value="50000+">₹50,000+</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-
-                          <div>
-                            <Label htmlFor="dailyWalkinsRange">Daily Number of Walk-ins *</Label>
-                            <Select
-                              value={formData.dailyWalkinsRange}
-                              onValueChange={(value) => updateFormData("dailyWalkinsRange", value)}
-                            >
-                              <SelectTrigger className="mt-2">
-                                <SelectValue placeholder="Select daily walk-ins range" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="0-20">0-20 customers</SelectItem>
-                                <SelectItem value="20-50">20-50 customers</SelectItem>
-                                <SelectItem value="50-100">50-100 customers</SelectItem>
-                                <SelectItem value="100-200">100-200 customers</SelectItem>
-                                <SelectItem value="200+">200+ customers</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-
-                          <FileUploadInput
-                            id="panCard"
-                            accept="application/pdf,image/jpeg,image/png"
-                            onChange={(file) => updateFormData("panCard", file)}
-                            file={formData.panCard}
-                            label="PAN Card (Optional)"
-                            optional={true}
-                          />
-
-                          <FileUploadInput
-                            id="aadharCard"
-                            accept="application/pdf,image/jpeg,image/png"
-                            onChange={(file) => updateFormData("aadharCard", file)}
-                            file={formData.aadharCard}
-                            label="Aadhar Card (Optional)"
-                            optional={true}
-                          />
-
-                          <FileUploadInput
-                            id="retailShopPhoto"
-                            accept="image/jpeg,image/png"
-                            onChange={(file) => updateFormData("retailShopPhoto", file)}
-                            file={formData.retailShopPhoto}
-                            label="Photo of the Retail Shop (Optional)"
-                            optional={true}
-                            isImage={true}
-                          />
-
-                          <FileUploadInput
-                            id="bankStatement"
-                            accept="application/pdf"
-                            onChange={(file) => updateFormData("bankStatement", file)}
-                            file={formData.bankStatement}
-                            label="Bank Statement (Optional)"
-                            optional={true}
-                          />
-
-                          <FileUploadInput
-                            id="itrDocuments"
-                            accept="application/pdf"
-                            onChange={(file) => updateFormData("itrDocuments", file)}
-                            file={formData.itrDocuments}
-                            label="ITR Documents (Optional)"
-                            optional={true}
-                          />
-
-                          <div>
-                            <div className="flex justify-between items-center mb-2">
-                              <Label>Existing Mortgage Loans (Optional)</Label>
-                              <Button type="button" size="sm" onClick={() => {
-                                updateFormData("existingLoans", [...formData.existingLoans, {
-                                  financierName: "",
-                                  loanAmount: "",
-                                  emiAmount: "",
-                                  tenor: "",
-                                  loanAvailedDate: ""
-                                }]);
-                              }}>
-                                <Plus className="h-4 w-4 mr-1" /> Add Loan
-                              </Button>
-                            </div>
-                            {formData.existingLoans.map((loan, index) => (
-                              <div key={index} className="bg-muted/30 p-4 rounded-lg mb-3 space-y-3">
-                                <div className="flex justify-between items-center">
-                                  <span className="font-semibold text-sm">Loan {index + 1}</span>
-                                  <Button
-                                    type="button"
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => {
-                                      updateFormData("existingLoans", formData.existingLoans.filter((_, i) => i !== index));
-                                    }}
-                                  >
-                                    <Trash2 className="h-4 w-4 text-destructive" />
-                                  </Button>
-                                </div>
-                                <Input
-                                  placeholder="Name of Financier"
-                                  value={loan.financierName}
-                                  onChange={(e) => {
-                                    const updated = [...formData.existingLoans];
-                                    updated[index].financierName = e.target.value;
-                                    updateFormData("existingLoans", updated);
-                                  }}
-                                />
-                                <Input
-                                  placeholder="Loan Amount"
-                                  value={loan.loanAmount}
-                                  onChange={(e) => {
-                                    const updated = [...formData.existingLoans];
-                                    updated[index].loanAmount = e.target.value;
-                                    updateFormData("existingLoans", updated);
-                                  }}
-                                />
-                                <Input
-                                  placeholder="EMI"
-                                  value={loan.emiAmount}
-                                  onChange={(e) => {
-                                    const updated = [...formData.existingLoans];
-                                    updated[index].emiAmount = e.target.value;
-                                    updateFormData("existingLoans", updated);
-                                  }}
-                                />
-                                <Input
-                                  placeholder="Tenor (in months)"
-                                  value={loan.tenor}
-                                  onChange={(e) => {
-                                    const updated = [...formData.existingLoans];
-                                    updated[index].tenor = e.target.value;
-                                    updateFormData("existingLoans", updated);
-                                  }}
-                                />
-                                <Input
-                                  type="date"
-                                  placeholder="Date of Loan Availed"
-                                  value={loan.loanAvailedDate}
-                                  onChange={(e) => {
-                                    const updated = [...formData.existingLoans];
-                                    updated[index].loanAvailedDate = e.target.value;
-                                    updateFormData("existingLoans", updated);
-                                  }}
-                                />
-                              </div>
-                            ))}
-                          </div>
-                        </>
-                      )}
 
                       {formData.partnerType === "individual" && (
                         <>
