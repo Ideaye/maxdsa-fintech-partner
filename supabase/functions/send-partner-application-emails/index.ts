@@ -603,8 +603,8 @@ const handler = async (req: Request): Promise<Response> => {
                 </div>
                 
                 <div class="button-container">
-                  <a href="https://maxdsa.com" target="_blank" class="button button-primary">Visit Website</a>
-                  <a href="mailto:partner@maxdsa.com" class="button button-secondary">Contact Us</a>
+                  <a href="https://maxdsa.com" target="_blank" class="button button-primary" style="background-color: #1a56db; color: #ffffff !important; text-decoration: none;">Visit Website</a>
+                  <a href="mailto:partner@maxdsa.com" class="button button-secondary" style="background-color: #ffffff; color: #1a56db !important; border: 2px solid #1a56db; text-decoration: none;">Contact Us</a>
                 </div>
                 
                 <p class="footer-text">We're excited about the possibility of partnering with you!</p>
@@ -803,14 +803,14 @@ const handler = async (req: Request): Promise<Response> => {
                 <div class="documents-section">
                   <div class="section-title">📄 Application Documents (Links)</div>
                   <p style="color: #6b7280; margin-bottom: 15px;">Document links are available for the next 7 days:</p>
-                  ${passportPhotoSignedUrl ? `<a href="${passportPhotoSignedUrl}" target="_blank" class="document-link">📷 Passport Photo</a>` : ''}
-                  ${panCardSignedUrl ? `<a href="${panCardSignedUrl}" target="_blank" class="document-link">📄 PAN Card</a>` : ''}
-                  ${aadharCardSignedUrl ? `<a href="${aadharCardSignedUrl}" target="_blank" class="document-link">📄 Aadhar Card</a>` : ''}
-                  ${companyDocSignedUrl ? `<a href="${companyDocSignedUrl}" target="_blank" class="document-link">📄 Company Document</a>` : ''}
-                  ${gstSignedUrl ? `<a href="${gstSignedUrl}" target="_blank" class="document-link">📄 GST Registration</a>` : ''}
-                  ${bankDocSignedUrl ? `<a href="${bankDocSignedUrl}" target="_blank" class="document-link">🏦 Bank Document</a>` : ''}
+                  ${passportPhotoSignedUrl ? `<a href="${passportPhotoSignedUrl}" target="_blank" class="document-link" style="background-color: #1a56db; color: #ffffff !important; text-decoration: none;">📷 Passport Photo</a>` : ''}
+                  ${panCardSignedUrl ? `<a href="${panCardSignedUrl}" target="_blank" class="document-link" style="background-color: #1a56db; color: #ffffff !important; text-decoration: none;">📄 PAN Card</a>` : ''}
+                  ${aadharCardSignedUrl ? `<a href="${aadharCardSignedUrl}" target="_blank" class="document-link" style="background-color: #1a56db; color: #ffffff !important; text-decoration: none;">📄 Aadhar Card</a>` : ''}
+                  ${companyDocSignedUrl ? `<a href="${companyDocSignedUrl}" target="_blank" class="document-link" style="background-color: #1a56db; color: #ffffff !important; text-decoration: none;">📄 Company Document</a>` : ''}
+                  ${gstSignedUrl ? `<a href="${gstSignedUrl}" target="_blank" class="document-link" style="background-color: #1a56db; color: #ffffff !important; text-decoration: none;">📄 GST Registration</a>` : ''}
+                  ${bankDocSignedUrl ? `<a href="${bankDocSignedUrl}" target="_blank" class="document-link" style="background-color: #1a56db; color: #ffffff !important; text-decoration: none;">🏦 Bank Document</a>` : ''}
                   ${additionalDocSignedUrls.map((url, index) => 
-                    `<a href="${url}" target="_blank" class="document-link">📄 Additional Doc ${index + 1}</a>`
+                    `<a href="${url}" target="_blank" class="document-link" style="background-color: #1a56db; color: #ffffff !important; text-decoration: none;">📄 Additional Doc ${index + 1}</a>`
                   ).join('\n                  ')}
                 </div>
               </div>
