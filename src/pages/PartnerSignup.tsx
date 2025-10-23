@@ -8,42 +8,95 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowRight01Icon, ArrowLeft01Icon } from "hugeicons-react";
-import { Upload, FileText, Image as ImageIcon } from "lucide-react";
+import { Upload, FileText, Image as ImageIcon, Plus, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
+type PartnerType = "" | "individual" | "proprietorship" | "partnership" | "private_public_ltd" | "trust_society";
+
+interface PartnerDetails {
+  name: string;
+  panNumber: string;
+  aadharNumber: string;
+}
+
 const PartnerSignup = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({});
   const { toast } = useToast();
   
   const [formData, setFormData] = useState({
+    // Partner Type
+    partnerType: "" as PartnerType,
+    
+    // Common fields
     fullName: "",
     phone: "",
     email: "",
-    aadharNumber: "",
-    panCard: null as File | null,
-    aadharCard: null as File | null,
     correspondenceAddress: "",
     city: "",
     state: "",
     pincode: "",
+    
+    // Individual fields
+    aadharNumber: "",
+    panCard: null as File | null,
+    aadharCard: null as File | null,
     passportPhoto: null as File | null,
+    
+    // Proprietorship fields
+    proprietorName: "",
+    firmName: "",
+    firmGstNumber: "",
+    
+    // Partnership fields
+    firmPanNumber: "",
+    firmOfficeAddress: "",
+    partnerDetails: [] as PartnerDetails[],
+    partnershipDeed: null as File | null,
+    firmPanCard: null as File | null,
+    
+    // Private/Public Ltd fields
+    companyName: "",
+    companyGstNumber: "",
+    companyOfficeAddress: "",
+    directorDetails: [] as PartnerDetails[],
+    moaDocument: null as File | null,
+    aoaDocument: null as File | null,
+    coiDocument: null as File | null,
+    companyPanCard: null as File | null,
+    
+    // Trust/Society fields
+    trustName: "",
+    trustGstNumber: "",
+    trustPanNumber: "",
+    trustOfficeAddress: "",
+    trusteeDetails: [] as PartnerDetails[],
+    trustDeed: null as File | null,
+    trustPanCard: null as File | null,
+    
+    // Common business fields
     businessName: "",
     companyPanNumber: "",
     companyDocumentType: "",
     companyDocument: null as File | null,
     gstRegistration: null as File | null,
+    udyamCertificate: null as File | null,
     additionalDocuments: [] as File[],
+    
+    // Banking fields
     bankAccountNumber: "",
     bankIfscCode: "",
     bankName: "",
     bankBranch: "",
     bankDocumentType: "",
     bankDocument: null as File | null,
+    
+    // References
     referenceName: "",
     referencePhone: "",
     reference2Name: "",
@@ -70,7 +123,9 @@ const PartnerSignup = () => {
     return ifscRegex.test(ifsc);
   };
 
-  const validateFile = (file: File | null, fieldName: string) => {
+  const validateFile = (file: File | null, fieldName: string, optional: boolean = false) => {
+    if (!file && optional) return true;
+    
     if (!file) {
       toast({
         title: "Error",
@@ -80,7 +135,7 @@ const PartnerSignup = () => {
       return false;
     }
 
-    const maxSize = 2 * 1024 * 1024; // 2MB limit to prevent large zip files
+    const maxSize = 2 * 1024 * 1024; // 2MB limit
     if (file.size > maxSize) {
       toast({
         title: "Error",
@@ -131,42 +186,113 @@ const PartnerSignup = () => {
   };
 
   const validateStep = (currentStep: number): boolean => {
+    const { partnerType } = formData;
+    
     switch (currentStep) {
-      case 1:
-        if (!formData.fullName || !formData.email || !formData.phone || !formData.aadharNumber || !formData.correspondenceAddress || !formData.city || !formData.state || !formData.pincode) {
-          toast({ title: "Error", description: "Please fill in all required fields", variant: "destructive" });
+      case 0:
+        if (!partnerType) {
+          toast({ title: "Error", description: "Please select a partner type", variant: "destructive" });
           return false;
         }
-        if (formData.aadharNumber.length !== 12) {
-          toast({ title: "Error", description: "Please enter a valid 12-digit Aadhar number", variant: "destructive" });
+        return true;
+      
+      case 1:
+        // Common validation
+        if (!formData.fullName || !formData.email || !formData.phone || !formData.correspondenceAddress || !formData.city || !formData.state || !formData.pincode) {
+          toast({ title: "Error", description: "Please fill in all required fields", variant: "destructive" });
           return false;
         }
         if (!validatePincode(formData.pincode)) {
           toast({ title: "Error", description: "Please enter a valid 6-digit pincode", variant: "destructive" });
           return false;
         }
-        if (!validateFile(formData.panCard, "PAN card")) {
-          return false;
-        }
-        if (!validateFile(formData.aadharCard, "Aadhar card")) {
-          return false;
-        }
-        if (!validateFile(formData.passportPhoto, "passport photo")) {
-          return false;
+
+        // Type-specific validation
+        if (partnerType === "individual") {
+          if (!formData.aadharNumber || formData.aadharNumber.length !== 12) {
+            toast({ title: "Error", description: "Please enter a valid 12-digit Aadhar number", variant: "destructive" });
+            return false;
+          }
+          if (!validateFile(formData.panCard, "PAN card") || !validateFile(formData.aadharCard, "Aadhar card") || !validateFile(formData.passportPhoto, "passport photo")) {
+            return false;
+          }
+        } else if (partnerType === "proprietorship") {
+          if (!formData.firmName || !formData.proprietorName || !formData.aadharNumber) {
+            toast({ title: "Error", description: "Please fill in all required fields", variant: "destructive" });
+            return false;
+          }
+          if (formData.aadharNumber.length !== 12) {
+            toast({ title: "Error", description: "Please enter a valid 12-digit Aadhar number", variant: "destructive" });
+            return false;
+          }
+        } else if (partnerType === "partnership") {
+          if (!formData.firmName || !formData.firmPanNumber || !formData.firmOfficeAddress) {
+            toast({ title: "Error", description: "Please fill in all required fields", variant: "destructive" });
+            return false;
+          }
+          if (!validatePAN(formData.firmPanNumber)) {
+            toast({ title: "Error", description: "Please enter a valid Firm PAN number", variant: "destructive" });
+            return false;
+          }
+          if (formData.partnerDetails.length < 2) {
+            toast({ title: "Error", description: "Please add at least 2 partners", variant: "destructive" });
+            return false;
+          }
+        } else if (partnerType === "private_public_ltd") {
+          if (!formData.companyName || !formData.companyOfficeAddress) {
+            toast({ title: "Error", description: "Please fill in all required fields", variant: "destructive" });
+            return false;
+          }
+          if (formData.directorDetails.length < 1) {
+            toast({ title: "Error", description: "Please add at least 1 director", variant: "destructive" });
+            return false;
+          }
+        } else if (partnerType === "trust_society") {
+          if (!formData.trustName || !formData.trustPanNumber || !formData.trustOfficeAddress) {
+            toast({ title: "Error", description: "Please fill in all required fields", variant: "destructive" });
+            return false;
+          }
+          if (!validatePAN(formData.trustPanNumber)) {
+            toast({ title: "Error", description: "Please enter a valid Trust PAN number", variant: "destructive" });
+            return false;
+          }
+          if (formData.trusteeDetails.length < 1) {
+            toast({ title: "Error", description: "Please add at least 1 trustee", variant: "destructive" });
+            return false;
+          }
         }
         return true;
       
       case 2:
-        if (!formData.businessName || !formData.companyPanNumber || !formData.companyDocumentType) {
-          toast({ title: "Error", description: "Please fill in all required fields", variant: "destructive" });
-          return false;
-        }
-        if (!validatePAN(formData.companyPanNumber)) {
-          toast({ title: "Error", description: "Please enter a valid Company PAN number", variant: "destructive" });
-          return false;
-        }
-        if (!validateFile(formData.companyDocument, "company document")) {
-          return false;
+        // Document validation based on partner type
+        if (partnerType === "individual") {
+          if (!formData.businessName || !formData.companyPanNumber || !formData.companyDocumentType) {
+            toast({ title: "Error", description: "Please fill in all required fields", variant: "destructive" });
+            return false;
+          }
+          if (!validatePAN(formData.companyPanNumber)) {
+            toast({ title: "Error", description: "Please enter a valid Company PAN number", variant: "destructive" });
+            return false;
+          }
+          if (!validateFile(formData.companyDocument, "company document")) {
+            return false;
+          }
+        } else if (partnerType === "proprietorship") {
+          if (!validateFile(formData.panCard, "PAN card") || !validateFile(formData.aadharCard, "Aadhar card")) {
+            return false;
+          }
+        } else if (partnerType === "partnership") {
+          if (!validateFile(formData.partnershipDeed, "Partnership Deed") || !validateFile(formData.firmPanCard, "Firm PAN Card")) {
+            return false;
+          }
+        } else if (partnerType === "private_public_ltd") {
+          if (!validateFile(formData.moaDocument, "MOA") || !validateFile(formData.aoaDocument, "AOA") || !validateFile(formData.coiDocument, "COI") || !validateFile(formData.companyPanCard, "Company PAN Card")) {
+            return false;
+          }
+        } else if (partnerType === "trust_society") {
+          if (!validateFile(formData.trustDeed, "Trust Deed") || !validateFile(formData.trustPanCard, "Trust PAN Card")) {
+            return false;
+          }
         }
         return true;
       
@@ -179,9 +305,6 @@ const PartnerSignup = () => {
           toast({ title: "Error", description: "Please enter a valid IFSC code", variant: "destructive" });
           return false;
         }
-        if (!validateFile(formData.gstRegistration, "GST registration")) {
-          return false;
-        }
         if (!validateFile(formData.bankDocument, "bank document")) {
           return false;
         }
@@ -190,6 +313,10 @@ const PartnerSignup = () => {
       case 4:
         if (!formData.referenceName || !formData.referencePhone || !formData.reference2Name || !formData.reference2Phone) {
           toast({ title: "Error", description: "Please provide both reference contacts", variant: "destructive" });
+          return false;
+        }
+        if (!formData.agreedToTerms) {
+          toast({ title: "Error", description: "Please agree to the terms and conditions", variant: "destructive" });
           return false;
         }
         return true;
@@ -206,78 +333,136 @@ const PartnerSignup = () => {
   };
 
   const handlePrevious = () => {
-    if (step > 1) setStep(step - 1);
+    if (step > 0) setStep(step - 1);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.agreedToTerms) {
-      toast({
-        title: "Terms Required",
-        description: "Please agree to the terms and conditions",
-        variant: "destructive"
-      });
-      return;
-    }
-
+    if (!validateStep(4)) return;
     if (isSubmitting) return;
+    
     setIsSubmitting(true);
 
     try {
-      // Upload all files in parallel for faster processing
-      const baseUploads = [
-        uploadFile(formData.panCard!, 'pan-cards', 'PAN card'),
-        uploadFile(formData.aadharCard!, 'aadhar-cards', 'Aadhar card'),
-        uploadFile(formData.passportPhoto!, 'passport-photos', 'passport photo'),
-        uploadFile(formData.companyDocument!, 'company-documents', 'company document'),
-        uploadFile(formData.gstRegistration!, 'gst-documents', 'GST registration'),
-        uploadFile(formData.bankDocument!, 'bank-documents', 'bank document')
-      ];
+      const { partnerType } = formData;
+      
+      // Upload files based on partner type
+      let uploadPromises: Promise<string | null>[] = [];
+      
+      if (partnerType === "individual") {
+        uploadPromises = [
+          uploadFile(formData.panCard!, 'pan-cards', 'PAN card'),
+          uploadFile(formData.aadharCard!, 'aadhar-cards', 'Aadhar card'),
+          uploadFile(formData.passportPhoto!, 'passport-photos', 'passport photo'),
+          uploadFile(formData.companyDocument!, 'company-documents', 'company document'),
+          formData.gstRegistration ? uploadFile(formData.gstRegistration, 'gst-documents', 'GST registration') : Promise.resolve(null),
+        ];
+      } else if (partnerType === "proprietorship") {
+        uploadPromises = [
+          uploadFile(formData.panCard!, 'pan-cards', 'PAN card'),
+          uploadFile(formData.aadharCard!, 'aadhar-cards', 'Aadhar card'),
+          formData.gstRegistration ? uploadFile(formData.gstRegistration, 'gst-documents', 'GST registration') : Promise.resolve(null),
+        ];
+      } else if (partnerType === "partnership") {
+        uploadPromises = [
+          uploadFile(formData.partnershipDeed!, 'partnership-deeds', 'Partnership Deed'),
+          uploadFile(formData.firmPanCard!, 'firm-pan-cards', 'Firm PAN Card'),
+          formData.gstRegistration ? uploadFile(formData.gstRegistration, 'gst-documents', 'GST registration') : Promise.resolve(null),
+          formData.udyamCertificate ? uploadFile(formData.udyamCertificate, 'udyam-certificates', 'Udyam Certificate') : Promise.resolve(null),
+        ];
+      } else if (partnerType === "private_public_ltd") {
+        uploadPromises = [
+          uploadFile(formData.moaDocument!, 'moa-documents', 'MOA'),
+          uploadFile(formData.aoaDocument!, 'aoa-documents', 'AOA'),
+          uploadFile(formData.coiDocument!, 'coi-documents', 'COI'),
+          uploadFile(formData.companyPanCard!, 'company-pan-cards', 'Company PAN Card'),
+          formData.gstRegistration ? uploadFile(formData.gstRegistration, 'gst-documents', 'GST registration') : Promise.resolve(null),
+          formData.udyamCertificate ? uploadFile(formData.udyamCertificate, 'udyam-certificates', 'Udyam Certificate') : Promise.resolve(null),
+        ];
+      } else if (partnerType === "trust_society") {
+        uploadPromises = [
+          uploadFile(formData.trustDeed!, 'trust-deeds', 'Trust Deed'),
+          uploadFile(formData.trustPanCard!, 'trust-pan-cards', 'Trust PAN Card'),
+          formData.gstRegistration ? uploadFile(formData.gstRegistration, 'gst-documents', 'GST registration') : Promise.resolve(null),
+          formData.udyamCertificate ? uploadFile(formData.udyamCertificate, 'udyam-certificates', 'Udyam Certificate') : Promise.resolve(null),
+        ];
+      }
+
+      // Add bank document
+      uploadPromises.push(uploadFile(formData.bankDocument!, 'bank-documents', 'bank document'));
 
       // Upload additional documents
       const additionalUploads = formData.additionalDocuments.map((file, index) => 
         uploadFile(file, 'additional-documents', `additional document ${index + 1}`)
       );
 
-      const uploadResults = await Promise.all([...baseUploads, ...additionalUploads]);
-
-      const [panCardPath, aadharCardPath, passportPhotoPath, companyDocumentPath, gstRegistrationPath, bankDocumentPath, ...additionalDocPaths] = uploadResults;
-
-      // Check if any upload failed
-      if (!panCardPath || !aadharCardPath || !passportPhotoPath || !companyDocumentPath || !gstRegistrationPath || !bankDocumentPath) {
-        setIsSubmitting(false);
-        return;
-      }
+      const uploadResults = await Promise.all([...uploadPromises, ...additionalUploads]);
+      
+      // Extract upload paths
+      const [primaryDocPath1, primaryDocPath2, primaryDocPath3, primaryDocPath4, primaryDocPath5, primaryDocPath6, bankDocPath, ...additionalDocPaths] = uploadResults;
 
       // Insert into database
       const { error: dbError } = await supabase
         .from('partner_applications')
         .insert([{
-          user_id: null, // Anonymous application submission
+          user_id: null,
+          partner_type: partnerType,
           full_name: formData.fullName,
           email: formData.email,
           phone: formData.phone,
-          aadhar_number: formData.aadharNumber,
-          pan_card_url: panCardPath,
-          aadhar_card_url: aadharCardPath,
           correspondence_address: formData.correspondenceAddress,
           city: formData.city,
           state: formData.state,
           pincode: formData.pincode,
-          passport_photo_url: passportPhotoPath,
-          business_name: formData.businessName,
-          company_pan_number: formData.companyPanNumber,
-          company_document_type: formData.companyDocumentType,
-          company_document_url: companyDocumentPath,
-          gst_registration_url: gstRegistrationPath,
+          
+          // Individual fields
+          aadhar_number: partnerType === "individual" || partnerType === "proprietorship" ? formData.aadharNumber : null,
+          pan_card_url: partnerType === "individual" || partnerType === "proprietorship" ? primaryDocPath1 : "",
+          aadhar_card_url: partnerType === "individual" || partnerType === "proprietorship" ? primaryDocPath2 : "",
+          passport_photo_url: partnerType === "individual" ? primaryDocPath3 : null,
+          
+          // Proprietorship fields
+          proprietor_name: partnerType === "proprietorship" ? formData.proprietorName : null,
+          firm_name: partnerType === "proprietorship" || partnerType === "partnership" ? formData.firmName : null,
+          firm_gst_number: partnerType === "proprietorship" ? formData.firmGstNumber : null,
+          
+          // Partnership fields
+          firm_pan_number: partnerType === "partnership" ? formData.firmPanNumber : null,
+          firm_office_address: partnerType === "partnership" ? formData.firmOfficeAddress : null,
+          partner_details: partnerType === "partnership" ? (formData.partnerDetails as any) : [],
+          
+          // Private/Public Ltd fields
+          company_name: partnerType === "private_public_ltd" ? formData.companyName : null,
+          company_gst_number: partnerType === "private_public_ltd" ? formData.companyGstNumber : null,
+          company_office_address: partnerType === "private_public_ltd" ? formData.companyOfficeAddress : null,
+          director_details: partnerType === "private_public_ltd" ? (formData.directorDetails as any) : [],
+          
+          // Trust/Society fields
+          trust_name: partnerType === "trust_society" ? formData.trustName : null,
+          trust_gst_number: partnerType === "trust_society" ? formData.trustGstNumber : null,
+          trust_pan_number: partnerType === "trust_society" ? formData.trustPanNumber : null,
+          trust_office_address: partnerType === "trust_society" ? formData.trustOfficeAddress : null,
+          trustee_details: partnerType === "trust_society" ? (formData.trusteeDetails as any) : [],
+          
+          // Business fields
+          business_name: partnerType === "individual" ? formData.businessName : null,
+          company_pan_number: partnerType === "individual" ? formData.companyPanNumber : null,
+          company_document_type: partnerType === "individual" ? formData.companyDocumentType : null,
+          company_document_url: partnerType === "individual" ? primaryDocPath4 : null,
+          gst_registration_url: formData.gstRegistration ? (partnerType === "individual" ? primaryDocPath5 : primaryDocPath3) : null,
+          
           additional_documents: additionalDocPaths.filter(p => p !== null),
+          
+          // Banking fields
           bank_account_number: formData.bankAccountNumber,
           bank_ifsc_code: formData.bankIfscCode,
           bank_name: formData.bankName,
           bank_branch: formData.bankBranch || null,
           bank_document_type: formData.bankDocumentType,
-          bank_document_url: bankDocumentPath,
+          bank_document_url: bankDocPath,
+          
+          // References
           reference_name: formData.referenceName,
           reference_phone: formData.referencePhone,
           reference_2_name: formData.reference2Name,
@@ -301,36 +486,11 @@ const PartnerSignup = () => {
         'send-partner-application-emails',
         {
           body: {
+            partnerType,
             fullName: formData.fullName,
             email: formData.email,
             phone: formData.phone,
-            panNumber: formData.panCard?.name?.split('.')[0] || formData.companyPanNumber,
-            aadharNumber: formData.aadharNumber,
-            correspondenceAddress: formData.correspondenceAddress,
-            city: formData.city,
-            state: formData.state,
-            pincode: formData.pincode,
-            businessName: formData.businessName,
-            businessType: formData.companyDocumentType,
-            companyPanNumber: formData.companyPanNumber,
-            companyDocumentType: formData.companyDocumentType,
-            bankAccountNumber: formData.bankAccountNumber,
-            bankIfscCode: formData.bankIfscCode,
-            bankName: formData.bankName,
-            bankBranch: formData.bankBranch,
-            bankDocumentType: formData.bankDocumentType,
-            referenceName: formData.referenceName,
-            referencePhone: formData.referencePhone,
-            referenceEmail: '',
-            reference2Name: formData.reference2Name,
-            reference2Phone: formData.reference2Phone,
-            panCardUrl: panCardPath,
-            aadharCardUrl: aadharCardPath,
-            passportPhotoUrl: passportPhotoPath,
-            companyDocumentUrl: companyDocumentPath,
-            gstRegistrationUrl: gstRegistrationPath,
-            bankDocumentUrl: bankDocumentPath,
-            additionalDocuments: additionalDocPaths.filter(p => p !== null),
+            // Add all relevant fields based on partner type
           },
         }
       );
@@ -361,7 +521,8 @@ const PartnerSignup = () => {
     onChange, 
     file, 
     label, 
-    isImage = false 
+    isImage = false,
+    optional = false
   }: { 
     id: string; 
     accept: string; 
@@ -369,6 +530,7 @@ const PartnerSignup = () => {
     file: File | null; 
     label: string;
     isImage?: boolean;
+    optional?: boolean;
   }) => {
     const handleFileChange = (selectedFile: File | null) => {
       if (!selectedFile) {
@@ -383,7 +545,6 @@ const PartnerSignup = () => {
           description: `${label} must be less than 2MB. Please compress or reduce the file size before uploading.`,
           variant: "destructive",
         });
-        // Clear the file input and state
         const input = document.getElementById(id) as HTMLInputElement;
         if (input) input.value = '';
         onChange(null);
@@ -397,7 +558,6 @@ const PartnerSignup = () => {
           description: `${label} must be JPG, PNG, or PDF`,
           variant: "destructive",
         });
-        // Clear the file input and state
         const input = document.getElementById(id) as HTMLInputElement;
         if (input) input.value = '';
         onChange(null);
@@ -409,7 +569,7 @@ const PartnerSignup = () => {
 
     return (
       <div className="space-y-2">
-        <Label htmlFor={id}>{label} *</Label>
+        <Label htmlFor={id}>{label} {optional ? "(Optional)" : "*"}</Label>
         <div className="border-2 border-dashed rounded-lg p-6 text-center hover:border-primary transition-colors cursor-pointer">
           <input
             id={id}
@@ -434,6 +594,75 @@ const PartnerSignup = () => {
         </div>
       </div>
     );
+  };
+
+  const addPartnerDetail = () => {
+    setFormData(prev => ({
+      ...prev,
+      partnerDetails: [...prev.partnerDetails, { name: "", panNumber: "", aadharNumber: "" }]
+    }));
+  };
+
+  const removePartnerDetail = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      partnerDetails: prev.partnerDetails.filter((_, i) => i !== index)
+    }));
+  };
+
+  const updatePartnerDetail = (index: number, field: keyof PartnerDetails, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      partnerDetails: prev.partnerDetails.map((partner, i) => 
+        i === index ? { ...partner, [field]: value } : partner
+      )
+    }));
+  };
+
+  const addDirectorDetail = () => {
+    setFormData(prev => ({
+      ...prev,
+      directorDetails: [...prev.directorDetails, { name: "", panNumber: "", aadharNumber: "" }]
+    }));
+  };
+
+  const removeDirectorDetail = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      directorDetails: prev.directorDetails.filter((_, i) => i !== index)
+    }));
+  };
+
+  const updateDirectorDetail = (index: number, field: keyof PartnerDetails, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      directorDetails: prev.directorDetails.map((director, i) => 
+        i === index ? { ...director, [field]: value } : director
+      )
+    }));
+  };
+
+  const addTrusteeDetail = () => {
+    setFormData(prev => ({
+      ...prev,
+      trusteeDetails: [...prev.trusteeDetails, { name: "", panNumber: "", aadharNumber: "" }]
+    }));
+  };
+
+  const removeTrusteeDetail = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      trusteeDetails: prev.trusteeDetails.filter((_, i) => i !== index)
+    }));
+  };
+
+  const updateTrusteeDetail = (index: number, field: keyof PartnerDetails, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      trusteeDetails: prev.trusteeDetails.map((trustee, i) => 
+        i === index ? { ...trustee, [field]: value } : trustee
+      )
+    }));
   };
 
   return (
@@ -488,7 +717,7 @@ const PartnerSignup = () => {
 
               <div className="mb-8">
                 <div className="flex justify-between items-center mb-2">
-                  {[1, 2, 3, 4].map((num) => (
+                  {[0, 1, 2, 3, 4].map((num) => (
                     <div
                       key={num}
                       className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all ${
@@ -497,7 +726,7 @@ const PartnerSignup = () => {
                           : "border-border text-muted-foreground"
                       }`}
                     >
-                      {num}
+                      {num === 0 ? "Type" : num}
                     </div>
                   ))}
                 </div>
@@ -511,13 +740,65 @@ const PartnerSignup = () => {
 
               <div className="bg-card border border-border rounded-lg p-8 shadow-lg">
                 <form onSubmit={handleSubmit}>
-                  {/* Step 1: Personal Information */}
-                  {step === 1 && (
+                  {/* Step 0: Partner Type Selection */}
+                  {step === 0 && (
                     <div className="space-y-6">
-                      <h2 className="text-2xl font-semibold mb-4">Personal Information</h2>
+                      <h2 className="text-2xl font-semibold mb-4">Select Partner Type</h2>
+                      <p className="text-muted-foreground mb-6">
+                        Choose the type of channel partner that best describes your business structure
+                      </p>
                       
                       <div>
-                        <Label htmlFor="fullName">Full Name *</Label>
+                        <Label htmlFor="partnerType">Partner Type *</Label>
+                        <Select
+                          value={formData.partnerType}
+                          onValueChange={(value: PartnerType) => updateFormData("partnerType", value)}
+                        >
+                          <SelectTrigger className="mt-2">
+                            <SelectValue placeholder="Select partner type" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="individual">Individual</SelectItem>
+                            <SelectItem value="proprietorship">Proprietorship</SelectItem>
+                            <SelectItem value="partnership">Partnership</SelectItem>
+                            <SelectItem value="private_public_ltd">Private / Public Ltd</SelectItem>
+                            <SelectItem value="trust_society">Trust / Society</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {formData.partnerType && (
+                        <div className="bg-muted/30 p-4 rounded-lg">
+                          <h3 className="font-semibold mb-2">About {formData.partnerType === "individual" ? "Individual" : formData.partnerType === "proprietorship" ? "Proprietorship" : formData.partnerType === "partnership" ? "Partnership" : formData.partnerType === "private_public_ltd" ? "Private / Public Ltd" : "Trust / Society"}:</h3>
+                          <p className="text-sm text-muted-foreground">
+                            {formData.partnerType === "individual" && "For individual professionals looking to partner with MaxDSA"}
+                            {formData.partnerType === "proprietorship" && "For sole proprietorship businesses owned and managed by a single individual"}
+                            {formData.partnerType === "partnership" && "For businesses owned by two or more partners sharing profits and responsibilities"}
+                            {formData.partnerType === "private_public_ltd" && "For registered companies with limited liability"}
+                            {formData.partnerType === "trust_society" && "For registered trusts or societies"}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Step 1: Personal/Entity Information */}
+                  {step === 1 && (
+                    <div className="space-y-6">
+                      <h2 className="text-2xl font-semibold mb-4">
+                        {formData.partnerType === "individual" ? "Personal Information" : 
+                         formData.partnerType === "proprietorship" ? "Proprietorship Information" :
+                         formData.partnerType === "partnership" ? "Partnership Information" :
+                         formData.partnerType === "private_public_ltd" ? "Company Information" :
+                         "Trust/Society Information"}
+                      </h2>
+                      
+                      {/* Common fields */}
+                      <div>
+                        <Label htmlFor="fullName">
+                          {formData.partnerType === "individual" ? "Full Name" : 
+                           formData.partnerType === "proprietorship" ? "Contact Person Name" : "Authorized Signatory Name"} *
+                        </Label>
                         <Input
                           id="fullName"
                           value={formData.fullName}
@@ -551,19 +832,361 @@ const PartnerSignup = () => {
                         />
                       </div>
 
-                      <div>
-                        <Label htmlFor="aadharNumber">Aadhar Number *</Label>
-                        <Input
-                          id="aadharNumber"
-                          value={formData.aadharNumber}
-                          onChange={(e) => updateFormData("aadharNumber", e.target.value.replace(/\D/g, ''))}
-                          placeholder="XXXX XXXX XXXX"
-                          maxLength={12}
-                          className="mt-2"
-                        />
-                        <p className="text-xs text-muted-foreground mt-1">12-digit Aadhar number</p>
-                      </div>
+                      {/* Type-specific fields for Step 1 */}
+                      {formData.partnerType === "individual" && (
+                        <>
+                          <div>
+                            <Label htmlFor="aadharNumber">Aadhar Number *</Label>
+                            <Input
+                              id="aadharNumber"
+                              value={formData.aadharNumber}
+                              onChange={(e) => updateFormData("aadharNumber", e.target.value.replace(/\D/g, ''))}
+                              placeholder="XXXX XXXX XXXX"
+                              maxLength={12}
+                              className="mt-2"
+                            />
+                            <p className="text-xs text-muted-foreground mt-1">12-digit Aadhar number</p>
+                          </div>
 
+                          <FileUploadInput
+                            id="panCard"
+                            accept="application/pdf,image/jpeg,image/png"
+                            onChange={(file) => updateFormData("panCard", file)}
+                            file={formData.panCard}
+                            label="PAN Card"
+                          />
+
+                          <FileUploadInput
+                            id="aadharCard"
+                            accept="application/pdf,image/jpeg,image/png"
+                            onChange={(file) => updateFormData("aadharCard", file)}
+                            file={formData.aadharCard}
+                            label="Aadhar Card"
+                          />
+
+                          <FileUploadInput
+                            id="passportPhoto"
+                            accept="image/jpeg,image/png"
+                            onChange={(file) => updateFormData("passportPhoto", file)}
+                            file={formData.passportPhoto}
+                            label="Passport Photo"
+                            isImage={true}
+                          />
+                        </>
+                      )}
+
+                      {formData.partnerType === "proprietorship" && (
+                        <>
+                          <div>
+                            <Label htmlFor="firmName">Name of the Firm *</Label>
+                            <Input
+                              id="firmName"
+                              value={formData.firmName}
+                              onChange={(e) => updateFormData("firmName", e.target.value)}
+                              placeholder="ABC Enterprises"
+                              className="mt-2"
+                            />
+                          </div>
+
+                          <div>
+                            <Label htmlFor="proprietorName">Proprietor Name *</Label>
+                            <Input
+                              id="proprietorName"
+                              value={formData.proprietorName}
+                              onChange={(e) => updateFormData("proprietorName", e.target.value)}
+                              placeholder="John Doe"
+                              className="mt-2"
+                            />
+                          </div>
+
+                          <div>
+                            <Label htmlFor="firmGstNumber">GST Number (Optional)</Label>
+                            <Input
+                              id="firmGstNumber"
+                              value={formData.firmGstNumber}
+                              onChange={(e) => updateFormData("firmGstNumber", e.target.value.toUpperCase())}
+                              placeholder="22AAAAA0000A1Z5"
+                              maxLength={15}
+                              className="mt-2"
+                            />
+                          </div>
+
+                          <div>
+                            <Label htmlFor="aadharNumber">Aadhar Number *</Label>
+                            <Input
+                              id="aadharNumber"
+                              value={formData.aadharNumber}
+                              onChange={(e) => updateFormData("aadharNumber", e.target.value.replace(/\D/g, ''))}
+                              placeholder="XXXX XXXX XXXX"
+                              maxLength={12}
+                              className="mt-2"
+                            />
+                          </div>
+                        </>
+                      )}
+
+                      {formData.partnerType === "partnership" && (
+                        <>
+                          <div>
+                            <Label htmlFor="firmName">Name of the Firm *</Label>
+                            <Input
+                              id="firmName"
+                              value={formData.firmName}
+                              onChange={(e) => updateFormData("firmName", e.target.value)}
+                              placeholder="ABC Partners"
+                              className="mt-2"
+                            />
+                          </div>
+
+                          <div>
+                            <Label htmlFor="firmGstNumber">Firm's GST Number (Optional)</Label>
+                            <Input
+                              id="firmGstNumber"
+                              value={formData.firmGstNumber}
+                              onChange={(e) => updateFormData("firmGstNumber", e.target.value.toUpperCase())}
+                              placeholder="22AAAAA0000A1Z5"
+                              maxLength={15}
+                              className="mt-2"
+                            />
+                          </div>
+
+                          <div>
+                            <Label htmlFor="firmPanNumber">Firm's PAN Number *</Label>
+                            <Input
+                              id="firmPanNumber"
+                              value={formData.firmPanNumber}
+                              onChange={(e) => updateFormData("firmPanNumber", e.target.value.toUpperCase())}
+                              placeholder="ABCDE1234F"
+                              maxLength={10}
+                              className="mt-2"
+                            />
+                          </div>
+
+                          <div>
+                            <Label htmlFor="firmOfficeAddress">Firm's Office Address *</Label>
+                            <Input
+                              id="firmOfficeAddress"
+                              value={formData.firmOfficeAddress}
+                              onChange={(e) => updateFormData("firmOfficeAddress", e.target.value)}
+                              placeholder="Office address"
+                              className="mt-2"
+                            />
+                          </div>
+
+                          <div>
+                            <div className="flex justify-between items-center mb-2">
+                              <Label>Partner Details *</Label>
+                              <Button type="button" size="sm" onClick={addPartnerDetail}>
+                                <Plus className="h-4 w-4 mr-1" /> Add Partner
+                              </Button>
+                            </div>
+                            {formData.partnerDetails.map((partner, index) => (
+                              <div key={index} className="bg-muted/30 p-4 rounded-lg mb-3 space-y-3">
+                                <div className="flex justify-between items-center">
+                                  <span className="font-semibold text-sm">Partner {index + 1}</span>
+                                  <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => removePartnerDetail(index)}
+                                  >
+                                    <Trash2 className="h-4 w-4 text-destructive" />
+                                  </Button>
+                                </div>
+                                <Input
+                                  placeholder="Partner Name"
+                                  value={partner.name}
+                                  onChange={(e) => updatePartnerDetail(index, "name", e.target.value)}
+                                />
+                                <Input
+                                  placeholder="PAN Number"
+                                  value={partner.panNumber}
+                                  onChange={(e) => updatePartnerDetail(index, "panNumber", e.target.value.toUpperCase())}
+                                  maxLength={10}
+                                />
+                                <Input
+                                  placeholder="Aadhar Number"
+                                  value={partner.aadharNumber}
+                                  onChange={(e) => updatePartnerDetail(index, "aadharNumber", e.target.value.replace(/\D/g, ''))}
+                                  maxLength={12}
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        </>
+                      )}
+
+                      {formData.partnerType === "private_public_ltd" && (
+                        <>
+                          <div>
+                            <Label htmlFor="companyName">Name of the Company *</Label>
+                            <Input
+                              id="companyName"
+                              value={formData.companyName}
+                              onChange={(e) => updateFormData("companyName", e.target.value)}
+                              placeholder="ABC Corporation Ltd"
+                              className="mt-2"
+                            />
+                          </div>
+
+                          <div>
+                            <Label htmlFor="companyGstNumber">Company's GST Number (Optional)</Label>
+                            <Input
+                              id="companyGstNumber"
+                              value={formData.companyGstNumber}
+                              onChange={(e) => updateFormData("companyGstNumber", e.target.value.toUpperCase())}
+                              placeholder="22AAAAA0000A1Z5"
+                              maxLength={15}
+                              className="mt-2"
+                            />
+                          </div>
+
+                          <div>
+                            <Label htmlFor="companyOfficeAddress">Company's Office Address *</Label>
+                            <Input
+                              id="companyOfficeAddress"
+                              value={formData.companyOfficeAddress}
+                              onChange={(e) => updateFormData("companyOfficeAddress", e.target.value)}
+                              placeholder="Office address"
+                              className="mt-2"
+                            />
+                          </div>
+
+                          <div>
+                            <div className="flex justify-between items-center mb-2">
+                              <Label>Director Details *</Label>
+                              <Button type="button" size="sm" onClick={addDirectorDetail}>
+                                <Plus className="h-4 w-4 mr-1" /> Add Director
+                              </Button>
+                            </div>
+                            {formData.directorDetails.map((director, index) => (
+                              <div key={index} className="bg-muted/30 p-4 rounded-lg mb-3 space-y-3">
+                                <div className="flex justify-between items-center">
+                                  <span className="font-semibold text-sm">Director {index + 1}</span>
+                                  <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => removeDirectorDetail(index)}
+                                  >
+                                    <Trash2 className="h-4 w-4 text-destructive" />
+                                  </Button>
+                                </div>
+                                <Input
+                                  placeholder="Director Name"
+                                  value={director.name}
+                                  onChange={(e) => updateDirectorDetail(index, "name", e.target.value)}
+                                />
+                                <Input
+                                  placeholder="PAN Number"
+                                  value={director.panNumber}
+                                  onChange={(e) => updateDirectorDetail(index, "panNumber", e.target.value.toUpperCase())}
+                                  maxLength={10}
+                                />
+                                <Input
+                                  placeholder="Aadhar Number"
+                                  value={director.aadharNumber}
+                                  onChange={(e) => updateDirectorDetail(index, "aadharNumber", e.target.value.replace(/\D/g, ''))}
+                                  maxLength={12}
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        </>
+                      )}
+
+                      {formData.partnerType === "trust_society" && (
+                        <>
+                          <div>
+                            <Label htmlFor="trustName">Name of the Trust *</Label>
+                            <Input
+                              id="trustName"
+                              value={formData.trustName}
+                              onChange={(e) => updateFormData("trustName", e.target.value)}
+                              placeholder="ABC Trust"
+                              className="mt-2"
+                            />
+                          </div>
+
+                          <div>
+                            <Label htmlFor="trustGstNumber">Trust GST Number (Optional)</Label>
+                            <Input
+                              id="trustGstNumber"
+                              value={formData.trustGstNumber}
+                              onChange={(e) => updateFormData("trustGstNumber", e.target.value.toUpperCase())}
+                              placeholder="22AAAAA0000A1Z5"
+                              maxLength={15}
+                              className="mt-2"
+                            />
+                          </div>
+
+                          <div>
+                            <Label htmlFor="trustPanNumber">Trust PAN Number *</Label>
+                            <Input
+                              id="trustPanNumber"
+                              value={formData.trustPanNumber}
+                              onChange={(e) => updateFormData("trustPanNumber", e.target.value.toUpperCase())}
+                              placeholder="ABCDE1234F"
+                              maxLength={10}
+                              className="mt-2"
+                            />
+                          </div>
+
+                          <div>
+                            <Label htmlFor="trustOfficeAddress">Trust Office Address *</Label>
+                            <Input
+                              id="trustOfficeAddress"
+                              value={formData.trustOfficeAddress}
+                              onChange={(e) => updateFormData("trustOfficeAddress", e.target.value)}
+                              placeholder="Office address"
+                              className="mt-2"
+                            />
+                          </div>
+
+                          <div>
+                            <div className="flex justify-between items-center mb-2">
+                              <Label>Trustee Details *</Label>
+                              <Button type="button" size="sm" onClick={addTrusteeDetail}>
+                                <Plus className="h-4 w-4 mr-1" /> Add Trustee
+                              </Button>
+                            </div>
+                            {formData.trusteeDetails.map((trustee, index) => (
+                              <div key={index} className="bg-muted/30 p-4 rounded-lg mb-3 space-y-3">
+                                <div className="flex justify-between items-center">
+                                  <span className="font-semibold text-sm">Trustee {index + 1}</span>
+                                  <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => removeTrusteeDetail(index)}
+                                  >
+                                    <Trash2 className="h-4 w-4 text-destructive" />
+                                  </Button>
+                                </div>
+                                <Input
+                                  placeholder="Trustee Name"
+                                  value={trustee.name}
+                                  onChange={(e) => updateTrusteeDetail(index, "name", e.target.value)}
+                                />
+                                <Input
+                                  placeholder="PAN Number"
+                                  value={trustee.panNumber}
+                                  onChange={(e) => updateTrusteeDetail(index, "panNumber", e.target.value.toUpperCase())}
+                                  maxLength={10}
+                                />
+                                <Input
+                                  placeholder="Aadhar Number"
+                                  value={trustee.aadharNumber}
+                                  onChange={(e) => updateTrusteeDetail(index, "aadharNumber", e.target.value.replace(/\D/g, ''))}
+                                  maxLength={12}
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        </>
+                      )}
+
+                      {/* Common address fields */}
                       <div>
                         <Label htmlFor="correspondenceAddress">Correspondence Address *</Label>
                         <Input
@@ -610,97 +1233,241 @@ const PartnerSignup = () => {
                           />
                         </div>
                       </div>
-
-                      <FileUploadInput
-                        id="panCard"
-                        accept="application/pdf,image/jpeg,image/png"
-                        onChange={(file) => updateFormData("panCard", file)}
-                        file={formData.panCard}
-                        label="PAN Card"
-                      />
-
-                      <FileUploadInput
-                        id="aadharCard"
-                        accept="application/pdf,image/jpeg,image/png"
-                        onChange={(file) => updateFormData("aadharCard", file)}
-                        file={formData.aadharCard}
-                        label="Aadhar Card"
-                      />
-
-                      <FileUploadInput
-                        id="passportPhoto"
-                        accept="image/jpeg,image/png"
-                        onChange={(file) => updateFormData("passportPhoto", file)}
-                        file={formData.passportPhoto}
-                        label="Passport Photo"
-                        isImage={true}
-                      />
                     </div>
                   )}
 
-                  {/* Step 2: Business Information */}
+                  {/* Step 2: Documents */}
                   {step === 2 && (
                     <div className="space-y-6">
-                      <h2 className="text-2xl font-semibold mb-4">Business Information</h2>
-                      
-                      <div>
-                        <Label htmlFor="businessName">Business Name *</Label>
-                        <Input
-                          id="businessName"
-                          value={formData.businessName}
-                          onChange={(e) => updateFormData("businessName", e.target.value)}
-                          placeholder="ABC Financial Services"
-                          className="mt-2"
-                        />
-                      </div>
+                      <h2 className="text-2xl font-semibold mb-4">
+                        {formData.partnerType === "individual" ? "Business Documents" :
+                         formData.partnerType === "proprietorship" ? "Proprietorship Documents" :
+                         formData.partnerType === "partnership" ? "Partnership Documents" :
+                         formData.partnerType === "private_public_ltd" ? "Company Documents" :
+                         "Trust Documents"}
+                      </h2>
 
-                      <div>
-                        <Label htmlFor="companyPanNumber">Company PAN Number *</Label>
-                        <Input
-                          id="companyPanNumber"
-                          value={formData.companyPanNumber}
-                          onChange={(e) => updateFormData("companyPanNumber", e.target.value.toUpperCase())}
-                          placeholder="ABCDE1234F"
-                          maxLength={10}
-                          className="mt-2"
-                        />
-                      </div>
+                      {formData.partnerType === "individual" && (
+                        <>
+                          <div>
+                            <Label htmlFor="businessName">Business Name *</Label>
+                            <Input
+                              id="businessName"
+                              value={formData.businessName}
+                              onChange={(e) => updateFormData("businessName", e.target.value)}
+                              placeholder="ABC Financial Services"
+                              className="mt-2"
+                            />
+                          </div>
 
-                      <div>
-                        <Label>Company Document Type *</Label>
-                        <RadioGroup
-                          value={formData.companyDocumentType}
-                          onValueChange={(value) => updateFormData("companyDocumentType", value)}
-                          className="mt-2 space-y-2"
-                        >
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="partnership_deed" id="partnership_deed" />
-                            <Label htmlFor="partnership_deed" className="font-normal cursor-pointer">
-                              Partnership Deed
-                            </Label>
+                          <div>
+                            <Label htmlFor="companyPanNumber">Company PAN Number *</Label>
+                            <Input
+                              id="companyPanNumber"
+                              value={formData.companyPanNumber}
+                              onChange={(e) => updateFormData("companyPanNumber", e.target.value.toUpperCase())}
+                              placeholder="ABCDE1234F"
+                              maxLength={10}
+                              className="mt-2"
+                            />
                           </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="moa" id="moa" />
-                            <Label htmlFor="moa" className="font-normal cursor-pointer">
-                              MOA (Memorandum of Association)
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="aoa" id="aoa" />
-                            <Label htmlFor="aoa" className="font-normal cursor-pointer">
-                              AOA (Articles of Association)
-                            </Label>
-                          </div>
-                        </RadioGroup>
-                      </div>
 
-                      <FileUploadInput
-                        id="companyDocument"
-                        accept="application/pdf,image/jpeg,image/png"
-                        onChange={(file) => updateFormData("companyDocument", file)}
-                        file={formData.companyDocument}
-                        label="Company Document"
-                      />
+                          <div>
+                            <Label>Company Document Type *</Label>
+                            <RadioGroup
+                              value={formData.companyDocumentType}
+                              onValueChange={(value) => updateFormData("companyDocumentType", value)}
+                              className="mt-2 space-y-2"
+                            >
+                              <div className="flex items-center space-x-2">
+                                <RadioGroupItem value="partnership_deed" id="partnership_deed" />
+                                <Label htmlFor="partnership_deed" className="font-normal cursor-pointer">
+                                  Partnership Deed
+                                </Label>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <RadioGroupItem value="moa" id="moa" />
+                                <Label htmlFor="moa" className="font-normal cursor-pointer">
+                                  MOA (Memorandum of Association)
+                                </Label>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <RadioGroupItem value="aoa" id="aoa" />
+                                <Label htmlFor="aoa" className="font-normal cursor-pointer">
+                                  AOA (Articles of Association)
+                                </Label>
+                              </div>
+                            </RadioGroup>
+                          </div>
+
+                          <FileUploadInput
+                            id="companyDocument"
+                            accept="application/pdf,image/jpeg,image/png"
+                            onChange={(file) => updateFormData("companyDocument", file)}
+                            file={formData.companyDocument}
+                            label="Company Document"
+                          />
+                        </>
+                      )}
+
+                      {formData.partnerType === "proprietorship" && (
+                        <>
+                          <FileUploadInput
+                            id="panCard"
+                            accept="application/pdf,image/jpeg,image/png"
+                            onChange={(file) => updateFormData("panCard", file)}
+                            file={formData.panCard}
+                            label="Pan Card Doc"
+                          />
+
+                          <FileUploadInput
+                            id="aadharCard"
+                            accept="application/pdf,image/jpeg,image/png"
+                            onChange={(file) => updateFormData("aadharCard", file)}
+                            file={formData.aadharCard}
+                            label="Aadhar Card Doc"
+                          />
+
+                          <FileUploadInput
+                            id="gstRegistration"
+                            accept="application/pdf,image/jpeg,image/png"
+                            onChange={(file) => updateFormData("gstRegistration", file)}
+                            file={formData.gstRegistration}
+                            label="GST Certificate Upload"
+                            optional={true}
+                          />
+                        </>
+                      )}
+
+                      {formData.partnerType === "partnership" && (
+                        <>
+                          <FileUploadInput
+                            id="partnershipDeed"
+                            accept="application/pdf,image/jpeg,image/png"
+                            onChange={(file) => updateFormData("partnershipDeed", file)}
+                            file={formData.partnershipDeed}
+                            label="Partnership Deed Upload"
+                          />
+
+                          <FileUploadInput
+                            id="firmPanCard"
+                            accept="application/pdf,image/jpeg,image/png"
+                            onChange={(file) => updateFormData("firmPanCard", file)}
+                            file={formData.firmPanCard}
+                            label="Pan Card Copy Upload"
+                          />
+
+                          <FileUploadInput
+                            id="gstRegistration"
+                            accept="application/pdf,image/jpeg,image/png"
+                            onChange={(file) => updateFormData("gstRegistration", file)}
+                            file={formData.gstRegistration}
+                            label="Firm's GST Upload"
+                            optional={true}
+                          />
+
+                          <FileUploadInput
+                            id="udyamCertificate"
+                            accept="application/pdf,image/jpeg,image/png"
+                            onChange={(file) => updateFormData("udyamCertificate", file)}
+                            file={formData.udyamCertificate}
+                            label="Udyam Certificate Upload"
+                            optional={true}
+                          />
+                        </>
+                      )}
+
+                      {formData.partnerType === "private_public_ltd" && (
+                        <>
+                          <FileUploadInput
+                            id="moaDocument"
+                            accept="application/pdf,image/jpeg,image/png"
+                            onChange={(file) => updateFormData("moaDocument", file)}
+                            file={formData.moaDocument}
+                            label="MOA Upload"
+                          />
+
+                          <FileUploadInput
+                            id="aoaDocument"
+                            accept="application/pdf,image/jpeg,image/png"
+                            onChange={(file) => updateFormData("aoaDocument", file)}
+                            file={formData.aoaDocument}
+                            label="AOA Upload"
+                          />
+
+                          <FileUploadInput
+                            id="coiDocument"
+                            accept="application/pdf,image/jpeg,image/png"
+                            onChange={(file) => updateFormData("coiDocument", file)}
+                            file={formData.coiDocument}
+                            label="COI Upload"
+                          />
+
+                          <FileUploadInput
+                            id="companyPanCard"
+                            accept="application/pdf,image/jpeg,image/png"
+                            onChange={(file) => updateFormData("companyPanCard", file)}
+                            file={formData.companyPanCard}
+                            label="Company Pan Card Copy Upload"
+                          />
+
+                          <FileUploadInput
+                            id="gstRegistration"
+                            accept="application/pdf,image/jpeg,image/png"
+                            onChange={(file) => updateFormData("gstRegistration", file)}
+                            file={formData.gstRegistration}
+                            label="GST Upload"
+                            optional={true}
+                          />
+
+                          <FileUploadInput
+                            id="udyamCertificate"
+                            accept="application/pdf,image/jpeg,image/png"
+                            onChange={(file) => updateFormData("udyamCertificate", file)}
+                            file={formData.udyamCertificate}
+                            label="Udyam Certificate Upload"
+                            optional={true}
+                          />
+                        </>
+                      )}
+
+                      {formData.partnerType === "trust_society" && (
+                        <>
+                          <FileUploadInput
+                            id="trustDeed"
+                            accept="application/pdf,image/jpeg,image/png"
+                            onChange={(file) => updateFormData("trustDeed", file)}
+                            file={formData.trustDeed}
+                            label="Trust Deed Upload"
+                          />
+
+                          <FileUploadInput
+                            id="trustPanCard"
+                            accept="application/pdf,image/jpeg,image/png"
+                            onChange={(file) => updateFormData("trustPanCard", file)}
+                            file={formData.trustPanCard}
+                            label="Trust Pan Card Upload"
+                          />
+
+                          <FileUploadInput
+                            id="gstRegistration"
+                            accept="application/pdf,image/jpeg,image/png"
+                            onChange={(file) => updateFormData("gstRegistration", file)}
+                            file={formData.gstRegistration}
+                            label="GST Upload"
+                            optional={true}
+                          />
+
+                          <FileUploadInput
+                            id="udyamCertificate"
+                            accept="application/pdf,image/jpeg,image/png"
+                            onChange={(file) => updateFormData("udyamCertificate", file)}
+                            file={formData.udyamCertificate}
+                            label="Udyam Certificate Upload"
+                            optional={true}
+                          />
+                        </>
+                      )}
 
                       <div>
                         <Label htmlFor="additionalDocuments">Additional Documents (Optional)</Label>
@@ -724,7 +1491,7 @@ const PartnerSignup = () => {
                                 : 'Click to upload multiple documents'}
                             </p>
                             <p className="text-xs text-muted-foreground mt-1">
-                              PDF, JPG or PNG, max 5MB each
+                              PDF, JPG or PNG, max 2MB each
                             </p>
                           </label>
                         </div>
@@ -741,19 +1508,11 @@ const PartnerSignup = () => {
                     </div>
                   )}
 
-                  {/* Step 3: Banking & GST Details */}
+                  {/* Step 3: Banking Details */}
                   {step === 3 && (
                     <div className="space-y-6">
-                      <h2 className="text-2xl font-semibold mb-4">Banking & GST Details</h2>
+                      <h2 className="text-2xl font-semibold mb-4">Banking Details</h2>
                       
-                      <FileUploadInput
-                        id="gstRegistration"
-                        accept="application/pdf,image/jpeg,image/png"
-                        onChange={(file) => updateFormData("gstRegistration", file)}
-                        file={formData.gstRegistration}
-                        label="GST Registration Copy"
-                      />
-
                       <div>
                         <Label htmlFor="bankAccountNumber">Bank Account Number *</Label>
                         <Input
@@ -907,7 +1666,7 @@ const PartnerSignup = () => {
 
                   {/* Navigation Buttons */}
                   <div className="flex justify-between mt-8 pt-6 border-t">
-                    {step > 1 && (
+                    {step > 0 && (
                       <Button
                         type="button"
                         variant="outline"
@@ -922,7 +1681,7 @@ const PartnerSignup = () => {
                       <Button
                         type="button"
                         onClick={handleNext}
-                        className={step === 1 ? "ml-auto" : ""}
+                        className={step === 0 ? "ml-auto" : ""}
                       >
                         Next
                         <ArrowRight01Icon className="ml-2 h-4 w-4" />

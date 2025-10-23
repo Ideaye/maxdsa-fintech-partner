@@ -17,7 +17,7 @@ export type Database = {
       partner_applications: {
         Row: {
           aadhar_card_url: string
-          aadhar_number: string
+          aadhar_number: string | null
           additional_documents: Json | null
           agreed_to_terms: boolean
           bank_account_number: string
@@ -26,31 +26,47 @@ export type Database = {
           bank_document_url: string
           bank_ifsc_code: string
           bank_name: string
-          business_name: string
+          business_name: string | null
           city: string
-          company_document_type: string
-          company_document_url: string
-          company_pan_number: string
+          company_document_type: string | null
+          company_document_url: string | null
+          company_gst_number: string | null
+          company_name: string | null
+          company_office_address: string | null
+          company_pan_number: string | null
           correspondence_address: string
           created_at: string
+          director_details: Json | null
           email: string
+          firm_gst_number: string | null
+          firm_name: string | null
+          firm_office_address: string | null
+          firm_pan_number: string | null
           full_name: string
-          gst_registration_url: string
+          gst_registration_url: string | null
           id: string
           pan_card_url: string
-          passport_photo_url: string
+          partner_details: Json | null
+          partner_type: string
+          passport_photo_url: string | null
           phone: string
           pincode: string
+          proprietor_name: string | null
           reference_2_name: string
           reference_2_phone: string
           reference_name: string | null
           reference_phone: string | null
           state: string
+          trust_gst_number: string | null
+          trust_name: string | null
+          trust_office_address: string | null
+          trust_pan_number: string | null
+          trustee_details: Json | null
           user_id: string | null
         }
         Insert: {
           aadhar_card_url?: string
-          aadhar_number: string
+          aadhar_number?: string | null
           additional_documents?: Json | null
           agreed_to_terms?: boolean
           bank_account_number: string
@@ -59,31 +75,47 @@ export type Database = {
           bank_document_url: string
           bank_ifsc_code: string
           bank_name: string
-          business_name: string
+          business_name?: string | null
           city?: string
-          company_document_type: string
-          company_document_url: string
-          company_pan_number: string
+          company_document_type?: string | null
+          company_document_url?: string | null
+          company_gst_number?: string | null
+          company_name?: string | null
+          company_office_address?: string | null
+          company_pan_number?: string | null
           correspondence_address?: string
           created_at?: string
+          director_details?: Json | null
           email: string
+          firm_gst_number?: string | null
+          firm_name?: string | null
+          firm_office_address?: string | null
+          firm_pan_number?: string | null
           full_name: string
-          gst_registration_url: string
+          gst_registration_url?: string | null
           id?: string
           pan_card_url?: string
-          passport_photo_url: string
+          partner_details?: Json | null
+          partner_type?: string
+          passport_photo_url?: string | null
           phone: string
           pincode?: string
+          proprietor_name?: string | null
           reference_2_name?: string
           reference_2_phone?: string
           reference_name?: string | null
           reference_phone?: string | null
           state?: string
+          trust_gst_number?: string | null
+          trust_name?: string | null
+          trust_office_address?: string | null
+          trust_pan_number?: string | null
+          trustee_details?: Json | null
           user_id?: string | null
         }
         Update: {
           aadhar_card_url?: string
-          aadhar_number?: string
+          aadhar_number?: string | null
           additional_documents?: Json | null
           agreed_to_terms?: boolean
           bank_account_number?: string
@@ -92,26 +124,42 @@ export type Database = {
           bank_document_url?: string
           bank_ifsc_code?: string
           bank_name?: string
-          business_name?: string
+          business_name?: string | null
           city?: string
-          company_document_type?: string
-          company_document_url?: string
-          company_pan_number?: string
+          company_document_type?: string | null
+          company_document_url?: string | null
+          company_gst_number?: string | null
+          company_name?: string | null
+          company_office_address?: string | null
+          company_pan_number?: string | null
           correspondence_address?: string
           created_at?: string
+          director_details?: Json | null
           email?: string
+          firm_gst_number?: string | null
+          firm_name?: string | null
+          firm_office_address?: string | null
+          firm_pan_number?: string | null
           full_name?: string
-          gst_registration_url?: string
+          gst_registration_url?: string | null
           id?: string
           pan_card_url?: string
-          passport_photo_url?: string
+          partner_details?: Json | null
+          partner_type?: string
+          passport_photo_url?: string | null
           phone?: string
           pincode?: string
+          proprietor_name?: string | null
           reference_2_name?: string
           reference_2_phone?: string
           reference_name?: string | null
           reference_phone?: string | null
           state?: string
+          trust_gst_number?: string | null
+          trust_name?: string | null
+          trust_office_address?: string | null
+          trust_pan_number?: string | null
+          trustee_details?: Json | null
           user_id?: string | null
         }
         Relationships: []
