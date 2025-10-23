@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { Resend } from "npm:resend@2.0.0";
+import { encode as base64Encode } from "https://deno.land/std@0.190.0/encoding/base64.ts";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -12,14 +13,9 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// Helper function to convert Uint8Array to base64 (Deno-compatible)
+// Helper function to convert Uint8Array to base64 (uses efficient Deno stdlib)
 function uint8ArrayToBase64(uint8Array: Uint8Array): string {
-  let binary = '';
-  const len = uint8Array.byteLength;
-  for (let i = 0; i < len; i++) {
-    binary += String.fromCharCode(uint8Array[i]);
-  }
-  return btoa(binary);
+  return base64Encode(uint8Array);
 }
 
 interface PartnerApplicationRequest {
@@ -306,8 +302,9 @@ const handler = async (req: Request): Promise<Response> => {
       const zipSizeMB = zipBuffer.length / (1024 * 1024);
       console.log(`Zip file created successfully (${zipSizeMB.toFixed(2)} MB)`);
       
-      if (zipSizeMB >= 35) {
-        console.warn('Zip file too large (>35MB), will not attach to email');
+      // Limit to 10MB to avoid CPU timeout during base64 conversion
+      if (zipSizeMB >= 10) {
+        console.warn(`Zip file too large (${zipSizeMB.toFixed(2)} MB), will not attach to email (limit: 10MB)`);
         zipBuffer = null;
       }
     } catch (error) {
