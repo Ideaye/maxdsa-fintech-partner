@@ -369,33 +369,70 @@ const PartnerSignup = () => {
     file: File | null; 
     label: string;
     isImage?: boolean;
-  }) => (
-    <div className="space-y-2">
-      <Label htmlFor={id}>{label} *</Label>
-      <div className="border-2 border-dashed rounded-lg p-6 text-center hover:border-primary transition-colors cursor-pointer">
-        <input
-          id={id}
-          type="file"
-          accept={accept}
-          onChange={(e) => onChange(e.target.files?.[0] || null)}
-          className="hidden"
-        />
-        <label htmlFor={id} className="cursor-pointer block">
-          {isImage ? (
-            <ImageIcon className="mx-auto h-12 w-12 text-muted-foreground mb-2" />
-          ) : (
-            <FileText className="mx-auto h-12 w-12 text-muted-foreground mb-2" />
-          )}
-          <p className="text-sm font-medium">
-            {file ? file.name : `Click to upload ${label.toLowerCase()}`}
-          </p>
-          <p className="text-xs text-muted-foreground mt-1">
-            {isImage ? "JPG or PNG" : "PDF, JPG or PNG"}, max 5MB
-          </p>
-        </label>
+  }) => {
+    const handleFileChange = (selectedFile: File | null) => {
+      if (!selectedFile) {
+        onChange(null);
+        return;
+      }
+
+      const maxSize = 2 * 1024 * 1024; // 2MB
+      if (selectedFile.size > maxSize) {
+        toast({
+          title: "File Too Large",
+          description: `${label} must be less than 2MB. Please compress or reduce the file size before uploading.`,
+          variant: "destructive",
+        });
+        // Clear the file input
+        const input = document.getElementById(id) as HTMLInputElement;
+        if (input) input.value = '';
+        return;
+      }
+
+      const validTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+      if (!validTypes.includes(selectedFile.type)) {
+        toast({
+          title: "Invalid File Type",
+          description: `${label} must be JPG, PNG, or PDF`,
+          variant: "destructive",
+        });
+        // Clear the file input
+        const input = document.getElementById(id) as HTMLInputElement;
+        if (input) input.value = '';
+        return;
+      }
+
+      onChange(selectedFile);
+    };
+
+    return (
+      <div className="space-y-2">
+        <Label htmlFor={id}>{label} *</Label>
+        <div className="border-2 border-dashed rounded-lg p-6 text-center hover:border-primary transition-colors cursor-pointer">
+          <input
+            id={id}
+            type="file"
+            accept={accept}
+            onChange={(e) => handleFileChange(e.target.files?.[0] || null)}
+            className="hidden"
+          />
+          <label htmlFor={id} className="cursor-pointer block">
+            {isImage ? (
+              <ImageIcon className="mx-auto h-12 w-12 text-muted-foreground mb-2" />
+            ) : (
+              <FileText className="mx-auto h-12 w-12 text-muted-foreground mb-2" />
+            )}
+            <p className="text-sm font-medium">
+              {file ? file.name : `Click to upload ${label.toLowerCase()}`}
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
+              {isImage ? "JPG or PNG" : "PDF, JPG or PNG"}, max 2MB
+            </p>
+          </label>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
