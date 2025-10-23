@@ -18,6 +18,10 @@ interface PartnerApplicationRequest {
   phone: string;
   panNumber: string;
   aadharNumber: string;
+  correspondenceAddress: string;
+  city: string;
+  state: string;
+  pincode: string;
   businessName: string;
   businessType: string;
   companyPanNumber: string;
@@ -30,10 +34,147 @@ interface PartnerApplicationRequest {
   referenceName?: string;
   referencePhone?: string;
   referenceEmail?: string;
+  reference2Name?: string;
+  reference2Phone?: string;
   passportPhotoUrl: string;
+  panCardUrl: string;
+  aadharCardUrl: string;
   companyDocumentUrl: string;
   gstRegistrationUrl: string;
   bankDocumentUrl: string;
+  additionalDocuments?: string[];
+}
+
+async function generateExcelFile(applicationData: PartnerApplicationRequest, documentUrls: any) {
+  const XLSX = await import('npm:xlsx@0.18.5');
+  
+  const workbook = XLSX.utils.book_new();
+  
+  // Sheet 1: Personal Information
+  const personalData = [
+    ['Field', 'Value'],
+    ['Full Name', applicationData.fullName],
+    ['Email Address', applicationData.email],
+    ['Phone Number', applicationData.phone],
+    ['PAN Number', applicationData.panNumber],
+    ['Aadhar Number', applicationData.aadharNumber],
+    ['Correspondence Address', applicationData.correspondenceAddress],
+    ['City', applicationData.city],
+    ['State', applicationData.state],
+    ['Pincode', applicationData.pincode],
+  ];
+  const personalSheet = XLSX.utils.aoa_to_sheet(personalData);
+  XLSX.utils.book_append_sheet(workbook, personalSheet, 'Personal Info');
+  
+  // Sheet 2: Business Details
+  const businessData = [
+    ['Field', 'Value'],
+    ['Business Name', applicationData.businessName],
+    ['Business Type', applicationData.businessType],
+    ['Company PAN Number', applicationData.companyPanNumber],
+    ['Company Document Type', applicationData.companyDocumentType],
+  ];
+  const businessSheet = XLSX.utils.aoa_to_sheet(businessData);
+  XLSX.utils.book_append_sheet(workbook, businessSheet, 'Business Details');
+  
+  // Sheet 3: Banking Information
+  const bankingData = [
+    ['Field', 'Value'],
+    ['Bank Name', applicationData.bankName],
+    ['Bank Branch', applicationData.bankBranch || 'N/A'],
+    ['Account Number', applicationData.bankAccountNumber],
+    ['IFSC Code', applicationData.bankIfscCode],
+    ['Bank Document Type', applicationData.bankDocumentType],
+  ];
+  const bankingSheet = XLSX.utils.aoa_to_sheet(bankingData);
+  XLSX.utils.book_append_sheet(workbook, bankingSheet, 'Banking Info');
+  
+  // Sheet 4: Reference Information
+  const referenceData = [
+    ['Field', 'Value'],
+    ['Reference 1 Name', applicationData.referenceName || 'N/A'],
+    ['Reference 1 Phone', applicationData.referencePhone || 'N/A'],
+    ['Reference 1 Email', applicationData.referenceEmail || 'N/A'],
+    ['Reference 2 Name', applicationData.reference2Name || 'N/A'],
+    ['Reference 2 Phone', applicationData.reference2Phone || 'N/A'],
+  ];
+  const referenceSheet = XLSX.utils.aoa_to_sheet(referenceData);
+  XLSX.utils.book_append_sheet(workbook, referenceSheet, 'References');
+  
+  // Sheet 5: Document Links
+  const documentData = [
+    ['Document Type', 'URL (Valid for 7 days)'],
+    ['Passport Photo', documentUrls.passportPhoto],
+    ['PAN Card', documentUrls.panCard],
+    ['Aadhar Card', documentUrls.aadharCard],
+    ['Company Document', documentUrls.companyDocument],
+    ['GST Registration', documentUrls.gstRegistration],
+    ['Bank Document', documentUrls.bankDocument],
+  ];
+  
+  if (applicationData.additionalDocuments && applicationData.additionalDocuments.length > 0) {
+    applicationData.additionalDocuments.forEach((doc, index) => {
+      documentData.push([`Additional Document ${index + 1}`, documentUrls.additionalDocs?.[index] || doc]);
+    });
+  }
+  
+  const documentSheet = XLSX.utils.aoa_to_sheet(documentData);
+  XLSX.utils.book_append_sheet(workbook, documentSheet, 'Document Links');
+  
+  const excelBuffer = XLSX.write(workbook, { 
+    type: 'buffer', 
+    bookType: 'xlsx' 
+  });
+  
+  return excelBuffer;
+}
+
+async function createDocumentZip(
+  supabaseClient: any, 
+  documentPaths: { path: string; category: string }[], 
+  businessName: string
+) {
+  const JSZip = (await import('npm:jszip@3.10.1')).default;
+  const zip = new JSZip();
+  
+  const personalFolder = zip.folder('Personal_Documents');
+  const businessFolder = zip.folder('Business_Documents');
+  const bankingFolder = zip.folder('Banking_Documents');
+  const additionalFolder = zip.folder('Additional_Documents');
+  
+  for (const { path, category } of documentPaths) {
+    try {
+      const { data, error } = await supabaseClient.storage
+        .from('partner-documents')
+        .download(path);
+      
+      if (!error && data) {
+        const fileName = path.split('/').pop() || 'document';
+        
+        if (category === 'personal') {
+          personalFolder?.file(fileName, data);
+        } else if (category === 'business') {
+          businessFolder?.file(fileName, data);
+        } else if (category === 'banking') {
+          bankingFolder?.file(fileName, data);
+        } else if (category === 'additional') {
+          additionalFolder?.file(fileName, data);
+        }
+      } else {
+        console.error(`Failed to download ${path}:`, error);
+      }
+    } catch (error) {
+      console.error(`Error processing ${path}:`, error);
+    }
+  }
+  
+  const zipBuffer = await zip.generateAsync({ 
+    type: 'uint8array',
+    compression: 'DEFLATE',
+    compressionOptions: { level: 9 }
+  });
+  
+  return zipBuffer;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -51,10 +192,12 @@ const handler = async (req: Request): Promise<Response> => {
 
     const {
       fullName, email, phone, panNumber, aadharNumber,
+      correspondenceAddress, city, state, pincode,
       businessName, businessType, companyPanNumber, companyDocumentType,
       bankAccountNumber, bankIfscCode, bankName, bankBranch, bankDocumentType,
-      referenceName, referencePhone, referenceEmail,
-      passportPhotoUrl, companyDocumentUrl, gstRegistrationUrl, bankDocumentUrl
+      referenceName, referencePhone, referenceEmail, reference2Name, reference2Phone,
+      passportPhotoUrl, panCardUrl, aadharCardUrl, companyDocumentUrl, 
+      gstRegistrationUrl, bankDocumentUrl, additionalDocuments
     }: PartnerApplicationRequest = await req.json();
 
     // Create Supabase client
@@ -63,23 +206,103 @@ const handler = async (req: Request): Promise<Response> => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
 
-    // Generate signed URLs for documents (valid for 1 hour for security)
-    // Admin needs to access documents within this timeframe
+    // Generate signed URLs for documents (valid for 7 days)
     const { data: passportPhotoSignedUrl } = await supabaseClient.storage
       .from('partner-documents')
-      .createSignedUrl(passportPhotoUrl, 3600);
+      .createSignedUrl(passportPhotoUrl, 604800);
+
+    const { data: panCardSignedUrl } = await supabaseClient.storage
+      .from('partner-documents')
+      .createSignedUrl(panCardUrl, 604800);
+
+    const { data: aadharCardSignedUrl } = await supabaseClient.storage
+      .from('partner-documents')
+      .createSignedUrl(aadharCardUrl, 604800);
 
     const { data: companyDocSignedUrl } = await supabaseClient.storage
       .from('partner-documents')
-      .createSignedUrl(companyDocumentUrl, 3600);
+      .createSignedUrl(companyDocumentUrl, 604800);
 
     const { data: gstSignedUrl } = await supabaseClient.storage
       .from('partner-documents')
-      .createSignedUrl(gstRegistrationUrl, 3600);
+      .createSignedUrl(gstRegistrationUrl, 604800);
 
     const { data: bankDocSignedUrl } = await supabaseClient.storage
       .from('partner-documents')
-      .createSignedUrl(bankDocumentUrl, 3600);
+      .createSignedUrl(bankDocumentUrl, 604800);
+
+    // Generate signed URLs for additional documents if any
+    const additionalDocSignedUrls: string[] = [];
+    if (additionalDocuments && additionalDocuments.length > 0) {
+      for (const docPath of additionalDocuments) {
+        const { data } = await supabaseClient.storage
+          .from('partner-documents')
+          .createSignedUrl(docPath, 604800);
+        if (data?.signedUrl) {
+          additionalDocSignedUrls.push(data.signedUrl);
+        }
+      }
+    }
+
+    const documentUrls = {
+      passportPhoto: passportPhotoSignedUrl?.signedUrl || '',
+      panCard: panCardSignedUrl?.signedUrl || '',
+      aadharCard: aadharCardSignedUrl?.signedUrl || '',
+      companyDocument: companyDocSignedUrl?.signedUrl || '',
+      gstRegistration: gstSignedUrl?.signedUrl || '',
+      bankDocument: bankDocSignedUrl?.signedUrl || '',
+      additionalDocs: additionalDocSignedUrls,
+    };
+
+    // Prepare document paths for zip creation
+    const documentPaths = [
+      { path: passportPhotoUrl, category: 'personal' },
+      { path: panCardUrl, category: 'personal' },
+      { path: aadharCardUrl, category: 'personal' },
+      { path: companyDocumentUrl, category: 'business' },
+      { path: gstRegistrationUrl, category: 'business' },
+      { path: bankDocumentUrl, category: 'banking' },
+    ];
+    
+    if (additionalDocuments && additionalDocuments.length > 0) {
+      additionalDocuments.forEach(doc => {
+        documentPaths.push({ path: doc, category: 'additional' });
+      });
+    }
+
+    // Generate Excel and Zip files
+    let excelBuffer: any = null;
+    let zipBuffer: any = null;
+    
+    try {
+      console.log('Generating Excel file...');
+      excelBuffer = await generateExcelFile({
+        fullName, email, phone, panNumber, aadharNumber,
+        correspondenceAddress, city, state, pincode,
+        businessName, businessType, companyPanNumber, companyDocumentType,
+        bankAccountNumber, bankIfscCode, bankName, bankBranch, bankDocumentType,
+        referenceName, referencePhone, referenceEmail, reference2Name, reference2Phone,
+        passportPhotoUrl, panCardUrl, aadharCardUrl, companyDocumentUrl,
+        gstRegistrationUrl, bankDocumentUrl, additionalDocuments
+      }, documentUrls);
+      console.log('Excel file generated successfully');
+    } catch (error) {
+      console.error('Failed to generate Excel file:', error);
+    }
+
+    try {
+      console.log('Creating document zip...');
+      zipBuffer = await createDocumentZip(supabaseClient, documentPaths, businessName);
+      const zipSizeMB = zipBuffer.length / (1024 * 1024);
+      console.log(`Zip file created successfully (${zipSizeMB.toFixed(2)} MB)`);
+      
+      if (zipSizeMB >= 35) {
+        console.warn('Zip file too large (>35MB), will not attach to email');
+        zipBuffer = null;
+      }
+    } catch (error) {
+      console.error('Failed to create zip file:', error);
+    }
 
     // Send confirmation email to applicant
     console.log('Sending confirmation email to:', email);
@@ -285,12 +508,30 @@ const handler = async (req: Request): Promise<Response> => {
     }
     console.log('Confirmation email sent successfully:', confirmationResult.data);
 
-    // Send notification email to admin with document links
-    console.log('Sending admin notification email');
+    // Prepare attachments
+    const attachments: any[] = [];
+    
+    if (excelBuffer) {
+      attachments.push({
+        filename: `${businessName.replace(/[^a-zA-Z0-9]/g, '_')}_Application_${Date.now()}.xlsx`,
+        content: Buffer.from(excelBuffer).toString('base64'),
+      });
+    }
+    
+    if (zipBuffer) {
+      attachments.push({
+        filename: `${businessName.replace(/[^a-zA-Z0-9]/g, '_')}_Documents_${Date.now()}.zip`,
+        content: Buffer.from(zipBuffer).toString('base64'),
+      });
+    }
+
+    // Send notification email to admin with document links and attachments
+    console.log('Sending admin notification email with attachments');
     const adminResult = await resend.emails.send({
       from: "MaxDSA <partner@maxdsa.com>",
       to: ["partner@maxdsa.com"],
       subject: `New Partner Application: ${businessName}`,
+      attachments: attachments.length > 0 ? attachments : undefined,
       html: `
         <!DOCTYPE html>
         <html>
@@ -425,14 +666,32 @@ const handler = async (req: Request): Promise<Response> => {
                 </div>
                 ` : ''}
 
+                <!-- Attachments Notice -->
+                <div style="background-color: #eff6ff; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                  <h3 style="color: #1a56db; margin-top: 0;">📎 Attachments Included</h3>
+                  <p style="margin: 10px 0;">This email includes:</p>
+                  <ul style="margin: 10px 0; padding-left: 20px;">
+                    <li><strong>Excel file</strong> - Complete application data organized in sheets</li>
+                    <li><strong>Zip file</strong> - All uploaded documents in organized folders</li>
+                  </ul>
+                  <p style="margin: 10px 0; color: #6b7280; font-size: 14px;">
+                    Download the attachments for permanent access to all application data and documents.
+                  </p>
+                </div>
+
                 <!-- Documents Section -->
                 <div class="documents-section">
-                  <div class="section-title">📄 Application Documents</div>
-                  <p style="color: #6b7280; margin-bottom: 15px;">All documents are available for download for the next 7 days:</p>
+                  <div class="section-title">📄 Application Documents (Links)</div>
+                  <p style="color: #6b7280; margin-bottom: 15px;">Document links are also available for the next 7 days:</p>
                   <a href="${passportPhotoSignedUrl?.signedUrl}" target="_blank" class="document-link">📷 Passport Photo</a>
+                  <a href="${panCardSignedUrl?.signedUrl}" target="_blank" class="document-link">📄 PAN Card</a>
+                  <a href="${aadharCardSignedUrl?.signedUrl}" target="_blank" class="document-link">📄 Aadhar Card</a>
                   <a href="${companyDocSignedUrl?.signedUrl}" target="_blank" class="document-link">📄 Company Document</a>
                   <a href="${gstSignedUrl?.signedUrl}" target="_blank" class="document-link">📄 GST Registration</a>
                   <a href="${bankDocSignedUrl?.signedUrl}" target="_blank" class="document-link">🏦 Bank Document</a>
+                  ${additionalDocSignedUrls.map((url, index) => 
+                    `<a href="${url}" target="_blank" class="document-link">📄 Additional Doc ${index + 1}</a>`
+                  ).join('\n                  ')}
                 </div>
               </div>
 
