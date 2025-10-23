@@ -511,18 +511,34 @@ const PartnerSignup = () => {
         return;
       }
 
-      // Send notification emails
+      // Send email notification using edge function with complete data
+      console.log('Invoking send-partner-application-emails function...');
+      const emailPayload: any = {
+        partnerType: formData.partnerType,
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        correspondenceAddress: formData.correspondenceAddress,
+        city: formData.city,
+        state: formData.state,
+        pincode: formData.pincode,
+        bankAccountNumber: formData.bankAccountNumber,
+        bankIfscCode: formData.bankIfscCode,
+        bankName: formData.bankName,
+        bankBranch: formData.bankBranch,
+        bankDocumentType: formData.bankDocumentType,
+        bankDocumentUrl: bankDocPath,
+        referenceName: formData.referenceName,
+        referencePhone: formData.referencePhone,
+        reference2Name: formData.reference2Name,
+        reference2Phone: formData.reference2Phone,
+        additionalDocuments: additionalDocPaths,
+        ...insertData, // Include all partner-type-specific fields
+      };
+
       const { error: emailError } = await supabase.functions.invoke(
         'send-partner-application-emails',
-        {
-          body: {
-            partnerType,
-            fullName: formData.fullName,
-            email: formData.email,
-            phone: formData.phone,
-            // Add all relevant fields based on partner type
-          },
-        }
+        { body: emailPayload }
       );
 
       if (emailError) {

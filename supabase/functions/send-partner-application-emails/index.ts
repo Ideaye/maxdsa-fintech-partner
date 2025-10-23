@@ -19,36 +19,61 @@ function uint8ArrayToBase64(uint8Array: Uint8Array): string {
 }
 
 interface PartnerApplicationRequest {
+  partnerType: 'individual' | 'proprietorship' | 'partnership' | 'private_public_ltd' | 'trust_society';
   fullName: string;
   email: string;
   phone: string;
-  panNumber: string;
-  aadharNumber: string;
   correspondenceAddress: string;
   city: string;
   state: string;
   pincode: string;
-  businessName: string;
-  businessType: string;
-  companyPanNumber: string;
-  companyDocumentType: string;
   bankAccountNumber: string;
   bankIfscCode: string;
   bankName: string;
   bankBranch?: string;
   bankDocumentType: string;
+  bankDocumentUrl: string;
   referenceName?: string;
   referencePhone?: string;
-  referenceEmail?: string;
   reference2Name?: string;
   reference2Phone?: string;
-  passportPhotoUrl: string;
-  panCardUrl: string;
-  aadharCardUrl: string;
-  companyDocumentUrl: string;
-  gstRegistrationUrl: string;
-  bankDocumentUrl: string;
   additionalDocuments?: string[];
+  
+  // Individual specific
+  aadharNumber?: string;
+  businessName?: string;
+  passportPhotoUrl?: string;
+  panCardUrl?: string;
+  aadharCardUrl?: string;
+  
+  // Proprietorship specific
+  proprietorName?: string;
+  firmName?: string;
+  firmGstNumber?: string;
+  firmPanNumber?: string;
+  firmOfficeAddress?: string;
+  
+  // Partnership specific
+  partnerDetails?: any[];
+  
+  // Private/Public Ltd specific
+  companyName?: string;
+  companyGstNumber?: string;
+  companyPanNumber?: string;
+  companyOfficeAddress?: string;
+  companyDocumentType?: string;
+  companyDocumentUrl?: string;
+  directorDetails?: any[];
+  
+  // Trust/Society specific
+  trustName?: string;
+  trustGstNumber?: string;
+  trustPanNumber?: string;
+  trustOfficeAddress?: string;
+  trusteeDetails?: any[];
+  
+  // Common documents
+  gstRegistrationUrl?: string;
 }
 
 async function generateExcelFile(applicationData: PartnerApplicationRequest, documentUrls: any) {
@@ -62,26 +87,81 @@ async function generateExcelFile(applicationData: PartnerApplicationRequest, doc
     ['Full Name', applicationData.fullName],
     ['Email Address', applicationData.email],
     ['Phone Number', applicationData.phone],
-    ['PAN Number', applicationData.panNumber],
-    ['Aadhar Number', applicationData.aadharNumber],
+    ['Partner Type', applicationData.partnerType],
     ['Correspondence Address', applicationData.correspondenceAddress],
     ['City', applicationData.city],
     ['State', applicationData.state],
     ['Pincode', applicationData.pincode],
   ];
+  
+  if (applicationData.aadharNumber) {
+    personalData.push(['Aadhar Number', applicationData.aadharNumber]);
+  }
+  
   const personalSheet = XLSX.utils.aoa_to_sheet(personalData);
   XLSX.utils.book_append_sheet(workbook, personalSheet, 'Personal Info');
   
-  // Sheet 2: Business Details
-  const businessData = [
-    ['Field', 'Value'],
-    ['Business Name', applicationData.businessName],
-    ['Business Type', applicationData.businessType],
-    ['Company PAN Number', applicationData.companyPanNumber],
-    ['Company Document Type', applicationData.companyDocumentType],
-  ];
-  const businessSheet = XLSX.utils.aoa_to_sheet(businessData);
-  XLSX.utils.book_append_sheet(workbook, businessSheet, 'Business Details');
+  // Sheet 2: Business Details (dynamic based on partner type)
+  const businessData: any[][] = [['Field', 'Value']];
+  
+  if (applicationData.partnerType === 'individual') {
+    if (applicationData.businessName) businessData.push(['Business Name', applicationData.businessName]);
+  } else if (applicationData.partnerType === 'proprietorship') {
+    if (applicationData.proprietorName) businessData.push(['Proprietor Name', applicationData.proprietorName]);
+    if (applicationData.firmName) businessData.push(['Firm Name', applicationData.firmName]);
+    if (applicationData.firmGstNumber) businessData.push(['GST Number', applicationData.firmGstNumber]);
+    if (applicationData.firmPanNumber) businessData.push(['PAN Number', applicationData.firmPanNumber]);
+    if (applicationData.firmOfficeAddress) businessData.push(['Office Address', applicationData.firmOfficeAddress]);
+  } else if (applicationData.partnerType === 'partnership') {
+    if (applicationData.firmName) businessData.push(['Firm Name', applicationData.firmName]);
+    if (applicationData.firmGstNumber) businessData.push(['GST Number', applicationData.firmGstNumber]);
+    if (applicationData.firmPanNumber) businessData.push(['PAN Number', applicationData.firmPanNumber]);
+    if (applicationData.firmOfficeAddress) businessData.push(['Office Address', applicationData.firmOfficeAddress]);
+  } else if (applicationData.partnerType === 'private_public_ltd') {
+    if (applicationData.companyName) businessData.push(['Company Name', applicationData.companyName]);
+    if (applicationData.companyGstNumber) businessData.push(['GST Number', applicationData.companyGstNumber]);
+    if (applicationData.companyPanNumber) businessData.push(['PAN Number', applicationData.companyPanNumber]);
+    if (applicationData.companyOfficeAddress) businessData.push(['Office Address', applicationData.companyOfficeAddress]);
+    if (applicationData.companyDocumentType) businessData.push(['Document Type', applicationData.companyDocumentType]);
+  } else if (applicationData.partnerType === 'trust_society') {
+    if (applicationData.trustName) businessData.push(['Trust/Society Name', applicationData.trustName]);
+    if (applicationData.trustGstNumber) businessData.push(['GST Number', applicationData.trustGstNumber]);
+    if (applicationData.trustPanNumber) businessData.push(['PAN Number', applicationData.trustPanNumber]);
+    if (applicationData.trustOfficeAddress) businessData.push(['Office Address', applicationData.trustOfficeAddress]);
+  }
+  
+  if (businessData.length > 1) {
+    const businessSheet = XLSX.utils.aoa_to_sheet(businessData);
+    XLSX.utils.book_append_sheet(workbook, businessSheet, 'Business Details');
+  }
+  
+  // Add partner/director/trustee details sheets if applicable
+  if (applicationData.partnerDetails && applicationData.partnerDetails.length > 0) {
+    const partnerData: any[][] = [['Name', 'PAN', 'Aadhar', 'Address']];
+    applicationData.partnerDetails.forEach((p: any) => {
+      partnerData.push([p.name || '', p.pan || '', p.aadhar || '', p.address || '']);
+    });
+    const partnerSheet = XLSX.utils.aoa_to_sheet(partnerData);
+    XLSX.utils.book_append_sheet(workbook, partnerSheet, 'Partner Details');
+  }
+  
+  if (applicationData.directorDetails && applicationData.directorDetails.length > 0) {
+    const directorData: any[][] = [['Name', 'PAN', 'Aadhar', 'Address']];
+    applicationData.directorDetails.forEach((d: any) => {
+      directorData.push([d.name || '', d.pan || '', d.aadhar || '', d.address || '']);
+    });
+    const directorSheet = XLSX.utils.aoa_to_sheet(directorData);
+    XLSX.utils.book_append_sheet(workbook, directorSheet, 'Director Details');
+  }
+  
+  if (applicationData.trusteeDetails && applicationData.trusteeDetails.length > 0) {
+    const trusteeData: any[][] = [['Name', 'PAN', 'Aadhar', 'Address']];
+    applicationData.trusteeDetails.forEach((t: any) => {
+      trusteeData.push([t.name || '', t.pan || '', t.aadhar || '', t.address || '']);
+    });
+    const trusteeSheet = XLSX.utils.aoa_to_sheet(trusteeData);
+    XLSX.utils.book_append_sheet(workbook, trusteeSheet, 'Trustee Details');
+  }
   
   // Sheet 3: Banking Information
   const bankingData = [
@@ -107,16 +187,15 @@ async function generateExcelFile(applicationData: PartnerApplicationRequest, doc
   const referenceSheet = XLSX.utils.aoa_to_sheet(referenceData);
   XLSX.utils.book_append_sheet(workbook, referenceSheet, 'References');
   
-  // Sheet 5: Document Links
-  const documentData = [
-    ['Document Type', 'URL (Valid for 7 days)'],
-    ['Passport Photo', documentUrls.passportPhoto],
-    ['PAN Card', documentUrls.panCard],
-    ['Aadhar Card', documentUrls.aadharCard],
-    ['Company Document', documentUrls.companyDocument],
-    ['GST Registration', documentUrls.gstRegistration],
-    ['Bank Document', documentUrls.bankDocument],
-  ];
+  // Sheet: Document Links (dynamic based on what's uploaded)
+  const documentData: any[][] = [['Document Type', 'URL (Valid for 7 days)']];
+  
+  if (documentUrls.passportPhoto) documentData.push(['Passport Photo', documentUrls.passportPhoto]);
+  if (documentUrls.panCard) documentData.push(['PAN Card', documentUrls.panCard]);
+  if (documentUrls.aadharCard) documentData.push(['Aadhar Card', documentUrls.aadharCard]);
+  if (documentUrls.companyDocument) documentData.push(['Company Document', documentUrls.companyDocument]);
+  if (documentUrls.gstRegistration) documentData.push(['GST Registration', documentUrls.gstRegistration]);
+  if (documentUrls.bankDocument) documentData.push(['Bank Document', documentUrls.bankDocument]);
   
   if (applicationData.additionalDocuments && applicationData.additionalDocuments.length > 0) {
     applicationData.additionalDocuments.forEach((doc, index) => {
@@ -124,8 +203,10 @@ async function generateExcelFile(applicationData: PartnerApplicationRequest, doc
     });
   }
   
-  const documentSheet = XLSX.utils.aoa_to_sheet(documentData);
-  XLSX.utils.book_append_sheet(workbook, documentSheet, 'Document Links');
+  if (documentData.length > 1) {
+    const documentSheet = XLSX.utils.aoa_to_sheet(documentData);
+    XLSX.utils.book_append_sheet(workbook, documentSheet, 'Document Links');
+  }
   
   const excelBuffer = XLSX.write(workbook, { 
     type: 'buffer', 
@@ -196,15 +277,9 @@ const handler = async (req: Request): Promise<Response> => {
       throw new Error('Email service is not configured');
     }
 
-    const {
-      fullName, email, phone, panNumber, aadharNumber,
-      correspondenceAddress, city, state, pincode,
-      businessName, businessType, companyPanNumber, companyDocumentType,
-      bankAccountNumber, bankIfscCode, bankName, bankBranch, bankDocumentType,
-      referenceName, referencePhone, referenceEmail, reference2Name, reference2Phone,
-      passportPhotoUrl, panCardUrl, aadharCardUrl, companyDocumentUrl, 
-      gstRegistrationUrl, bankDocumentUrl, additionalDocuments
-    }: PartnerApplicationRequest = await req.json();
+    const applicationData: PartnerApplicationRequest = await req.json();
+
+    console.log('Received application data for partner type:', applicationData.partnerType);
 
     // Create Supabase client
     const supabaseClient = createClient(
@@ -212,66 +287,61 @@ const handler = async (req: Request): Promise<Response> => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
 
-    // Generate signed URLs for documents (valid for 7 days)
-    const { data: passportPhotoSignedUrl } = await supabaseClient.storage
-      .from('partner-documents')
-      .createSignedUrl(passportPhotoUrl, 604800);
+    // Helper function to safely create signed URL
+    const createSignedUrlSafely = async (path: string | undefined) => {
+      if (!path) return null;
+      try {
+        const { data } = await supabaseClient.storage
+          .from('partner-documents')
+          .createSignedUrl(path, 604800);
+        return data?.signedUrl || null;
+      } catch (error) {
+        console.error(`Failed to create signed URL for ${path}:`, error);
+        return null;
+      }
+    };
 
-    const { data: panCardSignedUrl } = await supabaseClient.storage
-      .from('partner-documents')
-      .createSignedUrl(panCardUrl, 604800);
-
-    const { data: aadharCardSignedUrl } = await supabaseClient.storage
-      .from('partner-documents')
-      .createSignedUrl(aadharCardUrl, 604800);
-
-    const { data: companyDocSignedUrl } = await supabaseClient.storage
-      .from('partner-documents')
-      .createSignedUrl(companyDocumentUrl, 604800);
-
-    const { data: gstSignedUrl } = await supabaseClient.storage
-      .from('partner-documents')
-      .createSignedUrl(gstRegistrationUrl, 604800);
-
-    const { data: bankDocSignedUrl } = await supabaseClient.storage
-      .from('partner-documents')
-      .createSignedUrl(bankDocumentUrl, 604800);
+    // Generate signed URLs for documents (only for uploaded docs)
+    const passportPhotoSignedUrl = await createSignedUrlSafely(applicationData.passportPhotoUrl);
+    const panCardSignedUrl = await createSignedUrlSafely(applicationData.panCardUrl);
+    const aadharCardSignedUrl = await createSignedUrlSafely(applicationData.aadharCardUrl);
+    const companyDocSignedUrl = await createSignedUrlSafely(applicationData.companyDocumentUrl);
+    const gstSignedUrl = await createSignedUrlSafely(applicationData.gstRegistrationUrl);
+    const bankDocSignedUrl = await createSignedUrlSafely(applicationData.bankDocumentUrl);
 
     // Generate signed URLs for additional documents if any
     const additionalDocSignedUrls: string[] = [];
-    if (additionalDocuments && additionalDocuments.length > 0) {
-      for (const docPath of additionalDocuments) {
-        const { data } = await supabaseClient.storage
-          .from('partner-documents')
-          .createSignedUrl(docPath, 604800);
-        if (data?.signedUrl) {
-          additionalDocSignedUrls.push(data.signedUrl);
+    if (applicationData.additionalDocuments && applicationData.additionalDocuments.length > 0) {
+      for (const docPath of applicationData.additionalDocuments) {
+        const signedUrl = await createSignedUrlSafely(docPath);
+        if (signedUrl) {
+          additionalDocSignedUrls.push(signedUrl);
         }
       }
     }
 
     const documentUrls = {
-      passportPhoto: passportPhotoSignedUrl?.signedUrl || '',
-      panCard: panCardSignedUrl?.signedUrl || '',
-      aadharCard: aadharCardSignedUrl?.signedUrl || '',
-      companyDocument: companyDocSignedUrl?.signedUrl || '',
-      gstRegistration: gstSignedUrl?.signedUrl || '',
-      bankDocument: bankDocSignedUrl?.signedUrl || '',
+      passportPhoto: passportPhotoSignedUrl,
+      panCard: panCardSignedUrl,
+      aadharCard: aadharCardSignedUrl,
+      companyDocument: companyDocSignedUrl,
+      gstRegistration: gstSignedUrl,
+      bankDocument: bankDocSignedUrl,
       additionalDocs: additionalDocSignedUrls,
     };
 
-    // Prepare document paths for zip creation
-    const documentPaths = [
-      { path: passportPhotoUrl, category: 'personal' },
-      { path: panCardUrl, category: 'personal' },
-      { path: aadharCardUrl, category: 'personal' },
-      { path: companyDocumentUrl, category: 'business' },
-      { path: gstRegistrationUrl, category: 'business' },
-      { path: bankDocumentUrl, category: 'banking' },
-    ];
+    // Prepare document paths for zip creation (only include uploaded documents)
+    const documentPaths: { path: string; category: string }[] = [];
     
-    if (additionalDocuments && additionalDocuments.length > 0) {
-      additionalDocuments.forEach(doc => {
+    if (applicationData.passportPhotoUrl) documentPaths.push({ path: applicationData.passportPhotoUrl, category: 'personal' });
+    if (applicationData.panCardUrl) documentPaths.push({ path: applicationData.panCardUrl, category: 'personal' });
+    if (applicationData.aadharCardUrl) documentPaths.push({ path: applicationData.aadharCardUrl, category: 'personal' });
+    if (applicationData.companyDocumentUrl) documentPaths.push({ path: applicationData.companyDocumentUrl, category: 'business' });
+    if (applicationData.gstRegistrationUrl) documentPaths.push({ path: applicationData.gstRegistrationUrl, category: 'business' });
+    if (applicationData.bankDocumentUrl) documentPaths.push({ path: applicationData.bankDocumentUrl, category: 'banking' });
+    
+    if (applicationData.additionalDocuments && applicationData.additionalDocuments.length > 0) {
+      applicationData.additionalDocuments.forEach(doc => {
         documentPaths.push({ path: doc, category: 'additional' });
       });
     }
@@ -282,15 +352,7 @@ const handler = async (req: Request): Promise<Response> => {
     
     try {
       console.log('Generating Excel file...');
-      excelBuffer = await generateExcelFile({
-        fullName, email, phone, panNumber, aadharNumber,
-        correspondenceAddress, city, state, pincode,
-        businessName, businessType, companyPanNumber, companyDocumentType,
-        bankAccountNumber, bankIfscCode, bankName, bankBranch, bankDocumentType,
-        referenceName, referencePhone, referenceEmail, reference2Name, reference2Phone,
-        passportPhotoUrl, panCardUrl, aadharCardUrl, companyDocumentUrl,
-        gstRegistrationUrl, bankDocumentUrl, additionalDocuments
-      }, documentUrls);
+      excelBuffer = await generateExcelFile(applicationData, documentUrls);
       console.log('Excel file generated successfully');
     } catch (error) {
       console.error('Failed to generate Excel file:', error);
@@ -298,6 +360,11 @@ const handler = async (req: Request): Promise<Response> => {
 
     try {
       console.log('Creating document zip...');
+      const businessName = applicationData.businessName || 
+                          applicationData.firmName || 
+                          applicationData.companyName || 
+                          applicationData.trustName || 
+                          applicationData.fullName;
       zipBuffer = await createDocumentZip(supabaseClient, documentPaths, businessName);
       const zipSizeMB = zipBuffer.length / (1024 * 1024);
       console.log(`Zip file created successfully (${zipSizeMB.toFixed(2)} MB)`);
@@ -312,10 +379,10 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // Send confirmation email to applicant
-    console.log('Sending confirmation email to:', email);
+    console.log('Sending confirmation email to:', applicationData.email);
     const confirmationResult = await resend.emails.send({
       from: "MaxDSA <partner@maxdsa.com>",
-      to: [email],
+      to: [applicationData.email],
       subject: "Partner Application Received - MaxDSA",
       html: `
         <!DOCTYPE html>
@@ -365,14 +432,14 @@ const handler = async (req: Request): Promise<Response> => {
                   <h2 style="color: #ffffff; font-size: 32px; font-weight: 700; margin: 0;">${MAXDSA_LOGO}</h2>
                 </div>
                 <div class="header-icon">🎉</div>
-                <h1>Thank You, ${fullName}!</h1>
+                <h1>Thank You, ${applicationData.fullName}!</h1>
                 <p>Your partnership application has been successfully submitted</p>
               </div>
               
               <div class="content">
                 <!-- Introduction Message -->
                 <div class="intro">
-                  <p><strong>Dear ${fullName},</strong></p>
+                  <p><strong>Dear ${applicationData.fullName},</strong></p>
                   <p>We have received your partnership application and appreciate your interest in joining MaxDSA. Our team will carefully review your application and get back to you within <strong>2-3 business days</strong>.</p>
                   <p>In the meantime, you can review the information you submitted below.</p>
                 </div>
@@ -386,89 +453,93 @@ const handler = async (req: Request): Promise<Response> => {
                   <table class="info-table">
                     <tr>
                       <td>Full Name</td>
-                      <td>${fullName}</td>
+                      <td>${applicationData.fullName}</td>
                     </tr>
                     <tr>
                       <td>Email Address</td>
-                      <td>${email}</td>
+                      <td>${applicationData.email}</td>
                     </tr>
                     <tr>
                       <td>Phone Number</td>
-                      <td>${phone}</td>
+                      <td>${applicationData.phone}</td>
                     </tr>
                     <tr>
-                      <td>PAN Number</td>
-                      <td>${panNumber}</td>
+                      <td>Partner Type</td>
+                      <td>${applicationData.partnerType.replace(/_/g, ' ').toUpperCase()}</td>
                     </tr>
+                    ${applicationData.aadharNumber ? `
                     <tr>
                       <td>Aadhar Number</td>
-                      <td>${aadharNumber.replace(/\d(?=\d{4})/g, 'X')}</td>
+                      <td>${applicationData.aadharNumber.replace(/\d(?=\d{4})/g, 'X')}</td>
                     </tr>
+                    ` : ''}
                   </table>
                 </div>
 
-                <!-- Business Details -->
+                <!-- Business Details (dynamic based on partner type) -->
+                ${applicationData.businessName || applicationData.firmName || applicationData.companyName || applicationData.trustName ? `
                 <div class="section">
                   <div class="section-title">🏢 Business Details</div>
                   <table class="info-table">
-                    <tr>
-                      <td>Business Name</td>
-                      <td>${businessName}</td>
-                    </tr>
-                    <tr>
-                      <td>Business Type</td>
-                      <td>${businessType}</td>
-                    </tr>
-                    <tr>
-                      <td>Company PAN</td>
-                      <td>${companyPanNumber}</td>
-                    </tr>
-                    <tr>
-                      <td>Document Type</td>
-                      <td>${companyDocumentType}</td>
+                    ${applicationData.businessName ? `<tr><td>Business Name</td><td>${applicationData.businessName}</td></tr>` : ''}
+                    ${applicationData.firmName ? `<tr><td>Firm Name</td><td>${applicationData.firmName}</td></tr>` : ''}
+                    ${applicationData.firmGstNumber ? `<tr><td>GST Number</td><td>${applicationData.firmGstNumber}</td></tr>` : ''}
+                    ${applicationData.firmPanNumber ? `<tr><td>PAN Number</td><td>${applicationData.firmPanNumber}</td></tr>` : ''}
+                    ${applicationData.companyName ? `<tr><td>Company Name</td><td>${applicationData.companyName}</td></tr>` : ''}
+                    ${applicationData.companyGstNumber ? `<tr><td>GST Number</td><td>${applicationData.companyGstNumber}</td></tr>` : ''}
+                    ${applicationData.companyPanNumber ? `<tr><td>PAN Number</td><td>${applicationData.companyPanNumber}</td></tr>` : ''}
+                    ${applicationData.trustName ? `<tr><td>Trust/Society Name</td><td>${applicationData.trustName}</td></tr>` : ''}
+                    ${applicationData.trustGstNumber ? `<tr><td>GST Number</td><td>${applicationData.trustGstNumber}</td></tr>` : ''}
+                    ${applicationData.trustPanNumber ? `<tr><td>PAN Number</td><td>${applicationData.trustPanNumber}</td></tr>` : ''}
                     </tr>
                   </table>
-                </div>
+                ` : ''}
 
-                <!-- Banking Details -->
+                <!-- Banking Information -->
                 <div class="section">
-                  <div class="section-title">🏦 Banking Details</div>
+                  <div class="section-title">🏦 Banking Information</div>
                   <table class="info-table">
                     <tr>
+                      <td>Bank Name</td>
+                      <td>${applicationData.bankName}</td>
+                    </tr>
+                    ${applicationData.bankBranch ? `
+                    <tr>
+                      <td>Bank Branch</td>
+                      <td>${applicationData.bankBranch}</td>
+                    </tr>
+                    ` : ''}
+                    <tr>
                       <td>Account Number</td>
-                      <td>${bankAccountNumber.replace(/\d(?=\d{4})/g, 'X')}</td>
+                      <td>${applicationData.bankAccountNumber.replace(/\d(?=\d{4})/g, 'X')}</td>
                     </tr>
                     <tr>
                       <td>IFSC Code</td>
-                      <td>${bankIfscCode}</td>
+                      <td>${applicationData.bankIfscCode}</td>
                     </tr>
-                    <tr>
-                      <td>Bank Name</td>
-                      <td>${bankName}</td>
-                    </tr>
-                    ${bankBranch ? `<tr>
-                      <td>Branch</td>
-                      <td>${bankBranch}</td>
-                    </tr>` : ''}
                   </table>
                 </div>
 
-                ${referenceName ? `
+                ${applicationData.referenceName ? `
                 <!-- Reference Information -->
                 <div class="section">
                   <div class="section-title">📞 Reference Information</div>
                   <table class="info-table">
-                    <tr>
-                      <td>Reference Name</td>
-                      <td>${referenceName}</td>
-                    </tr>
-                    ${referencePhone ? `<tr>
-                      <td>Phone Number</td>
-                      <td>${referencePhone}</td>
+                    ${applicationData.referenceName ? `<tr>
+                      <td>Reference 1 Name</td>
+                      <td>${applicationData.referenceName}</td>
                     </tr>` : ''}
-                    ${referenceEmail ? `<tr>
-                      <td>Email Address</td>
-                      <td>${referenceEmail}</td>
+                    ${applicationData.referencePhone ? `<tr>
+                      <td>Reference 1 Phone</td>
+                      <td>${applicationData.referencePhone}</td>
+                    </tr>` : ''}
+                    ${applicationData.reference2Name ? `<tr>
+                      <td>Reference 2 Name</td>
+                      <td>${applicationData.reference2Name}</td>
+                    </tr>` : ''}
+                    ${applicationData.reference2Phone ? `<tr>
+                      <td>Reference 2 Phone</td>
+                      <td>${applicationData.reference2Phone}</td>
                     </tr>` : ''}
                   </table>
                 </div>
@@ -477,10 +548,14 @@ const handler = async (req: Request): Promise<Response> => {
                 <!-- Documents Submitted -->
                 <div class="documents-list">
                   <div class="section-title">📄 Documents Submitted</div>
-                  <div class="document-item">Passport Size Photo</div>
-                  <div class="document-item">Company Document (${companyDocumentType})</div>
-                  <div class="document-item">GST Registration Certificate</div>
-                  <div class="document-item">Bank Document (${bankDocumentType})</div>
+                  ${applicationData.passportPhotoUrl ? '<div class="document-item">Passport Photo</div>' : ''}
+                  ${applicationData.panCardUrl ? '<div class="document-item">PAN Card</div>' : ''}
+                  ${applicationData.aadharCardUrl ? '<div class="document-item">Aadhar Card</div>' : ''}
+                  ${applicationData.companyDocumentUrl ? `<div class="document-item">Company Document${applicationData.companyDocumentType ? ` (${applicationData.companyDocumentType})` : ''}</div>` : ''}
+                  ${applicationData.gstRegistrationUrl ? '<div class="document-item">GST Registration Certificate</div>' : ''}
+                  ${applicationData.bankDocumentUrl ? `<div class="document-item">Bank Document${applicationData.bankDocumentType ? ` (${applicationData.bankDocumentType})` : ''}</div>` : ''}
+                  ${applicationData.additionalDocuments && applicationData.additionalDocuments.length > 0 ? 
+                    applicationData.additionalDocuments.map((_, i) => `<div class="document-item">Additional Document ${i + 1}</div>`).join('') : ''}
                 </div>
               </div>
 
@@ -517,6 +592,12 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Prepare attachments
     const attachments: any[] = [];
+    
+    const businessName = applicationData.businessName || 
+                        applicationData.firmName || 
+                        applicationData.companyName || 
+                        applicationData.trustName || 
+                        applicationData.fullName;
     
     if (excelBuffer) {
       console.log('Adding Excel file as attachment');
@@ -583,49 +664,50 @@ const handler = async (req: Request): Promise<Response> => {
                   <table class="info-table">
                     <tr>
                       <td>Full Name</td>
-                      <td>${fullName}</td>
+                      <td>${applicationData.fullName}</td>
                     </tr>
                     <tr>
                       <td>Email Address</td>
-                      <td>${email}</td>
+                      <td>${applicationData.email}</td>
                     </tr>
                     <tr>
                       <td>Phone Number</td>
-                      <td>${phone}</td>
+                      <td>${applicationData.phone}</td>
                     </tr>
                     <tr>
-                      <td>PAN Number</td>
-                      <td>${panNumber}</td>
+                      <td>Partner Type</td>
+                      <td>${applicationData.partnerType.replace(/_/g, ' ').toUpperCase()}</td>
                     </tr>
+                    ${applicationData.aadharNumber ? `
                     <tr>
                       <td>Aadhar Number</td>
-                      <td>${aadharNumber}</td>
+                      <td>${applicationData.aadharNumber}</td>
+                    </tr>
+                    ` : ''}
+                  </table>
+                </div>
+
+                <!-- Business Details Section (dynamic) -->
+                ${applicationData.businessName || applicationData.firmName || applicationData.companyName || applicationData.trustName ? `
+                <div class="section">
+                  <div class="section-title">🏢 Business Details</div>
+                  <table class="info-table">
+                    ${applicationData.businessName ? `<tr><td>Business Name</td><td>${applicationData.businessName}</td></tr>` : ''}
+                    ${applicationData.proprietorName ? `<tr><td>Proprietor Name</td><td>${applicationData.proprietorName}</td></tr>` : ''}
+                    ${applicationData.firmName ? `<tr><td>Firm Name</td><td>${applicationData.firmName}</td></tr>` : ''}
+                    ${applicationData.firmGstNumber ? `<tr><td>GST Number</td><td>${applicationData.firmGstNumber}</td></tr>` : ''}
+                    ${applicationData.firmPanNumber ? `<tr><td>PAN Number</td><td>${applicationData.firmPanNumber}</td></tr>` : ''}
+                    ${applicationData.companyName ? `<tr><td>Company Name</td><td>${applicationData.companyName}</td></tr>` : ''}
+                    ${applicationData.companyGstNumber ? `<tr><td>GST Number</td><td>${applicationData.companyGstNumber}</td></tr>` : ''}
+                    ${applicationData.companyPanNumber ? `<tr><td>PAN Number</td><td>${applicationData.companyPanNumber}</td></tr>` : ''}
+                    ${applicationData.trustName ? `<tr><td>Trust/Society Name</td><td>${applicationData.trustName}</td></tr>` : ''}
+                    ${applicationData.trustGstNumber ? `<tr><td>GST Number</td><td>${applicationData.trustGstNumber}</td></tr>` : ''}
+                    ${applicationData.trustPanNumber ? `<tr><td>PAN Number</td><td>${applicationData.trustPanNumber}</td></tr>` : ''}
                     </tr>
                   </table>
                 </div>
 
-                <!-- Business Details Section -->
-                <div class="section">
-                  <div class="section-title">🏢 Business Details</div>
-                  <table class="info-table">
-                    <tr>
-                      <td>Business Name</td>
-                      <td>${businessName}</td>
-                    </tr>
-                    <tr>
-                      <td>Business Type</td>
-                      <td>${businessType}</td>
-                    </tr>
-                    <tr>
-                      <td>Company PAN</td>
-                      <td>${companyPanNumber}</td>
-                    </tr>
-                    <tr>
-                      <td>Company Document Type</td>
-                      <td>${companyDocumentType}</td>
-                    </tr>
-                  </table>
-                </div>
+                ` : ''}
 
                 <!-- Banking Details Section -->
                 <div class="section">
@@ -633,44 +715,36 @@ const handler = async (req: Request): Promise<Response> => {
                   <table class="info-table">
                     <tr>
                       <td>Account Number</td>
-                      <td>${bankAccountNumber}</td>
+                      <td>${applicationData.bankAccountNumber}</td>
                     </tr>
                     <tr>
                       <td>IFSC Code</td>
-                      <td>${bankIfscCode}</td>
+                      <td>${applicationData.bankIfscCode}</td>
                     </tr>
                     <tr>
                       <td>Bank Name</td>
-                      <td>${bankName}</td>
+                      <td>${applicationData.bankName}</td>
                     </tr>
-                    ${bankBranch ? `<tr>
+                    ${applicationData.bankBranch ? `<tr>
                       <td>Branch</td>
-                      <td>${bankBranch}</td>
+                      <td>${applicationData.bankBranch}</td>
                     </tr>` : ''}
                     <tr>
                       <td>Bank Document Type</td>
-                      <td>${bankDocumentType}</td>
+                      <td>${applicationData.bankDocumentType}</td>
                     </tr>
                   </table>
                 </div>
 
-                ${referenceName ? `
+                ${applicationData.referenceName ? `
                 <!-- Reference Section -->
                 <div class="section">
                   <div class="section-title">📞 Reference Information</div>
                   <table class="info-table">
-                    <tr>
-                      <td>Reference Name</td>
-                      <td>${referenceName}</td>
-                    </tr>
-                    ${referencePhone ? `<tr>
-                      <td>Reference Phone</td>
-                      <td>${referencePhone}</td>
-                    </tr>` : ''}
-                    ${referenceEmail ? `<tr>
-                      <td>Reference Email</td>
-                      <td>${referenceEmail}</td>
-                    </tr>` : ''}
+                    ${applicationData.referenceName ? `<tr><td>Reference 1 Name</td><td>${applicationData.referenceName}</td></tr>` : ''}
+                    ${applicationData.referencePhone ? `<tr><td>Reference 1 Phone</td><td>${applicationData.referencePhone}</td></tr>` : ''}
+                    ${applicationData.reference2Name ? `<tr><td>Reference 2 Name</td><td>${applicationData.reference2Name}</td></tr>` : ''}
+                    ${applicationData.reference2Phone ? `<tr><td>Reference 2 Phone</td><td>${applicationData.reference2Phone}</td></tr>` : ''}
                   </table>
                 </div>
                 ` : ''}
@@ -691,13 +765,13 @@ const handler = async (req: Request): Promise<Response> => {
                 <!-- Documents Section -->
                 <div class="documents-section">
                   <div class="section-title">📄 Application Documents (Links)</div>
-                  <p style="color: #6b7280; margin-bottom: 15px;">Document links are also available for the next 7 days:</p>
-                  <a href="${passportPhotoSignedUrl?.signedUrl}" target="_blank" class="document-link">📷 Passport Photo</a>
-                  <a href="${panCardSignedUrl?.signedUrl}" target="_blank" class="document-link">📄 PAN Card</a>
-                  <a href="${aadharCardSignedUrl?.signedUrl}" target="_blank" class="document-link">📄 Aadhar Card</a>
-                  <a href="${companyDocSignedUrl?.signedUrl}" target="_blank" class="document-link">📄 Company Document</a>
-                  <a href="${gstSignedUrl?.signedUrl}" target="_blank" class="document-link">📄 GST Registration</a>
-                  <a href="${bankDocSignedUrl?.signedUrl}" target="_blank" class="document-link">🏦 Bank Document</a>
+                  <p style="color: #6b7280; margin-bottom: 15px;">Document links are available for the next 7 days:</p>
+                  ${passportPhotoSignedUrl ? `<a href="${passportPhotoSignedUrl}" target="_blank" class="document-link">📷 Passport Photo</a>` : ''}
+                  ${panCardSignedUrl ? `<a href="${panCardSignedUrl}" target="_blank" class="document-link">📄 PAN Card</a>` : ''}
+                  ${aadharCardSignedUrl ? `<a href="${aadharCardSignedUrl}" target="_blank" class="document-link">📄 Aadhar Card</a>` : ''}
+                  ${companyDocSignedUrl ? `<a href="${companyDocSignedUrl}" target="_blank" class="document-link">📄 Company Document</a>` : ''}
+                  ${gstSignedUrl ? `<a href="${gstSignedUrl}" target="_blank" class="document-link">📄 GST Registration</a>` : ''}
+                  ${bankDocSignedUrl ? `<a href="${bankDocSignedUrl}" target="_blank" class="document-link">🏦 Bank Document</a>` : ''}
                   ${additionalDocSignedUrls.map((url, index) => 
                     `<a href="${url}" target="_blank" class="document-link">📄 Additional Doc ${index + 1}</a>`
                   ).join('\n                  ')}
