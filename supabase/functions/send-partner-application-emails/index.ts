@@ -84,6 +84,24 @@ interface PartnerApplicationRequest {
   // Common documents
   gstRegistrationUrl?: string;
   udyamCertificateUrl?: string;
+  
+  // Database snake_case versions (sent from frontend via ...insertData)
+  passport_photo_url?: string;
+  pan_card_url?: string;
+  aadhar_card_url?: string;
+  company_document_url?: string;
+  gst_registration_url?: string;
+  udyam_certificate_url?: string;
+  bank_document_url?: string;
+  additional_documents?: string[];
+  firm_pan_card_url?: string;
+  moa_document_url?: string;
+  aoa_document_url?: string;
+  coi_document_url?: string;
+  company_pan_card_url?: string;
+  trust_pan_card_url?: string;
+  partnership_deed_url?: string;
+  trust_deed_url?: string;
 }
 
 async function generateExcelFile(applicationData: PartnerApplicationRequest, documentUrls: any) {
@@ -346,42 +364,101 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Prepare document paths for zip creation (only include uploaded documents)
     const documentPaths: { path: string; category: string }[] = [];
-    
-    // Personal documents
-    if (applicationData.passportPhotoUrl) documentPaths.push({ path: applicationData.passportPhotoUrl, category: 'personal' });
-    if (applicationData.panCardUrl) documentPaths.push({ path: applicationData.panCardUrl, category: 'personal' });
-    if (applicationData.aadharCardUrl) documentPaths.push({ path: applicationData.aadharCardUrl, category: 'personal' });
-    
-    // Business documents - different for each partner type
-    if (applicationData.companyDocumentUrl) documentPaths.push({ path: applicationData.companyDocumentUrl, category: 'business' });
-    if (applicationData.gstRegistrationUrl) documentPaths.push({ path: applicationData.gstRegistrationUrl, category: 'business' });
-    
-    // Partnership specific documents
-    if (applicationData.partnershipDeedUrl) documentPaths.push({ path: applicationData.partnershipDeedUrl, category: 'business' });
-    if (applicationData.firmPanCardUrl) documentPaths.push({ path: applicationData.firmPanCardUrl, category: 'business' });
-    
-    // Private/Public Ltd specific documents
-    if (applicationData.moaDocumentUrl) documentPaths.push({ path: applicationData.moaDocumentUrl, category: 'business' });
-    if (applicationData.aoaDocumentUrl) documentPaths.push({ path: applicationData.aoaDocumentUrl, category: 'business' });
-    if (applicationData.coiDocumentUrl) documentPaths.push({ path: applicationData.coiDocumentUrl, category: 'business' });
-    if (applicationData.companyPanCardUrl) documentPaths.push({ path: applicationData.companyPanCardUrl, category: 'business' });
-    
-    // Trust/Society specific documents
-    if (applicationData.trustDeedUrl) documentPaths.push({ path: applicationData.trustDeedUrl, category: 'business' });
-    if (applicationData.trustPanCardUrl) documentPaths.push({ path: applicationData.trustPanCardUrl, category: 'business' });
-    
-    // Udyam certificate (common optional)
-    if (applicationData.udyamCertificateUrl) documentPaths.push({ path: applicationData.udyamCertificateUrl, category: 'business' });
-    
-    // Banking documents
-    if (applicationData.bankDocumentUrl) documentPaths.push({ path: applicationData.bankDocumentUrl, category: 'banking' });
-    
-    // Additional documents
-    if (applicationData.additionalDocuments && applicationData.additionalDocuments.length > 0) {
-      applicationData.additionalDocuments.forEach(doc => {
-        documentPaths.push({ path: doc, category: 'additional' });
-      });
+
+    console.log('Building document paths array...');
+    console.log('Application data keys:', Object.keys(applicationData));
+
+    // Personal documents (common - use snake_case to match database fields)
+    if (applicationData.passport_photo_url) {
+      documentPaths.push({ path: applicationData.passport_photo_url, category: 'personal' });
+      console.log('✓ Added passport photo');
     }
+    if (applicationData.pan_card_url) {
+      documentPaths.push({ path: applicationData.pan_card_url, category: 'personal' });
+      console.log('✓ Added PAN card');
+    }
+    if (applicationData.aadhar_card_url) {
+      documentPaths.push({ path: applicationData.aadhar_card_url, category: 'personal' });
+      console.log('✓ Added Aadhar card');
+    }
+
+    // Business documents - check all possible document fields
+    if (applicationData.company_document_url) {
+      const docType = applicationData.companyDocumentType || 'business';
+      documentPaths.push({ path: applicationData.company_document_url, category: 'business' });
+      console.log(`✓ Added company document (${docType})`);
+    }
+
+    if (applicationData.gst_registration_url) {
+      documentPaths.push({ path: applicationData.gst_registration_url, category: 'business' });
+      console.log('✓ Added GST registration');
+    }
+
+    if (applicationData.udyam_certificate_url) {
+      documentPaths.push({ path: applicationData.udyam_certificate_url, category: 'business' });
+      console.log('✓ Added Udyam certificate');
+    }
+
+    // Partnership specific (partnership_deed is stored in company_document_url)
+    if (applicationData.firm_pan_card_url) {
+      documentPaths.push({ path: applicationData.firm_pan_card_url, category: 'business' });
+      console.log('✓ Added firm PAN card');
+    }
+
+    // Private/Public Ltd specific - MOA, AOA, COI
+    // Note: Frontend stores MOA in company_document_url, but also check specific fields
+    if (applicationData.moa_document_url) {
+      documentPaths.push({ path: applicationData.moa_document_url, category: 'business' });
+      console.log('✓ Added MOA document');
+    }
+    if (applicationData.aoa_document_url) {
+      documentPaths.push({ path: applicationData.aoa_document_url, category: 'business' });
+      console.log('✓ Added AOA document');
+    }
+    if (applicationData.coi_document_url) {
+      documentPaths.push({ path: applicationData.coi_document_url, category: 'business' });
+      console.log('✓ Added COI document');
+    }
+    if (applicationData.company_pan_card_url) {
+      documentPaths.push({ path: applicationData.company_pan_card_url, category: 'business' });
+      console.log('✓ Added company PAN card');
+    }
+
+    // Trust/Society specific (trust_deed is stored in company_document_url)
+    if (applicationData.trust_pan_card_url) {
+      documentPaths.push({ path: applicationData.trust_pan_card_url, category: 'business' });
+      console.log('✓ Added trust PAN card');
+    }
+
+    // Banking documents (mandatory for all)
+    if (applicationData.bank_document_url || applicationData.bankDocumentUrl) {
+      const bankDocUrl = applicationData.bank_document_url || applicationData.bankDocumentUrl;
+      documentPaths.push({ path: bankDocUrl, category: 'banking' });
+      console.log('✓ Added bank document');
+    }
+
+    // Additional documents (always check this array)
+    if (applicationData.additional_documents && Array.isArray(applicationData.additional_documents) && applicationData.additional_documents.length > 0) {
+      applicationData.additional_documents.forEach((doc: string, index: number) => {
+        if (doc) {
+          documentPaths.push({ path: doc, category: 'additional' });
+        }
+      });
+      console.log(`✓ Added ${applicationData.additional_documents.length} additional documents`);
+    }
+
+    // Also check additionalDocuments (camelCase) as fallback
+    if (applicationData.additionalDocuments && Array.isArray(applicationData.additionalDocuments) && applicationData.additionalDocuments.length > 0) {
+      applicationData.additionalDocuments.forEach((doc: string, index: number) => {
+        if (doc) {
+          documentPaths.push({ path: doc, category: 'additional' });
+        }
+      });
+      console.log(`✓ Added ${applicationData.additionalDocuments.length} additional documents (from camelCase field)`);
+    }
+
+    console.log(`📦 Total documents to be zipped: ${documentPaths.length}`);
+    console.log('Document paths:', documentPaths.map(d => ({ category: d.category, path: d.path.substring(0, 50) + '...' })));
 
     // Generate Excel and Zip files
     let excelBuffer: any = null;
