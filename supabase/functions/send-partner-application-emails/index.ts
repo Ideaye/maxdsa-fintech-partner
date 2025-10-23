@@ -302,9 +302,9 @@ const handler = async (req: Request): Promise<Response> => {
       const zipSizeMB = zipBuffer.length / (1024 * 1024);
       console.log(`Zip file created successfully (${zipSizeMB.toFixed(2)} MB)`);
       
-      // Limit to 10MB to avoid CPU timeout during base64 conversion
-      if (zipSizeMB >= 10) {
-        console.warn(`Zip file too large (${zipSizeMB.toFixed(2)} MB), will not attach to email (limit: 10MB)`);
+      // With 2MB per file limit, zip should stay under 15MB
+      if (zipSizeMB >= 20) {
+        console.warn(`Zip file too large (${zipSizeMB.toFixed(2)} MB), will not attach to email (limit: 20MB)`);
         zipBuffer = null;
       }
     } catch (error) {

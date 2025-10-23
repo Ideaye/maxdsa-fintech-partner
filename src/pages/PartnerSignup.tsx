@@ -80,11 +80,11 @@ const PartnerSignup = () => {
       return false;
     }
 
-    const maxSize = 5 * 1024 * 1024; // 5MB
+    const maxSize = 2 * 1024 * 1024; // 2MB limit to prevent large zip files
     if (file.size > maxSize) {
       toast({
         title: "Error",
-        description: `${fieldName} must be less than 5MB`,
+        description: `${fieldName} must be less than 2MB. Please compress or reduce the file size.`,
         variant: "destructive",
       });
       return false;
