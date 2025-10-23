@@ -26,8 +26,12 @@ export type Database = {
           bank_document_url: string
           bank_ifsc_code: string
           bank_name: string
+          bank_statement_url: string | null
           business_name: string | null
           city: string
+          co_applicant_contact: string | null
+          co_applicant_dob: string | null
+          co_applicant_name: string | null
           company_document_type: string | null
           company_document_url: string | null
           company_gst_number: string | null
@@ -36,15 +40,24 @@ export type Database = {
           company_pan_number: string | null
           correspondence_address: string
           created_at: string
+          customer_dob: string | null
+          daily_turnover_range: string | null
+          daily_walkins_range: string | null
           director_details: Json | null
           email: string
+          existing_loans: Json | null
           firm_gst_number: string | null
           firm_name: string | null
           firm_office_address: string | null
           firm_pan_number: string | null
           full_name: string
+          geo_location: string | null
           gst_registration_url: string | null
           id: string
+          itr_documents_url: string | null
+          nature_of_residence_ownership: string | null
+          nature_of_retail_shop: string | null
+          nature_of_shop_ownership: string | null
           pan_card_url: string
           partner_details: Json | null
           partner_type: string
@@ -56,12 +69,18 @@ export type Database = {
           reference_2_phone: string
           reference_name: string | null
           reference_phone: string | null
+          residence_address: string | null
+          retail_shop_address: string | null
+          retail_shop_name: string | null
+          retail_shop_photo_url: string | null
+          shop_size: string | null
           state: string
           trust_gst_number: string | null
           trust_name: string | null
           trust_office_address: string | null
           trust_pan_number: string | null
           trustee_details: Json | null
+          udyam_number: string | null
           user_id: string | null
         }
         Insert: {
@@ -75,8 +94,12 @@ export type Database = {
           bank_document_url: string
           bank_ifsc_code: string
           bank_name: string
+          bank_statement_url?: string | null
           business_name?: string | null
           city?: string
+          co_applicant_contact?: string | null
+          co_applicant_dob?: string | null
+          co_applicant_name?: string | null
           company_document_type?: string | null
           company_document_url?: string | null
           company_gst_number?: string | null
@@ -85,15 +108,24 @@ export type Database = {
           company_pan_number?: string | null
           correspondence_address?: string
           created_at?: string
+          customer_dob?: string | null
+          daily_turnover_range?: string | null
+          daily_walkins_range?: string | null
           director_details?: Json | null
           email: string
+          existing_loans?: Json | null
           firm_gst_number?: string | null
           firm_name?: string | null
           firm_office_address?: string | null
           firm_pan_number?: string | null
           full_name: string
+          geo_location?: string | null
           gst_registration_url?: string | null
           id?: string
+          itr_documents_url?: string | null
+          nature_of_residence_ownership?: string | null
+          nature_of_retail_shop?: string | null
+          nature_of_shop_ownership?: string | null
           pan_card_url?: string
           partner_details?: Json | null
           partner_type?: string
@@ -105,12 +137,18 @@ export type Database = {
           reference_2_phone?: string
           reference_name?: string | null
           reference_phone?: string | null
+          residence_address?: string | null
+          retail_shop_address?: string | null
+          retail_shop_name?: string | null
+          retail_shop_photo_url?: string | null
+          shop_size?: string | null
           state?: string
           trust_gst_number?: string | null
           trust_name?: string | null
           trust_office_address?: string | null
           trust_pan_number?: string | null
           trustee_details?: Json | null
+          udyam_number?: string | null
           user_id?: string | null
         }
         Update: {
@@ -124,8 +162,12 @@ export type Database = {
           bank_document_url?: string
           bank_ifsc_code?: string
           bank_name?: string
+          bank_statement_url?: string | null
           business_name?: string | null
           city?: string
+          co_applicant_contact?: string | null
+          co_applicant_dob?: string | null
+          co_applicant_name?: string | null
           company_document_type?: string | null
           company_document_url?: string | null
           company_gst_number?: string | null
@@ -134,15 +176,24 @@ export type Database = {
           company_pan_number?: string | null
           correspondence_address?: string
           created_at?: string
+          customer_dob?: string | null
+          daily_turnover_range?: string | null
+          daily_walkins_range?: string | null
           director_details?: Json | null
           email?: string
+          existing_loans?: Json | null
           firm_gst_number?: string | null
           firm_name?: string | null
           firm_office_address?: string | null
           firm_pan_number?: string | null
           full_name?: string
+          geo_location?: string | null
           gst_registration_url?: string | null
           id?: string
+          itr_documents_url?: string | null
+          nature_of_residence_ownership?: string | null
+          nature_of_retail_shop?: string | null
+          nature_of_shop_ownership?: string | null
           pan_card_url?: string
           partner_details?: Json | null
           partner_type?: string
@@ -154,12 +205,18 @@ export type Database = {
           reference_2_phone?: string
           reference_name?: string | null
           reference_phone?: string | null
+          residence_address?: string | null
+          retail_shop_address?: string | null
+          retail_shop_name?: string | null
+          retail_shop_photo_url?: string | null
+          shop_size?: string | null
           state?: string
           trust_gst_number?: string | null
           trust_name?: string | null
           trust_office_address?: string | null
           trust_pan_number?: string | null
           trustee_details?: Json | null
+          udyam_number?: string | null
           user_id?: string | null
         }
         Relationships: []

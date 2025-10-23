@@ -19,20 +19,20 @@ function uint8ArrayToBase64(uint8Array: Uint8Array): string {
 }
 
 interface PartnerApplicationRequest {
-  partnerType: 'individual' | 'proprietorship' | 'partnership' | 'private_public_ltd' | 'trust_society';
+  partnerType: 'individual' | 'proprietorship' | 'partnership' | 'private_public_ltd' | 'trust_society' | 'kirana_stores';
   fullName: string;
   email: string;
   phone: string;
-  correspondenceAddress: string;
-  city: string;
-  state: string;
-  pincode: string;
+  correspondenceAddress?: string;
+  city?: string;
+  state?: string;
+  pincode?: string;
   bankAccountNumber: string;
   bankIfscCode: string;
   bankName: string;
   bankBranch?: string;
   bankDocumentType: string;
-  bankDocumentUrl: string;
+  bankDocumentUrl?: string;
   referenceName?: string;
   referencePhone?: string;
   reference2Name?: string;
@@ -71,6 +71,27 @@ interface PartnerApplicationRequest {
   trustPanNumber?: string;
   trustOfficeAddress?: string;
   trusteeDetails?: any[];
+  
+  // Kirana Stores specific
+  customerDob?: string;
+  retailShopName?: string;
+  retailShopAddress?: string;
+  residenceAddress?: string;
+  geoLocation?: string;
+  natureOfRetailShop?: string;
+  natureOfShopOwnership?: string;
+  natureOfResidenceOwnership?: string;
+  shopSize?: string;
+  dailyTurnoverRange?: string;
+  dailyWalkinsRange?: string;
+  udyamNumber?: string;
+  retailShopPhotoUrl?: string;
+  bankStatementUrl?: string;
+  itrDocumentsUrl?: string;
+  coApplicantName?: string;
+  coApplicantDob?: string;
+  coApplicantContact?: string;
+  existingLoans?: any[];
   
   // Common documents
   gstRegistrationUrl?: string;
@@ -128,6 +149,21 @@ async function generateExcelFile(applicationData: PartnerApplicationRequest, doc
     if (applicationData.trustGstNumber) businessData.push(['GST Number', applicationData.trustGstNumber]);
     if (applicationData.trustPanNumber) businessData.push(['PAN Number', applicationData.trustPanNumber]);
     if (applicationData.trustOfficeAddress) businessData.push(['Office Address', applicationData.trustOfficeAddress]);
+  } else if (applicationData.partnerType === 'kirana_stores') {
+    if (applicationData.retailShopName) businessData.push(['Retail Shop Name', applicationData.retailShopName]);
+    if (applicationData.retailShopAddress) businessData.push(['Shop Address', applicationData.retailShopAddress]);
+    if (applicationData.residenceAddress) businessData.push(['Residence Address', applicationData.residenceAddress]);
+    if (applicationData.natureOfRetailShop) businessData.push(['Nature of Shop', applicationData.natureOfRetailShop]);
+    if (applicationData.natureOfShopOwnership) businessData.push(['Shop Ownership', applicationData.natureOfShopOwnership]);
+    if (applicationData.natureOfResidenceOwnership) businessData.push(['Residence Ownership', applicationData.natureOfResidenceOwnership]);
+    if (applicationData.shopSize) businessData.push(['Shop Size', applicationData.shopSize]);
+    if (applicationData.dailyTurnoverRange) businessData.push(['Daily Turnover', applicationData.dailyTurnoverRange]);
+    if (applicationData.dailyWalkinsRange) businessData.push(['Daily Walk-ins', applicationData.dailyWalkinsRange]);
+    if (applicationData.udyamNumber) businessData.push(['Udyam Number', applicationData.udyamNumber]);
+    if (applicationData.customerDob) businessData.push(['Date of Birth', applicationData.customerDob]);
+    if (applicationData.coApplicantName) businessData.push(['Co-applicant Name', applicationData.coApplicantName]);
+    if (applicationData.coApplicantDob) businessData.push(['Co-applicant DOB', applicationData.coApplicantDob]);
+    if (applicationData.coApplicantContact) businessData.push(['Co-applicant Contact', applicationData.coApplicantContact]);
   }
   
   if (businessData.length > 1) {
@@ -163,6 +199,22 @@ async function generateExcelFile(applicationData: PartnerApplicationRequest, doc
     XLSX.utils.book_append_sheet(workbook, trusteeSheet, 'Trustee Details');
   }
   
+  // Add existing loans sheet for Kirana Stores
+  if (applicationData.existingLoans && applicationData.existingLoans.length > 0) {
+    const loansData: any[][] = [['Financier Name', 'Loan Amount', 'EMI Amount', 'Tenor', 'Date Availed']];
+    applicationData.existingLoans.forEach((loan: any) => {
+      loansData.push([
+        loan.financierName || '',
+        loan.loanAmount || '',
+        loan.emiAmount || '',
+        loan.tenor || '',
+        loan.loanAvailedDate || ''
+      ]);
+    });
+    const loansSheet = XLSX.utils.aoa_to_sheet(loansData);
+    XLSX.utils.book_append_sheet(workbook, loansSheet, 'Existing Loans');
+  }
+  
   // Sheet 3: Banking Information
   const bankingData = [
     ['Field', 'Value'],
@@ -196,6 +248,9 @@ async function generateExcelFile(applicationData: PartnerApplicationRequest, doc
   if (documentUrls.companyDocument) documentData.push(['Company Document', documentUrls.companyDocument]);
   if (documentUrls.gstRegistration) documentData.push(['GST Registration', documentUrls.gstRegistration]);
   if (documentUrls.bankDocument) documentData.push(['Bank Document', documentUrls.bankDocument]);
+  if (documentUrls.retailShopPhoto) documentData.push(['Retail Shop Photo', documentUrls.retailShopPhoto]);
+  if (documentUrls.bankStatement) documentData.push(['Bank Statement', documentUrls.bankStatement]);
+  if (documentUrls.itrDocuments) documentData.push(['ITR Documents', documentUrls.itrDocuments]);
   
   if (applicationData.additionalDocuments && applicationData.additionalDocuments.length > 0) {
     applicationData.additionalDocuments.forEach((doc, index) => {
