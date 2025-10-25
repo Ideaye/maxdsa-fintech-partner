@@ -59,6 +59,7 @@ export type Database = {
           nature_of_retail_shop: string | null
           nature_of_shop_ownership: string | null
           pan_card_url: string
+          pan_number: string | null
           partner_details: Json | null
           partner_type: string
           passport_photo_url: string | null
@@ -127,6 +128,7 @@ export type Database = {
           nature_of_retail_shop?: string | null
           nature_of_shop_ownership?: string | null
           pan_card_url?: string
+          pan_number?: string | null
           partner_details?: Json | null
           partner_type?: string
           passport_photo_url?: string | null
@@ -195,6 +197,7 @@ export type Database = {
           nature_of_retail_shop?: string | null
           nature_of_shop_ownership?: string | null
           pan_card_url?: string
+          pan_number?: string | null
           partner_details?: Json | null
           partner_type?: string
           passport_photo_url?: string | null
