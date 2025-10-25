@@ -14,7 +14,7 @@ import { Upload, FileText, Image as ImageIcon, Plus, Trash2 } from "lucide-react
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
-type PartnerType = "" | "individual" | "proprietorship" | "partnership" | "private_public_ltd" | "trust_society";
+type PartnerType = "" | "individual" | "proprietorship" | "partnership" | "private_public_ltd" | "trust_society" | "kirana_stores";
 
 interface PartnerDetails {
   name: string;
@@ -821,19 +821,21 @@ const PartnerSignup = () => {
                             <SelectItem value="partnership">Partnership</SelectItem>
                             <SelectItem value="private_public_ltd">Private / Public Ltd</SelectItem>
                             <SelectItem value="trust_society">Trust / Society</SelectItem>
+                            <SelectItem value="kirana_stores">Kirana Stores</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
 
                       {formData.partnerType && (
                         <div className="bg-muted/30 p-4 rounded-lg">
-                          <h3 className="font-semibold mb-2">About {formData.partnerType === "individual" ? "Individual" : formData.partnerType === "proprietorship" ? "Proprietorship" : formData.partnerType === "partnership" ? "Partnership" : formData.partnerType === "private_public_ltd" ? "Private / Public Ltd" : "Trust / Society"}:</h3>
+                          <h3 className="font-semibold mb-2">About {formData.partnerType === "individual" ? "Individual" : formData.partnerType === "proprietorship" ? "Proprietorship" : formData.partnerType === "partnership" ? "Partnership" : formData.partnerType === "private_public_ltd" ? "Private / Public Ltd" : formData.partnerType === "kirana_stores" ? "Kirana Stores" : "Trust / Society"}:</h3>
                           <p className="text-sm text-muted-foreground">
                             {formData.partnerType === "individual" && "For individual professionals looking to partner with MaxDSA"}
                             {formData.partnerType === "proprietorship" && "For sole proprietorship businesses owned and managed by a single individual"}
                             {formData.partnerType === "partnership" && "For businesses owned by two or more partners sharing profits and responsibilities"}
                             {formData.partnerType === "private_public_ltd" && "For registered companies with limited liability"}
                             {formData.partnerType === "trust_society" && "For registered trusts or societies"}
+                            {formData.partnerType === "kirana_stores" && "For retail store owners and Kirana shop operators"}
                           </p>
                         </div>
                       )}
