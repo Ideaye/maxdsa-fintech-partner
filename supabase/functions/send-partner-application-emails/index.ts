@@ -19,20 +19,20 @@ function uint8ArrayToBase64(uint8Array: Uint8Array): string {
 }
 
 interface PartnerApplicationRequest {
-  partnerType: 'individual' | 'proprietorship' | 'partnership' | 'private_public_ltd' | 'trust_society';
+  partnerType: 'individual' | 'proprietorship' | 'partnership' | 'private_public_ltd' | 'trust_society' | 'kirana_stores';
   fullName: string;
   email: string;
   phone: string;
-  correspondenceAddress: string;
-  city: string;
-  state: string;
-  pincode: string;
+  correspondenceAddress?: string;
+  city?: string;
+  state?: string;
+  pincode?: string;
   bankAccountNumber: string;
   bankIfscCode: string;
   bankName: string;
   bankBranch?: string;
   bankDocumentType: string;
-  bankDocumentUrl: string;
+  bankDocumentUrl?: string;
   referenceName?: string;
   referencePhone?: string;
   reference2Name?: string;
@@ -40,7 +40,6 @@ interface PartnerApplicationRequest {
   additionalDocuments?: string[];
   
   // Individual specific
-  panNumber?: string;
   aadharNumber?: string;
   businessName?: string;
   passportPhotoUrl?: string;
@@ -56,8 +55,6 @@ interface PartnerApplicationRequest {
   
   // Partnership specific
   partnerDetails?: any[];
-  partnershipDeedUrl?: string;
-  firmPanCardUrl?: string;
   
   // Private/Public Ltd specific
   companyName?: string;
@@ -67,10 +64,6 @@ interface PartnerApplicationRequest {
   companyDocumentType?: string;
   companyDocumentUrl?: string;
   directorDetails?: any[];
-  moaDocumentUrl?: string;
-  aoaDocumentUrl?: string;
-  coiDocumentUrl?: string;
-  companyPanCardUrl?: string;
   
   // Trust/Society specific
   trustName?: string;
@@ -78,30 +71,30 @@ interface PartnerApplicationRequest {
   trustPanNumber?: string;
   trustOfficeAddress?: string;
   trusteeDetails?: any[];
-  trustDeedUrl?: string;
-  trustPanCardUrl?: string;
+  
+  // Kirana Stores specific
+  customerDob?: string;
+  retailShopName?: string;
+  retailShopAddress?: string;
+  residenceAddress?: string;
+  geoLocation?: string;
+  natureOfRetailShop?: string;
+  natureOfShopOwnership?: string;
+  natureOfResidenceOwnership?: string;
+  shopSize?: string;
+  dailyTurnoverRange?: string;
+  dailyWalkinsRange?: string;
+  udyamNumber?: string;
+  retailShopPhotoUrl?: string;
+  bankStatementUrl?: string;
+  itrDocumentsUrl?: string;
+  coApplicantName?: string;
+  coApplicantDob?: string;
+  coApplicantContact?: string;
+  existingLoans?: any[];
   
   // Common documents
   gstRegistrationUrl?: string;
-  udyamCertificateUrl?: string;
-  
-  // Database snake_case versions (sent from frontend via ...insertData)
-  passport_photo_url?: string;
-  pan_card_url?: string;
-  aadhar_card_url?: string;
-  company_document_url?: string;
-  gst_registration_url?: string;
-  udyam_certificate_url?: string;
-  bank_document_url?: string;
-  additional_documents?: string[];
-  firm_pan_card_url?: string;
-  moa_document_url?: string;
-  aoa_document_url?: string;
-  coi_document_url?: string;
-  company_pan_card_url?: string;
-  trust_pan_card_url?: string;
-  partnership_deed_url?: string;
-  trust_deed_url?: string;
 }
 
 async function generateExcelFile(applicationData: PartnerApplicationRequest, documentUrls: any) {
@@ -121,10 +114,6 @@ async function generateExcelFile(applicationData: PartnerApplicationRequest, doc
     ['State', applicationData.state],
     ['Pincode', applicationData.pincode],
   ];
-  
-  if (applicationData.panNumber) {
-    personalData.push(['PAN Number', applicationData.panNumber]);
-  }
   
   if (applicationData.aadharNumber) {
     personalData.push(['Aadhar Number', applicationData.aadharNumber]);
@@ -160,6 +149,21 @@ async function generateExcelFile(applicationData: PartnerApplicationRequest, doc
     if (applicationData.trustGstNumber) businessData.push(['GST Number', applicationData.trustGstNumber]);
     if (applicationData.trustPanNumber) businessData.push(['PAN Number', applicationData.trustPanNumber]);
     if (applicationData.trustOfficeAddress) businessData.push(['Office Address', applicationData.trustOfficeAddress]);
+  } else if (applicationData.partnerType === 'kirana_stores') {
+    if (applicationData.retailShopName) businessData.push(['Retail Shop Name', applicationData.retailShopName]);
+    if (applicationData.retailShopAddress) businessData.push(['Shop Address', applicationData.retailShopAddress]);
+    if (applicationData.residenceAddress) businessData.push(['Residence Address', applicationData.residenceAddress]);
+    if (applicationData.natureOfRetailShop) businessData.push(['Nature of Shop', applicationData.natureOfRetailShop]);
+    if (applicationData.natureOfShopOwnership) businessData.push(['Shop Ownership', applicationData.natureOfShopOwnership]);
+    if (applicationData.natureOfResidenceOwnership) businessData.push(['Residence Ownership', applicationData.natureOfResidenceOwnership]);
+    if (applicationData.shopSize) businessData.push(['Shop Size', applicationData.shopSize]);
+    if (applicationData.dailyTurnoverRange) businessData.push(['Daily Turnover', applicationData.dailyTurnoverRange]);
+    if (applicationData.dailyWalkinsRange) businessData.push(['Daily Walk-ins', applicationData.dailyWalkinsRange]);
+    if (applicationData.udyamNumber) businessData.push(['Udyam Number', applicationData.udyamNumber]);
+    if (applicationData.customerDob) businessData.push(['Date of Birth', applicationData.customerDob]);
+    if (applicationData.coApplicantName) businessData.push(['Co-applicant Name', applicationData.coApplicantName]);
+    if (applicationData.coApplicantDob) businessData.push(['Co-applicant DOB', applicationData.coApplicantDob]);
+    if (applicationData.coApplicantContact) businessData.push(['Co-applicant Contact', applicationData.coApplicantContact]);
   }
   
   if (businessData.length > 1) {
@@ -195,6 +199,22 @@ async function generateExcelFile(applicationData: PartnerApplicationRequest, doc
     XLSX.utils.book_append_sheet(workbook, trusteeSheet, 'Trustee Details');
   }
   
+  // Add existing loans sheet for Kirana Stores
+  if (applicationData.existingLoans && applicationData.existingLoans.length > 0) {
+    const loansData: any[][] = [['Financier Name', 'Loan Amount', 'EMI Amount', 'Tenor', 'Date Availed']];
+    applicationData.existingLoans.forEach((loan: any) => {
+      loansData.push([
+        loan.financierName || '',
+        loan.loanAmount || '',
+        loan.emiAmount || '',
+        loan.tenor || '',
+        loan.loanAvailedDate || ''
+      ]);
+    });
+    const loansSheet = XLSX.utils.aoa_to_sheet(loansData);
+    XLSX.utils.book_append_sheet(workbook, loansSheet, 'Existing Loans');
+  }
+  
   // Sheet 3: Banking Information
   const bankingData = [
     ['Field', 'Value'],
@@ -228,6 +248,9 @@ async function generateExcelFile(applicationData: PartnerApplicationRequest, doc
   if (documentUrls.companyDocument) documentData.push(['Company Document', documentUrls.companyDocument]);
   if (documentUrls.gstRegistration) documentData.push(['GST Registration', documentUrls.gstRegistration]);
   if (documentUrls.bankDocument) documentData.push(['Bank Document', documentUrls.bankDocument]);
+  if (documentUrls.retailShopPhoto) documentData.push(['Retail Shop Photo', documentUrls.retailShopPhoto]);
+  if (documentUrls.bankStatement) documentData.push(['Bank Statement', documentUrls.bankStatement]);
+  if (documentUrls.itrDocuments) documentData.push(['ITR Documents', documentUrls.itrDocuments]);
   
   if (applicationData.additionalDocuments && applicationData.additionalDocuments.length > 0) {
     applicationData.additionalDocuments.forEach((doc, index) => {
@@ -364,101 +387,19 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Prepare document paths for zip creation (only include uploaded documents)
     const documentPaths: { path: string; category: string }[] = [];
-
-    console.log('Building document paths array...');
-    console.log('Application data keys:', Object.keys(applicationData));
-
-    // Personal documents (common - use snake_case to match database fields)
-    if (applicationData.passport_photo_url) {
-      documentPaths.push({ path: applicationData.passport_photo_url, category: 'personal' });
-      console.log('✓ Added passport photo');
-    }
-    if (applicationData.pan_card_url) {
-      documentPaths.push({ path: applicationData.pan_card_url, category: 'personal' });
-      console.log('✓ Added PAN card');
-    }
-    if (applicationData.aadhar_card_url) {
-      documentPaths.push({ path: applicationData.aadhar_card_url, category: 'personal' });
-      console.log('✓ Added Aadhar card');
-    }
-
-    // Business documents - check all possible document fields
-    if (applicationData.company_document_url) {
-      const docType = applicationData.companyDocumentType || 'business';
-      documentPaths.push({ path: applicationData.company_document_url, category: 'business' });
-      console.log(`✓ Added company document (${docType})`);
-    }
-
-    if (applicationData.gst_registration_url) {
-      documentPaths.push({ path: applicationData.gst_registration_url, category: 'business' });
-      console.log('✓ Added GST registration');
-    }
-
-    if (applicationData.udyam_certificate_url) {
-      documentPaths.push({ path: applicationData.udyam_certificate_url, category: 'business' });
-      console.log('✓ Added Udyam certificate');
-    }
-
-    // Partnership specific (partnership_deed is stored in company_document_url)
-    if (applicationData.firm_pan_card_url) {
-      documentPaths.push({ path: applicationData.firm_pan_card_url, category: 'business' });
-      console.log('✓ Added firm PAN card');
-    }
-
-    // Private/Public Ltd specific - MOA, AOA, COI
-    // Note: Frontend stores MOA in company_document_url, but also check specific fields
-    if (applicationData.moa_document_url) {
-      documentPaths.push({ path: applicationData.moa_document_url, category: 'business' });
-      console.log('✓ Added MOA document');
-    }
-    if (applicationData.aoa_document_url) {
-      documentPaths.push({ path: applicationData.aoa_document_url, category: 'business' });
-      console.log('✓ Added AOA document');
-    }
-    if (applicationData.coi_document_url) {
-      documentPaths.push({ path: applicationData.coi_document_url, category: 'business' });
-      console.log('✓ Added COI document');
-    }
-    if (applicationData.company_pan_card_url) {
-      documentPaths.push({ path: applicationData.company_pan_card_url, category: 'business' });
-      console.log('✓ Added company PAN card');
-    }
-
-    // Trust/Society specific (trust_deed is stored in company_document_url)
-    if (applicationData.trust_pan_card_url) {
-      documentPaths.push({ path: applicationData.trust_pan_card_url, category: 'business' });
-      console.log('✓ Added trust PAN card');
-    }
-
-    // Banking documents (mandatory for all)
-    if (applicationData.bank_document_url || applicationData.bankDocumentUrl) {
-      const bankDocUrl = applicationData.bank_document_url || applicationData.bankDocumentUrl;
-      documentPaths.push({ path: bankDocUrl, category: 'banking' });
-      console.log('✓ Added bank document');
-    }
-
-    // Additional documents (always check this array)
-    if (applicationData.additional_documents && Array.isArray(applicationData.additional_documents) && applicationData.additional_documents.length > 0) {
-      applicationData.additional_documents.forEach((doc: string, index: number) => {
-        if (doc) {
-          documentPaths.push({ path: doc, category: 'additional' });
-        }
+    
+    if (applicationData.passportPhotoUrl) documentPaths.push({ path: applicationData.passportPhotoUrl, category: 'personal' });
+    if (applicationData.panCardUrl) documentPaths.push({ path: applicationData.panCardUrl, category: 'personal' });
+    if (applicationData.aadharCardUrl) documentPaths.push({ path: applicationData.aadharCardUrl, category: 'personal' });
+    if (applicationData.companyDocumentUrl) documentPaths.push({ path: applicationData.companyDocumentUrl, category: 'business' });
+    if (applicationData.gstRegistrationUrl) documentPaths.push({ path: applicationData.gstRegistrationUrl, category: 'business' });
+    if (applicationData.bankDocumentUrl) documentPaths.push({ path: applicationData.bankDocumentUrl, category: 'banking' });
+    
+    if (applicationData.additionalDocuments && applicationData.additionalDocuments.length > 0) {
+      applicationData.additionalDocuments.forEach(doc => {
+        documentPaths.push({ path: doc, category: 'additional' });
       });
-      console.log(`✓ Added ${applicationData.additional_documents.length} additional documents`);
     }
-
-    // Also check additionalDocuments (camelCase) as fallback
-    if (applicationData.additionalDocuments && Array.isArray(applicationData.additionalDocuments) && applicationData.additionalDocuments.length > 0) {
-      applicationData.additionalDocuments.forEach((doc: string, index: number) => {
-        if (doc) {
-          documentPaths.push({ path: doc, category: 'additional' });
-        }
-      });
-      console.log(`✓ Added ${applicationData.additionalDocuments.length} additional documents (from camelCase field)`);
-    }
-
-    console.log(`📦 Total documents to be zipped: ${documentPaths.length}`);
-    console.log('Document paths:', documentPaths.map(d => ({ category: d.category, path: d.path.substring(0, 50) + '...' })));
 
     // Generate Excel and Zip files
     let excelBuffer: any = null;
@@ -680,8 +621,8 @@ const handler = async (req: Request): Promise<Response> => {
                 </div>
                 
                 <div class="button-container">
-                  <a href="https://maxdsa.com" target="_blank" class="button button-primary" style="background-color: #1a56db; color: #ffffff !important; text-decoration: none;">Visit Website</a>
-                  <a href="mailto:partner@maxdsa.com" class="button button-secondary" style="background-color: #ffffff; color: #1a56db !important; border: 2px solid #1a56db; text-decoration: none;">Contact Us</a>
+                  <a href="https://maxdsa.com" target="_blank" class="button button-primary">Visit Website</a>
+                  <a href="mailto:partner@maxdsa.com" class="button button-secondary">Contact Us</a>
                 </div>
                 
                 <p class="footer-text">We're excited about the possibility of partnering with you!</p>
@@ -880,14 +821,14 @@ const handler = async (req: Request): Promise<Response> => {
                 <div class="documents-section">
                   <div class="section-title">📄 Application Documents (Links)</div>
                   <p style="color: #6b7280; margin-bottom: 15px;">Document links are available for the next 7 days:</p>
-                  ${passportPhotoSignedUrl ? `<a href="${passportPhotoSignedUrl}" target="_blank" class="document-link" style="background-color: #1a56db; color: #ffffff !important; text-decoration: none;">📷 Passport Photo</a>` : ''}
-                  ${panCardSignedUrl ? `<a href="${panCardSignedUrl}" target="_blank" class="document-link" style="background-color: #1a56db; color: #ffffff !important; text-decoration: none;">📄 PAN Card</a>` : ''}
-                  ${aadharCardSignedUrl ? `<a href="${aadharCardSignedUrl}" target="_blank" class="document-link" style="background-color: #1a56db; color: #ffffff !important; text-decoration: none;">📄 Aadhar Card</a>` : ''}
-                  ${companyDocSignedUrl ? `<a href="${companyDocSignedUrl}" target="_blank" class="document-link" style="background-color: #1a56db; color: #ffffff !important; text-decoration: none;">📄 Company Document</a>` : ''}
-                  ${gstSignedUrl ? `<a href="${gstSignedUrl}" target="_blank" class="document-link" style="background-color: #1a56db; color: #ffffff !important; text-decoration: none;">📄 GST Registration</a>` : ''}
-                  ${bankDocSignedUrl ? `<a href="${bankDocSignedUrl}" target="_blank" class="document-link" style="background-color: #1a56db; color: #ffffff !important; text-decoration: none;">🏦 Bank Document</a>` : ''}
+                  ${passportPhotoSignedUrl ? `<a href="${passportPhotoSignedUrl}" target="_blank" class="document-link">📷 Passport Photo</a>` : ''}
+                  ${panCardSignedUrl ? `<a href="${panCardSignedUrl}" target="_blank" class="document-link">📄 PAN Card</a>` : ''}
+                  ${aadharCardSignedUrl ? `<a href="${aadharCardSignedUrl}" target="_blank" class="document-link">📄 Aadhar Card</a>` : ''}
+                  ${companyDocSignedUrl ? `<a href="${companyDocSignedUrl}" target="_blank" class="document-link">📄 Company Document</a>` : ''}
+                  ${gstSignedUrl ? `<a href="${gstSignedUrl}" target="_blank" class="document-link">📄 GST Registration</a>` : ''}
+                  ${bankDocSignedUrl ? `<a href="${bankDocSignedUrl}" target="_blank" class="document-link">🏦 Bank Document</a>` : ''}
                   ${additionalDocSignedUrls.map((url, index) => 
-                    `<a href="${url}" target="_blank" class="document-link" style="background-color: #1a56db; color: #ffffff !important; text-decoration: none;">📄 Additional Doc ${index + 1}</a>`
+                    `<a href="${url}" target="_blank" class="document-link">📄 Additional Doc ${index + 1}</a>`
                   ).join('\n                  ')}
                 </div>
               </div>
