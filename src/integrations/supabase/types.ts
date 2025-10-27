@@ -21,6 +21,7 @@ export type Database = {
           additional_documents: Json | null
           agreed_to_terms: boolean
           bank_account_number: string
+          bank_account_type: string | null
           bank_branch: string | null
           bank_document_type: string
           bank_document_url: string
@@ -43,6 +44,7 @@ export type Database = {
           customer_dob: string | null
           daily_turnover_range: string | null
           daily_walkins_range: string | null
+          date_of_birth: string | null
           director_details: Json | null
           email: string
           existing_loans: Json | null
@@ -66,6 +68,7 @@ export type Database = {
           phone: string
           pincode: string
           proprietor_name: string | null
+          proprietor_pan_number: string | null
           reference_2_name: string
           reference_2_phone: string
           reference_name: string | null
@@ -90,6 +93,7 @@ export type Database = {
           additional_documents?: Json | null
           agreed_to_terms?: boolean
           bank_account_number: string
+          bank_account_type?: string | null
           bank_branch?: string | null
           bank_document_type: string
           bank_document_url: string
@@ -112,6 +116,7 @@ export type Database = {
           customer_dob?: string | null
           daily_turnover_range?: string | null
           daily_walkins_range?: string | null
+          date_of_birth?: string | null
           director_details?: Json | null
           email: string
           existing_loans?: Json | null
@@ -135,6 +140,7 @@ export type Database = {
           phone: string
           pincode?: string
           proprietor_name?: string | null
+          proprietor_pan_number?: string | null
           reference_2_name?: string
           reference_2_phone?: string
           reference_name?: string | null
@@ -159,6 +165,7 @@ export type Database = {
           additional_documents?: Json | null
           agreed_to_terms?: boolean
           bank_account_number?: string
+          bank_account_type?: string | null
           bank_branch?: string | null
           bank_document_type?: string
           bank_document_url?: string
@@ -181,6 +188,7 @@ export type Database = {
           customer_dob?: string | null
           daily_turnover_range?: string | null
           daily_walkins_range?: string | null
+          date_of_birth?: string | null
           director_details?: Json | null
           email?: string
           existing_loans?: Json | null
@@ -204,6 +212,7 @@ export type Database = {
           phone?: string
           pincode?: string
           proprietor_name?: string | null
+          proprietor_pan_number?: string | null
           reference_2_name?: string
           reference_2_phone?: string
           reference_name?: string | null
