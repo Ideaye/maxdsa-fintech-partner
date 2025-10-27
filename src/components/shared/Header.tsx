@@ -50,7 +50,8 @@ const Header = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              {navigation.map((item) => (
+              {/* First 3 items: Home, Services, About Us */}
+              {navigation.slice(0, 3).map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
@@ -64,7 +65,7 @@ const Header = () => {
                 </Link>
               ))}
               
-              {/* Loans Dropdown Menu */}
+              {/* Loans Dropdown Menu - positioned after About Us */}
               <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem>
@@ -87,6 +88,21 @@ const Header = () => {
                   </NavigationMenuItem>
                 </NavigationMenuList>
               </NavigationMenu>
+
+              {/* Last 2 items: Why Partner With Us, Contact Us */}
+              {navigation.slice(3).map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
+                    isActive(item.href)
+                      ? "text-primary border-b-2 border-primary"
+                      : "text-gray-700 hover:text-primary"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              ))}
             </div>
           </div>
 
@@ -121,7 +137,8 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-border">
-              {navigation.map((item) => (
+              {/* First 3 items: Home, Services, About Us */}
+              {navigation.slice(0, 3).map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
@@ -136,7 +153,7 @@ const Header = () => {
                 </Link>
               ))}
               
-              {/* Mobile Loans Dropdown */}
+              {/* Mobile Loans Dropdown - positioned after About Us */}
               <div>
                 <button
                   className="w-full flex items-center justify-between px-3 py-2 text-base font-medium text-muted-foreground hover:text-primary hover:bg-secondary transition-colors duration-200"
@@ -163,6 +180,22 @@ const Header = () => {
                   </div>
                 )}
               </div>
+
+              {/* Last 2 items: Why Partner With Us, Contact Us */}
+              {navigation.slice(3).map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={`block px-3 py-2 text-base font-medium transition-colors duration-200 ${
+                    isActive(item.href)
+                      ? "text-primary bg-secondary"
+                      : "text-muted-foreground hover:text-primary hover:bg-secondary"
+                  }`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              ))}
               
               <div className="px-3 pt-4 space-y-3 border-t border-border">
                 <Link to="/downloads" onClick={() => setIsMenuOpen(false)}>

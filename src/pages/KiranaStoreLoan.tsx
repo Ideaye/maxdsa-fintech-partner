@@ -29,6 +29,7 @@ const KiranaStoreLoan = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [formData, setFormData] = useState({
+    advisorName: "",
     customerName: "",
     dateOfBirth: null as Date | null,
     contactNumber: "",
@@ -129,6 +130,20 @@ const KiranaStoreLoan = () => {
     setFormData({ ...formData, existingLoans: updatedLoans });
   };
 
+  const sanitizeFilename = (filename: string): string => {
+    const lastDotIndex = filename.lastIndexOf('.');
+    const name = lastDotIndex > 0 ? filename.substring(0, lastDotIndex) : filename;
+    const extension = lastDotIndex > 0 ? filename.substring(lastDotIndex) : '';
+    
+    const sanitizedName = name
+      .toLowerCase()
+      .replace(/\s+/g, '_')
+      .replace(/[^a-z0-9_-]/g, '_')
+      .replace(/_+/g, '_');
+    
+    return sanitizedName + extension.toLowerCase();
+  };
+
   const validateStep = (step: number) => {
     switch (step) {
       case 1:
@@ -196,7 +211,8 @@ const KiranaStoreLoan = () => {
       const uploadPromises = [];
 
       if (formData.bankStatementFile) {
-        const bankStatementPath = `kirana-loans/${Date.now()}_bank_statement_${formData.bankStatementFile.name}`;
+        const sanitizedBankName = sanitizeFilename(formData.bankStatementFile.name);
+        const bankStatementPath = `kirana-loans/${Date.now()}_bank_statement_${sanitizedBankName}`;
         uploadPromises.push(
           supabase.storage
             .from("partner-documents")
@@ -209,7 +225,8 @@ const KiranaStoreLoan = () => {
       }
 
       if (formData.itrDocumentsFile) {
-        const itrPath = `kirana-loans/${Date.now()}_itr_${formData.itrDocumentsFile.name}`;
+        const sanitizedItrName = sanitizeFilename(formData.itrDocumentsFile.name);
+        const itrPath = `kirana-loans/${Date.now()}_itr_${sanitizedItrName}`;
         uploadPromises.push(
           supabase.storage
             .from("partner-documents")
@@ -222,7 +239,8 @@ const KiranaStoreLoan = () => {
       }
 
       if (formData.shopPhotoFile) {
-        const shopPhotoPath = `kirana-loans/${Date.now()}_shop_photo_${formData.shopPhotoFile.name}`;
+        const sanitizedShopPhotoName = sanitizeFilename(formData.shopPhotoFile.name);
+        const shopPhotoPath = `kirana-loans/${Date.now()}_shop_photo_${sanitizedShopPhotoName}`;
         uploadPromises.push(
           supabase.storage
             .from("partner-documents")
@@ -247,6 +265,7 @@ const KiranaStoreLoan = () => {
 
       // Insert into database
       const { error: insertError } = await supabase.from("kirana_store_loans").insert({
+        advisor_name: formData.advisorName || null,
         customer_name: formData.customerName,
         date_of_birth: formData.dateOfBirth ? format(formData.dateOfBirth, "yyyy-MM-dd") : null,
         contact_number: formData.contactNumber,
@@ -335,6 +354,17 @@ const KiranaStoreLoan = () => {
               <div className="space-y-6">
                 <h2 className="text-2xl font-semibold mb-4">Customer Details</h2>
                 
+                <div>
+                  <Label htmlFor="advisorName">Advisor Name (Optional)</Label>
+                  <Input
+                    id="advisorName"
+                    value={formData.advisorName}
+                    onChange={(e) => setFormData({ ...formData, advisorName: e.target.value })}
+                    placeholder="Enter advisor name for lead tracking"
+                  />
+                  <p className="text-xs text-muted-foreground mt-1">For internal tracking purposes</p>
+                </div>
+
                 <div>
                   <Label htmlFor="customerName">Customer Name *</Label>
                   <Input

@@ -17,6 +17,7 @@ export type Database = {
       kirana_store_loans: {
         Row: {
           aadhar_number: string | null
+          advisor_name: string | null
           bank_statement_url: string | null
           co_applicant_contact: string | null
           co_applicant_dob: string | null
@@ -45,6 +46,7 @@ export type Database = {
         }
         Insert: {
           aadhar_number?: string | null
+          advisor_name?: string | null
           bank_statement_url?: string | null
           co_applicant_contact?: string | null
           co_applicant_dob?: string | null
@@ -73,6 +75,7 @@ export type Database = {
         }
         Update: {
           aadhar_number?: string | null
+          advisor_name?: string | null
           bank_statement_url?: string | null
           co_applicant_contact?: string | null
           co_applicant_dob?: string | null

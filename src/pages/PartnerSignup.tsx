@@ -1649,10 +1649,10 @@ const PartnerSignup = () => {
                           value={formData.bankAccountType}
                           onValueChange={(value) => updateFormData("bankAccountType", value)}
                         >
-                          <SelectTrigger className="mt-2">
+                          <SelectTrigger className="mt-2 bg-background">
                             <SelectValue placeholder="Select account type" />
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent className="bg-background z-50">
                             <SelectItem value="savings">Savings Account</SelectItem>
                             <SelectItem value="current">Current Account</SelectItem>
                             <SelectItem value="cash_credit">Cash Credit Account</SelectItem>
