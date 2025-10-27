@@ -12,6 +12,7 @@ import WhyPartner from "./pages/WhyPartner";
 import Contact from "./pages/Contact";
 import PartnerSignup from "./pages/PartnerSignup";
 import Downloads from "./pages/Downloads";
+import KiranaStoreLoan from "./pages/KiranaStoreLoan";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/partner-signup" element={<PartnerSignup />} />
           <Route path="/downloads" element={<Downloads />} />
+          <Route path="/loans/kirana-store" element={<KiranaStoreLoan />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

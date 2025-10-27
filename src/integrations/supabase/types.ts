@@ -14,6 +14,93 @@ export type Database = {
   }
   public: {
     Tables: {
+      kirana_store_loans: {
+        Row: {
+          aadhar_number: string | null
+          bank_statement_url: string | null
+          co_applicant_contact: string | null
+          co_applicant_dob: string | null
+          co_applicant_name: string | null
+          contact_number: string
+          created_at: string
+          customer_name: string
+          daily_turnover_range: string
+          daily_walkins_range: string
+          date_of_birth: string
+          email: string | null
+          existing_loans: Json | null
+          geo_location: string | null
+          id: string
+          itr_documents_url: string | null
+          nature_of_residence_ownership: string | null
+          nature_of_retail_shop: string
+          nature_of_shop_ownership: string
+          pan_number: string | null
+          residence_address: string | null
+          retail_shop_address: string
+          retail_shop_name: string
+          shop_photo_url: string | null
+          shop_size: string
+          udyam_number: string | null
+        }
+        Insert: {
+          aadhar_number?: string | null
+          bank_statement_url?: string | null
+          co_applicant_contact?: string | null
+          co_applicant_dob?: string | null
+          co_applicant_name?: string | null
+          contact_number: string
+          created_at?: string
+          customer_name: string
+          daily_turnover_range: string
+          daily_walkins_range: string
+          date_of_birth: string
+          email?: string | null
+          existing_loans?: Json | null
+          geo_location?: string | null
+          id?: string
+          itr_documents_url?: string | null
+          nature_of_residence_ownership?: string | null
+          nature_of_retail_shop: string
+          nature_of_shop_ownership: string
+          pan_number?: string | null
+          residence_address?: string | null
+          retail_shop_address: string
+          retail_shop_name: string
+          shop_photo_url?: string | null
+          shop_size: string
+          udyam_number?: string | null
+        }
+        Update: {
+          aadhar_number?: string | null
+          bank_statement_url?: string | null
+          co_applicant_contact?: string | null
+          co_applicant_dob?: string | null
+          co_applicant_name?: string | null
+          contact_number?: string
+          created_at?: string
+          customer_name?: string
+          daily_turnover_range?: string
+          daily_walkins_range?: string
+          date_of_birth?: string
+          email?: string | null
+          existing_loans?: Json | null
+          geo_location?: string | null
+          id?: string
+          itr_documents_url?: string | null
+          nature_of_residence_ownership?: string | null
+          nature_of_retail_shop?: string
+          nature_of_shop_ownership?: string
+          pan_number?: string | null
+          residence_address?: string | null
+          retail_shop_address?: string
+          retail_shop_name?: string
+          shop_photo_url?: string | null
+          shop_size?: string
+          udyam_number?: string | null
+        }
+        Relationships: []
+      }
       partner_applications: {
         Row: {
           aadhar_card_url: string

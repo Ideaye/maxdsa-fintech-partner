@@ -2,11 +2,20 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Menu, X, Download } from "lucide-react";
+import { Menu, X, Download, ChevronDown } from "lucide-react";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 import maxdsaLogo from "@/assets/maxdsa-logo.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoansMenuOpen, setIsLoansMenuOpen] = useState(false);
   const location = useLocation();
 
   const navigation = [
@@ -15,6 +24,10 @@ const Header = () => {
     { name: "About Us", href: "/about" },
     { name: "Why Partner With Us", href: "/why-partner" },
     { name: "Contact Us", href: "/contact" },
+  ];
+
+  const loanProducts = [
+    { name: "Kirana Store Loans", href: "/loans/kirana-store" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -50,6 +63,30 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
+              
+              {/* Loans Dropdown Menu */}
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary bg-transparent">
+                      Loans
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="w-48 p-2 bg-card">
+                        {loanProducts.map((product) => (
+                          <li key={product.name}>
+                            <Link to={product.href}>
+                              <NavigationMenuLink className="block px-4 py-2 text-sm hover:bg-secondary rounded-md transition-colors">
+                                {product.name}
+                              </NavigationMenuLink>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
             </div>
           </div>
 
@@ -98,6 +135,35 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
+              
+              {/* Mobile Loans Dropdown */}
+              <div>
+                <button
+                  className="w-full flex items-center justify-between px-3 py-2 text-base font-medium text-muted-foreground hover:text-primary hover:bg-secondary transition-colors duration-200"
+                  onClick={() => setIsLoansMenuOpen(!isLoansMenuOpen)}
+                >
+                  Loans
+                  <ChevronDown className={`h-4 w-4 transition-transform ${isLoansMenuOpen ? 'rotate-180' : ''}`} />
+                </button>
+                {isLoansMenuOpen && (
+                  <div className="pl-4 space-y-1">
+                    {loanProducts.map((product) => (
+                      <Link
+                        key={product.name}
+                        to={product.href}
+                        className="block px-3 py-2 text-sm text-muted-foreground hover:text-primary hover:bg-secondary transition-colors duration-200"
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsLoansMenuOpen(false);
+                        }}
+                      >
+                        {product.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+              
               <div className="px-3 pt-4 space-y-3 border-t border-border">
                 <Link to="/downloads" onClick={() => setIsMenuOpen(false)}>
                   <Button variant="ghost" size="sm" className="w-full text-primary hover:bg-primary hover:text-white">
