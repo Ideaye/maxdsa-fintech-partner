@@ -19,19 +19,28 @@ interface KiranaLoanRequest {
 }
 
 const handler = async (req: Request): Promise<Response> => {
+  console.log('🚀 Kirana loan notification function started');
+  
   if (req.method === "OPTIONS") {
+    console.log('⚠️ OPTIONS request received');
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
     const apiKey = Deno.env.get("RESEND_API_KEY");
+    console.log('🔑 API Key status:', apiKey ? 'Present (length: ' + apiKey.length + ')' : 'MISSING');
+    
     if (!apiKey) {
-      console.error('RESEND_API_KEY is not configured');
+      console.error('❌ RESEND_API_KEY is not configured');
       throw new Error('Email service is not configured');
     }
 
     const applicationData: KiranaLoanRequest = await req.json();
-    console.log('Received Kirana loan notification request for:', applicationData.customerName);
+    console.log('📧 Received Kirana loan notification request');
+    console.log('📧 Customer Name:', applicationData.customerName);
+    console.log('📧 Email provided:', applicationData.email ? 'Yes (' + applicationData.email + ')' : 'No');
+    console.log('📧 Contact Number:', applicationData.contactNumber);
+    console.log('📧 From address: partner@maxdsa.com');
 
     const emails = [];
 

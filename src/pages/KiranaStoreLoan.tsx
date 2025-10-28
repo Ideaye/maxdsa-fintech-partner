@@ -224,6 +224,12 @@ const KiranaStoreLoan = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Only allow submission on Step 5
+    if (currentStep !== 5) {
+      return;
+    }
+    
     if (!validateStep(currentStep)) return;
 
     setIsSubmitting(true);
