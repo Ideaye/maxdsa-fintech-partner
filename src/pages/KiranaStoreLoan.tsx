@@ -845,6 +845,7 @@ const KiranaStoreLoan = () => {
                         <Popover>
                           <PopoverTrigger asChild>
                             <Button
+                              type="button"
                               variant="outline"
                               className={cn(
                                 "w-full justify-start text-left font-normal",
