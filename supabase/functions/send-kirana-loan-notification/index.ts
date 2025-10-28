@@ -2,6 +2,7 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import JSZip from "npm:jszip@3.10.1";
+import * as XLSX from "npm:xlsx@0.18.5";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -52,6 +53,115 @@ interface KiranaLoanRequest {
   loanType: string;
 }
 
+async function generateExcelFile(applicationData: KiranaLoanRequest) {
+  const workbook = XLSX.utils.book_new();
+  
+  // Sheet 1: Customer Details
+  const customerData = [
+    ['Field', 'Value'],
+    ['Customer Name', applicationData.customerName],
+    ['Contact Number', applicationData.contactNumber],
+    ['Email', applicationData.email || 'N/A'],
+    ['Date of Birth', applicationData.dateOfBirth || 'N/A'],
+    ['Advisor Name', applicationData.advisorName || 'N/A'],
+  ];
+  
+  const customerSheet = XLSX.utils.aoa_to_sheet(customerData);
+  XLSX.utils.book_append_sheet(workbook, customerSheet, 'Customer Details');
+  
+  // Sheet 2: Co-Applicant Details
+  if (applicationData.coApplicantName) {
+    const coApplicantData = [
+      ['Field', 'Value'],
+      ['Co-Applicant Name', applicationData.coApplicantName],
+      ['Co-Applicant DOB', applicationData.coApplicantDob || 'N/A'],
+      ['Co-Applicant Contact', applicationData.coApplicantContact || 'N/A'],
+    ];
+    
+    const coApplicantSheet = XLSX.utils.aoa_to_sheet(coApplicantData);
+    XLSX.utils.book_append_sheet(workbook, coApplicantSheet, 'Co-Applicant');
+  }
+  
+  // Sheet 3: Shop Details
+  const shopData = [
+    ['Field', 'Value'],
+    ['Shop Name', applicationData.retailShopName],
+    ['Shop Address', applicationData.retailShopAddress],
+    ['Nature of Business', applicationData.natureOfRetailShop],
+    ['Shop Ownership', applicationData.natureOfShopOwnership],
+    ['Shop Size', applicationData.shopSize],
+    ['Daily Turnover Range', applicationData.dailyTurnoverRange],
+    ['Daily Walk-ins Range', applicationData.dailyWalkinsRange],
+  ];
+  
+  const shopSheet = XLSX.utils.aoa_to_sheet(shopData);
+  XLSX.utils.book_append_sheet(workbook, shopSheet, 'Shop Details');
+  
+  // Sheet 4: Residence & Location
+  const residenceData = [
+    ['Field', 'Value'],
+    ['Residence Address', applicationData.residenceAddress || 'N/A'],
+    ['Residence Ownership', applicationData.natureOfResidenceOwnership || 'N/A'],
+    ['Geo Location', applicationData.geoLocation || 'N/A'],
+  ];
+  
+  const residenceSheet = XLSX.utils.aoa_to_sheet(residenceData);
+  XLSX.utils.book_append_sheet(workbook, residenceSheet, 'Residence Details');
+  
+  // Sheet 5: Verification Details
+  const verificationData = [
+    ['Field', 'Value'],
+    ['PAN Number', applicationData.panNumber || 'N/A'],
+    ['Aadhar Number', applicationData.aadharNumber || 'N/A'],
+    ['Udyam Number', applicationData.udyamNumber || 'N/A'],
+  ];
+  
+  const verificationSheet = XLSX.utils.aoa_to_sheet(verificationData);
+  XLSX.utils.book_append_sheet(workbook, verificationSheet, 'Verification');
+  
+  // Sheet 6: Existing Loans
+  if (applicationData.existingLoans && applicationData.existingLoans.length > 0) {
+    const loansData: any[][] = [['Financier', 'Loan Amount', 'EMI Amount', 'Tenor', 'Availed Date']];
+    applicationData.existingLoans.forEach((loan) => {
+      loansData.push([
+        loan.financier_name,
+        loan.loan_amount,
+        loan.emi_amount,
+        loan.tenor,
+        loan.loan_availed_date || 'N/A'
+      ]);
+    });
+    
+    const loansSheet = XLSX.utils.aoa_to_sheet(loansData);
+    XLSX.utils.book_append_sheet(workbook, loansSheet, 'Existing Loans');
+  }
+  
+  // Sheet 7: Document Links
+  const documentsData = [
+    ['Document Type', 'Status'],
+    ['Bank Statement', applicationData.bankStatementUrl ? 'Uploaded' : 'Not Uploaded'],
+    ['ITR Documents', applicationData.itrDocumentsUrl ? 'Uploaded' : 'Not Uploaded'],
+    ['Shop Photo', applicationData.shopPhotoUrl ? 'Uploaded' : 'Not Uploaded'],
+  ];
+  
+  const documentsSheet = XLSX.utils.aoa_to_sheet(documentsData);
+  XLSX.utils.book_append_sheet(workbook, documentsSheet, 'Documents');
+  
+  // Convert to base64
+  const excelBuffer = XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
+  const uint8Array = new Uint8Array(excelBuffer);
+  
+  // Convert to base64 using chunk-based approach
+  const chunkSize = 0x8000;
+  let binary = '';
+  for (let i = 0; i < uint8Array.length; i += chunkSize) {
+    const chunk = uint8Array.subarray(i, Math.min(i + chunkSize, uint8Array.length));
+    binary += String.fromCharCode.apply(null, Array.from(chunk));
+  }
+  
+  return btoa(binary);
+}
+
 const handler = async (req: Request): Promise<Response> => {
   console.log('🚀 Kirana loan notification function started');
   
@@ -75,6 +185,16 @@ const handler = async (req: Request): Promise<Response> => {
     console.log('📧 Email provided:', applicationData.email ? 'Yes (' + applicationData.email + ')' : 'No');
     console.log('📧 Contact Number:', applicationData.contactNumber);
     console.log('📧 From address: partner@maxdsa.com');
+
+    // Generate Excel file
+    console.log('📊 Generating Excel file...');
+    const excelBase64 = await generateExcelFile(applicationData);
+    const excelAttachment = {
+      filename: `Kirana_Loan_${applicationData.customerName.replace(/\s+/g, '_')}_Application.xlsx`,
+      content: excelBase64,
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    };
+    console.log('✅ Excel file generated successfully');
 
     // Download documents and create ZIP
     let zipAttachment = null;
@@ -205,10 +325,11 @@ const handler = async (req: Request): Promise<Response> => {
       to: ["partner@maxdsa.com"],
       subject: `New Kirana Store Loan Application - ${applicationData.customerName}`,
       html: adminEmailHtml,
+      attachments: [excelAttachment],
     };
 
     if (zipAttachment) {
-      adminEmail.attachments = [zipAttachment];
+      adminEmail.attachments.push(zipAttachment);
     }
 
     emails.push(adminEmail);
