@@ -222,14 +222,7 @@ const KiranaStoreLoan = () => {
     setCurrentStep(currentStep - 1);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Only allow submission on Step 5
-    if (currentStep !== 5) {
-      return;
-    }
-    
+  const handleSubmit = async () => {
     if (!validateStep(currentStep)) return;
 
     setIsSubmitting(true);
@@ -328,15 +321,34 @@ const KiranaStoreLoan = () => {
 
       console.log('✅ Database insert successful, sending email notification...');
 
-      // Send email notification
+      // Send email notification with full data
       try {
         const emailPayload = {
           customerName: formData.customerName,
           email: formData.email || null,
           contactNumber: formData.contactNumber,
           advisorName: formData.advisorName || null,
+          dateOfBirth: formData.dateOfBirth ? format(formData.dateOfBirth, "dd/MM/yyyy") : null,
+          coApplicantName: formData.coApplicantName || null,
+          coApplicantDob: formData.coApplicantDob ? format(formData.coApplicantDob, "dd/MM/yyyy") : null,
+          coApplicantContact: formData.coApplicantContact || null,
           retailShopName: formData.retailShopName,
           retailShopAddress: formData.retailShopAddress,
+          natureOfRetailShop: formData.natureOfRetailShop,
+          natureOfShopOwnership: formData.natureOfShopOwnership,
+          shopSize: formData.shopSize,
+          dailyTurnoverRange: formData.dailyTurnoverRange,
+          dailyWalkinsRange: formData.dailyWalkinsRange,
+          residenceAddress: formData.residenceAddress || null,
+          natureOfResidenceOwnership: formData.natureOfResidenceOwnership || null,
+          geoLocation: formData.geoLocation || null,
+          panNumber: formData.panNumber || null,
+          aadharNumber: formData.aadharNumber || null,
+          udyamNumber: formData.udyamNumber || null,
+          bankStatementUrl: bankStatementUrl || null,
+          itrDocumentsUrl: itrDocumentsUrl || null,
+          shopPhotoUrl: shopPhotoUrl || null,
+          existingLoans: existingLoansData,
           loanType: "Kirana Store Loan",
         };
 
@@ -410,7 +422,7 @@ const KiranaStoreLoan = () => {
             ))}
           </div>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={(e) => e.preventDefault()}>
             {/* Step 1: Customer Details */}
             {currentStep === 1 && (
               <div className="space-y-6">
@@ -890,7 +902,7 @@ const KiranaStoreLoan = () => {
                   Next
                 </Button>
               ) : (
-                <Button type="submit" disabled={isSubmitting} className="ml-auto">
+                <Button type="button" onClick={handleSubmit} disabled={isSubmitting} className="ml-auto">
                   {isSubmitting ? "Submitting..." : "Submit Application"}
                 </Button>
               )}
