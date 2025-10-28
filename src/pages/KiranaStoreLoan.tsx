@@ -182,6 +182,32 @@ const KiranaStoreLoan = () => {
           return false;
         }
         break;
+      case 3:
+        if (!formData.panNumber || !formData.aadharNumber || !formData.udyamNumber) {
+          toast({
+            title: "Missing Information",
+            description: "Please fill in PAN, Aadhar, and Udyam details.",
+            variant: "destructive",
+          });
+          return false;
+        }
+        if (formData.panNumber.length !== 10) {
+          toast({
+            title: "Invalid PAN Number",
+            description: "PAN number must be 10 characters.",
+            variant: "destructive",
+          });
+          return false;
+        }
+        if (formData.aadharNumber.length !== 12) {
+          toast({
+            title: "Invalid Aadhar Number",
+            description: "Aadhar number must be 12 digits.",
+            variant: "destructive",
+          });
+          return false;
+        }
+        break;
     }
     return true;
   };
@@ -641,7 +667,7 @@ const KiranaStoreLoan = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="panNumber">PAN Number of the Applicant (Optional)</Label>
+                  <Label htmlFor="panNumber">PAN Number of the Applicant *</Label>
                   <Input
                     id="panNumber"
                     value={formData.panNumber}
@@ -652,7 +678,7 @@ const KiranaStoreLoan = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="aadharNumber">Aadhar Card Number (Optional)</Label>
+                  <Label htmlFor="aadharNumber">Aadhar Card Number *</Label>
                   <Input
                     id="aadharNumber"
                     value={formData.aadharNumber}
@@ -663,7 +689,7 @@ const KiranaStoreLoan = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="udyamNumber">Udyam Number (Optional)</Label>
+                  <Label htmlFor="udyamNumber">Udyam Number *</Label>
                   <Input
                     id="udyamNumber"
                     value={formData.udyamNumber}
@@ -749,6 +775,7 @@ const KiranaStoreLoan = () => {
                         <Input
                           value={loan.financierName}
                           onChange={(e) => updateExistingLoan(index, "financierName", e.target.value)}
+                          onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
                           placeholder="Enter bank/financier name"
                         />
                       </div>
@@ -758,6 +785,7 @@ const KiranaStoreLoan = () => {
                         <Input
                           value={loan.loanAmount}
                           onChange={(e) => updateExistingLoan(index, "loanAmount", e.target.value)}
+                          onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
                           placeholder="Enter loan amount"
                         />
                       </div>
@@ -767,6 +795,7 @@ const KiranaStoreLoan = () => {
                         <Input
                           value={loan.emiAmount}
                           onChange={(e) => updateExistingLoan(index, "emiAmount", e.target.value)}
+                          onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
                           placeholder="Enter EMI amount"
                         />
                       </div>
@@ -776,6 +805,7 @@ const KiranaStoreLoan = () => {
                         <Input
                           value={loan.tenor}
                           onChange={(e) => updateExistingLoan(index, "tenor", e.target.value)}
+                          onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
                           placeholder="Enter tenor (e.g., 24 months)"
                         />
                       </div>
