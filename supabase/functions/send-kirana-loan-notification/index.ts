@@ -202,7 +202,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     const adminEmail: any = {
       from: "MaxDSA Loans <partner@maxdsa.com>",
-      to: ["partners@maxdsa.com"],
+      to: ["partner@maxdsa.com"],
       subject: `New Kirana Store Loan Application - ${applicationData.customerName}`,
       html: adminEmailHtml,
     };
