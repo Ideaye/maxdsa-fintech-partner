@@ -116,7 +116,14 @@ const handler = async (req: Request): Promise<Response> => {
       }
 
       const zipBuffer = await zip.generateAsync({ type: 'uint8array' });
-      const base64Zip = btoa(String.fromCharCode(...zipBuffer));
+      // Convert ZIP to base64 using chunk-based approach to avoid stack overflow
+      const chunkSize = 0x8000; // 32KB chunks
+      let binary = '';
+      for (let i = 0; i < zipBuffer.length; i += chunkSize) {
+        const chunk = zipBuffer.subarray(i, Math.min(i + chunkSize, zipBuffer.length));
+        binary += String.fromCharCode.apply(null, Array.from(chunk));
+      }
+      const base64Zip = btoa(binary);
       zipAttachment = {
         filename: `Kirana_Loan_${applicationData.customerName.replace(/\s+/g, '_')}_Documents.zip`,
         content: base64Zip,
