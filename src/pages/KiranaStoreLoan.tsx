@@ -320,6 +320,36 @@ const KiranaStoreLoan = () => {
 
       if (insertError) throw insertError;
 
+      console.log('✅ Database insert successful, sending email notification...');
+
+      // Send email notification
+      try {
+        const emailPayload = {
+          customerName: formData.customerName,
+          email: formData.email || null,
+          contactNumber: formData.contactNumber,
+          advisorName: formData.advisorName || null,
+          retailShopName: formData.retailShopName,
+          retailShopAddress: formData.retailShopAddress,
+          loanType: "Kirana Store Loan",
+        };
+
+        const { error: emailError } = await supabase.functions.invoke(
+          'send-kirana-loan-notification',
+          { body: emailPayload }
+        );
+
+        if (emailError) {
+          console.error("❌ Email notification failed:", emailError);
+          // Don't block success if email fails
+        } else {
+          console.log('✅ Email notification sent successfully');
+        }
+      } catch (emailErr) {
+        console.error("Email error:", emailErr);
+        // Continue even if email fails
+      }
+
       toast({
         title: "Application Submitted!",
         description: "Your Kirana Store loan application has been submitted successfully. We will contact you soon.",

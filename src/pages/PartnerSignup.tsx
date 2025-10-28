@@ -582,13 +582,21 @@ const PartnerSignup = () => {
         ...insertData, // Include all partner-type-specific fields
       };
 
-      const { error: emailError } = await supabase.functions.invoke(
+      console.log('About to invoke email function with payload keys:', Object.keys(emailPayload));
+      const { data: emailData, error: emailError } = await supabase.functions.invoke(
         'send-partner-application-emails',
         { body: emailPayload }
       );
 
       if (emailError) {
-        console.error("Email error:", emailError);
+        console.error("❌ Email sending failed:", emailError);
+        toast({
+          title: "Application Saved",
+          description: "Your application was saved but we couldn't send confirmation emails. Our team will still review it.",
+          variant: "destructive",
+        });
+      } else {
+        console.log('✅ Email sent successfully:', emailData);
       }
 
       setIsSubmitted(true);

@@ -56,5 +56,8 @@ enable_confirmations = true
 [functions.send-partner-application-emails]
 verify_jwt = false
 
+[functions.send-kirana-loan-notification]
+verify_jwt = false
+
 [functions.chatbot]
 verify_jwt = false
