@@ -37,7 +37,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Email to MaxDSA admin
     const adminEmail = {
-      from: "MaxDSA Loans <onboarding@resend.dev>",
+      from: "MaxDSA Loans <partner@maxdsa.com>",
       to: ["partners@maxdsa.com"],
       subject: `New Kirana Store Loan Application - ${applicationData.customerName}`,
       html: `
@@ -68,7 +68,7 @@ const handler = async (req: Request): Promise<Response> => {
     // Email to customer if email provided
     if (applicationData.email) {
       const customerEmail = {
-        from: "MaxDSA Loans <onboarding@resend.dev>",
+        from: "MaxDSA Loans <partner@maxdsa.com>",
         to: [applicationData.email],
         subject: "Your Kirana Store Loan Application Received",
         html: `
