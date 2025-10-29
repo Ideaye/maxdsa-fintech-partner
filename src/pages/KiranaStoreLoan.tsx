@@ -8,10 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon, Plus, Trash2 } from "lucide-react";
-import { format } from "date-fns";
+import { Plus, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ExistingLoan {
@@ -19,7 +16,7 @@ interface ExistingLoan {
   loanAmount: string;
   emiAmount: string;
   tenor: string;
-  loanAvailedDate: Date | null;
+  loanAvailedDate: string;
 }
 
 const KiranaStoreLoan = () => {
@@ -31,10 +28,10 @@ const KiranaStoreLoan = () => {
   const [formData, setFormData] = useState({
     advisorName: "",
     customerName: "",
-    dateOfBirth: null as Date | null,
+    dateOfBirth: "",
     contactNumber: "",
     coApplicantName: "",
-    coApplicantDob: null as Date | null,
+    coApplicantDob: "",
     coApplicantContact: "",
     email: "",
     retailShopName: "",
@@ -116,6 +113,42 @@ const KiranaStoreLoan = () => {
     "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"
   ];
 
+  // Format date input as DD/MM/YYYY
+  const formatDateInput = (value: string) => {
+    const numbers = value.replace(/\D/g, "");
+    if (numbers.length <= 2) {
+      return numbers;
+    } else if (numbers.length <= 4) {
+      return `${numbers.slice(0, 2)}/${numbers.slice(2)}`;
+    } else {
+      return `${numbers.slice(0, 2)}/${numbers.slice(2, 4)}/${numbers.slice(4, 8)}`;
+    }
+  };
+
+  // Parse DD/MM/YYYY string to Date object
+  const parseDateString = (dateStr: string): Date | null => {
+    if (!dateStr || dateStr.length !== 10) return null;
+    const [day, month, year] = dateStr.split('/');
+    const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+    if (isNaN(date.getTime())) return null;
+    if (date.getDate() !== parseInt(day)) return null;
+    if (date.getMonth() !== parseInt(month) - 1) return null;
+    return date;
+  };
+
+  // Calculate age from date string
+  const calculateAge = (dateStr: string): number | null => {
+    const birthDate = parseDateString(dateStr);
+    if (!birthDate) return null;
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  };
+
   const addExistingLoan = () => {
     setFormData({
       ...formData,
@@ -126,7 +159,7 @@ const KiranaStoreLoan = () => {
           loanAmount: "",
           emiAmount: "",
           tenor: "",
-          loanAvailedDate: null,
+          loanAvailedDate: "",
         },
       ],
     });
@@ -175,6 +208,70 @@ const KiranaStoreLoan = () => {
             variant: "destructive",
           });
           return false;
+        }
+
+        // Validate date format
+        if (formData.dateOfBirth.length !== 10) {
+          toast({
+            title: "Invalid Date Format",
+            description: "Please enter date of birth in DD/MM/YYYY format.",
+            variant: "destructive",
+          });
+          return false;
+        }
+
+        // Validate date is valid
+        const birthDate = parseDateString(formData.dateOfBirth);
+        if (!birthDate) {
+          toast({
+            title: "Invalid Date",
+            description: "Please enter a valid date of birth.",
+            variant: "destructive",
+          });
+          return false;
+        }
+
+        // Validate age (must be 18+)
+        const age = calculateAge(formData.dateOfBirth);
+        if (age === null || age < 18) {
+          toast({
+            title: "Age Requirement",
+            description: "Applicant must be at least 18 years old.",
+            variant: "destructive",
+          });
+          return false;
+        }
+
+        // Validate co-applicant DOB if provided
+        if (formData.coApplicantDob) {
+          if (formData.coApplicantDob.length !== 10) {
+            toast({
+              title: "Invalid Co-Applicant Date",
+              description: "Please enter co-applicant date in DD/MM/YYYY format.",
+              variant: "destructive",
+            });
+            return false;
+          }
+          
+          const coAppDate = parseDateString(formData.coApplicantDob);
+          if (!coAppDate) {
+            toast({
+              title: "Invalid Co-Applicant Date",
+              description: "Please enter a valid co-applicant date of birth.",
+              variant: "destructive",
+            });
+            return false;
+          }
+          
+          const coAppAge = calculateAge(formData.coApplicantDob);
+          if (coAppAge === null || coAppAge < 18) {
+            toast({
+              title: "Co-Applicant Age Requirement",
+              description: "Co-applicant must be at least 18 years old.",
+              variant: "destructive",
+            });
+            return false;
+          }
         }
         break;
       case 2:
@@ -312,17 +409,17 @@ const KiranaStoreLoan = () => {
         loan_amount: loan.loanAmount,
         emi_amount: loan.emiAmount,
         tenor: loan.tenor,
-        loan_availed_date: loan.loanAvailedDate ? format(loan.loanAvailedDate, "yyyy-MM-dd") : null,
+        loan_availed_date: loan.loanAvailedDate || null,
       }));
 
       // Insert into database
       const { error: insertError } = await supabase.from("kirana_store_loans").insert({
         advisor_name: formData.advisorName || null,
         customer_name: formData.customerName,
-        date_of_birth: formData.dateOfBirth ? format(formData.dateOfBirth, "yyyy-MM-dd") : null,
+        date_of_birth: formData.dateOfBirth ? parseDateString(formData.dateOfBirth)?.toISOString() : null,
         contact_number: formData.contactNumber,
         co_applicant_name: formData.coApplicantName || null,
-        co_applicant_dob: formData.coApplicantDob ? format(formData.coApplicantDob, "yyyy-MM-dd") : null,
+        co_applicant_dob: formData.coApplicantDob ? parseDateString(formData.coApplicantDob)?.toISOString() : null,
         co_applicant_contact: formData.coApplicantContact || null,
         email: formData.email || null,
         retail_shop_name: formData.retailShopName,
@@ -358,9 +455,9 @@ const KiranaStoreLoan = () => {
           email: formData.email || null,
           contactNumber: formData.contactNumber,
           advisorName: formData.advisorName || null,
-          dateOfBirth: formData.dateOfBirth ? format(formData.dateOfBirth, "dd/MM/yyyy") : null,
+          dateOfBirth: formData.dateOfBirth || null,
           coApplicantName: formData.coApplicantName || null,
-          coApplicantDob: formData.coApplicantDob ? format(formData.coApplicantDob, "dd/MM/yyyy") : null,
+          coApplicantDob: formData.coApplicantDob || null,
           coApplicantContact: formData.coApplicantContact || null,
           retailShopName: formData.retailShopName,
           retailShopAddress: formData.retailShopAddress,
@@ -484,29 +581,24 @@ const KiranaStoreLoan = () => {
                 </div>
 
                 <div>
-                  <Label>Date of Birth *</Label>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className={cn(
-                          "w-full justify-start text-left font-normal",
-                          !formData.dateOfBirth && "text-muted-foreground"
-                        )}
-                      >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {formData.dateOfBirth ? format(formData.dateOfBirth, "PPP") : "Select date"}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 bg-card">
-                      <Calendar
-                        mode="single"
-                        selected={formData.dateOfBirth || undefined}
-                        onSelect={(date) => setFormData({ ...formData, dateOfBirth: date || null })}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
+                  <Label htmlFor="dateOfBirth">Date of Birth * (DD/MM/YYYY)</Label>
+                  <Input
+                    id="dateOfBirth"
+                    type="text"
+                    value={formData.dateOfBirth}
+                    onChange={(e) => setFormData({ 
+                      ...formData, 
+                      dateOfBirth: formatDateInput(e.target.value) 
+                    })}
+                    placeholder="DD/MM/YYYY (e.g., 15/08/1971)"
+                    maxLength={10}
+                    required
+                  />
+                  {formData.dateOfBirth && calculateAge(formData.dateOfBirth) !== null && (
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Age: {calculateAge(formData.dateOfBirth)} years
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -546,29 +638,23 @@ const KiranaStoreLoan = () => {
                 </div>
 
                 <div>
-                  <Label>Co-Applicant Date of Birth</Label>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className={cn(
-                          "w-full justify-start text-left font-normal",
-                          !formData.coApplicantDob && "text-muted-foreground"
-                        )}
-                      >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {formData.coApplicantDob ? format(formData.coApplicantDob, "PPP") : "Select date"}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 bg-card">
-                      <Calendar
-                        mode="single"
-                        selected={formData.coApplicantDob || undefined}
-                        onSelect={(date) => setFormData({ ...formData, coApplicantDob: date || null })}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
+                  <Label htmlFor="coApplicantDob">Co-Applicant Date of Birth (DD/MM/YYYY)</Label>
+                  <Input
+                    id="coApplicantDob"
+                    type="text"
+                    value={formData.coApplicantDob}
+                    onChange={(e) => setFormData({ 
+                      ...formData, 
+                      coApplicantDob: formatDateInput(e.target.value) 
+                    })}
+                    placeholder="DD/MM/YYYY (e.g., 20/03/1975)"
+                    maxLength={10}
+                  />
+                  {formData.coApplicantDob && calculateAge(formData.coApplicantDob) !== null && (
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Age: {calculateAge(formData.coApplicantDob)} years
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -933,30 +1019,15 @@ const KiranaStoreLoan = () => {
                       </div>
 
                       <div>
-                        <Label>Loan Availed Date</Label>
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <Button
-                              type="button"
-                              variant="outline"
-                              className={cn(
-                                "w-full justify-start text-left font-normal",
-                                !loan.loanAvailedDate && "text-muted-foreground"
-                              )}
-                            >
-                              <CalendarIcon className="mr-2 h-4 w-4" />
-                              {loan.loanAvailedDate ? format(loan.loanAvailedDate, "PPP") : "Select date"}
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0 bg-card">
-                            <Calendar
-                              mode="single"
-                              selected={loan.loanAvailedDate || undefined}
-                              onSelect={(date) => updateExistingLoan(index, "loanAvailedDate", date || null)}
-                              initialFocus
-                            />
-                          </PopoverContent>
-                        </Popover>
+                        <Label>Loan Availed Date (DD/MM/YYYY)</Label>
+                        <Input
+                          type="text"
+                          value={loan.loanAvailedDate}
+                          onChange={(e) => updateExistingLoan(index, "loanAvailedDate", formatDateInput(e.target.value))}
+                          onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
+                          placeholder="DD/MM/YYYY (e.g., 15/08/2020)"
+                          maxLength={10}
+                        />
                       </div>
                     </div>
                   ))
