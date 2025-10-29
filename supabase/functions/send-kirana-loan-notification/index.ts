@@ -100,6 +100,9 @@ async function generateExcelFile(applicationData: KiranaLoanRequest) {
   // Sheet 4: Residence & Location
   const residenceData = [
     ['Field', 'Value'],
+    ['State', applicationData.state || 'N/A'],
+    ['City', applicationData.city || 'N/A'],
+    ['Pincode', applicationData.pincode || 'N/A'],
     ['Residence Address', applicationData.residenceAddress || 'N/A'],
     ['Residence Ownership', applicationData.natureOfResidenceOwnership || 'N/A'],
     ['Geo Location', applicationData.geoLocation || 'N/A'],

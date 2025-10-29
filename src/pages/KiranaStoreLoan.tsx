@@ -47,6 +47,9 @@ const KiranaStoreLoan = () => {
     residenceAddress: "",
     natureOfResidenceOwnership: "",
     geoLocation: "",
+    city: "",
+    state: "",
+    pincode: "",
     panNumber: "",
     aadharNumber: "",
     udyamNumber: "",
@@ -101,6 +104,16 @@ const KiranaStoreLoan = () => {
     "100 to 200",
     "200 to 500",
     "Above 500",
+  ];
+
+  const indianStates = [
+    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
+    "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka",
+    "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram",
+    "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu",
+    "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal",
+    "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu",
+    "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"
   ];
 
   const addExistingLoan = () => {
@@ -183,15 +196,28 @@ const KiranaStoreLoan = () => {
         }
         break;
       case 3:
-        if (!formData.panNumber || !formData.aadharNumber || !formData.udyamNumber) {
+        // State, City, Pincode are mandatory
+        if (!formData.state || !formData.city || !formData.pincode) {
           toast({
             title: "Missing Information",
-            description: "Please fill in PAN, Aadhar, and Udyam details.",
+            description: "Please fill in State, City, and Pincode.",
             variant: "destructive",
           });
           return false;
         }
-        if (formData.panNumber.length !== 10) {
+        
+        // Pincode validation
+        if (formData.pincode.length !== 6) {
+          toast({
+            title: "Invalid Pincode",
+            description: "Pincode must be 6 digits.",
+            variant: "destructive",
+          });
+          return false;
+        }
+        
+        // Optional field validations - only if filled
+        if (formData.panNumber && formData.panNumber.length !== 10) {
           toast({
             title: "Invalid PAN Number",
             description: "PAN number must be 10 characters.",
@@ -199,7 +225,8 @@ const KiranaStoreLoan = () => {
           });
           return false;
         }
-        if (formData.aadharNumber.length !== 12) {
+        
+        if (formData.aadharNumber && formData.aadharNumber.length !== 12) {
           toast({
             title: "Invalid Aadhar Number",
             description: "Aadhar number must be 12 digits.",
@@ -308,6 +335,9 @@ const KiranaStoreLoan = () => {
         residence_address: formData.residenceAddress || null,
         nature_of_residence_ownership: formData.natureOfResidenceOwnership || null,
         geo_location: formData.geoLocation || null,
+        state: formData.state,
+        city: formData.city,
+        pincode: formData.pincode,
         pan_number: formData.panNumber || null,
         aadhar_number: formData.aadharNumber || null,
         udyam_number: formData.udyamNumber || null,
@@ -342,6 +372,9 @@ const KiranaStoreLoan = () => {
           residenceAddress: formData.residenceAddress || null,
           natureOfResidenceOwnership: formData.natureOfResidenceOwnership || null,
           geoLocation: formData.geoLocation || null,
+          state: formData.state,
+          city: formData.city,
+          pincode: formData.pincode,
           panNumber: formData.panNumber || null,
           aadharNumber: formData.aadharNumber || null,
           udyamNumber: formData.udyamNumber || null,
@@ -715,7 +748,48 @@ const KiranaStoreLoan = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="panNumber">PAN Number of the Applicant *</Label>
+                  <Label htmlFor="state">State *</Label>
+                  <Select
+                    value={formData.state}
+                    onValueChange={(value) => setFormData({ ...formData, state: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select state" />
+                    </SelectTrigger>
+                    <SelectContent className="max-h-[300px]">
+                      {indianStates.map((state) => (
+                        <SelectItem key={state} value={state}>
+                          {state}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="city">City *</Label>
+                  <Input
+                    id="city"
+                    value={formData.city}
+                    onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                    placeholder="Enter city name"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="pincode">Pincode *</Label>
+                  <Input
+                    id="pincode"
+                    type="text"
+                    value={formData.pincode}
+                    onChange={(e) => setFormData({ ...formData, pincode: e.target.value.replace(/\D/g, "") })}
+                    placeholder="Enter 6-digit pincode"
+                    maxLength={6}
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="panNumber">PAN Number of the Applicant (Optional)</Label>
                   <Input
                     id="panNumber"
                     value={formData.panNumber}
@@ -726,7 +800,7 @@ const KiranaStoreLoan = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="aadharNumber">Aadhar Card Number *</Label>
+                  <Label htmlFor="aadharNumber">Aadhar Card Number (Optional)</Label>
                   <Input
                     id="aadharNumber"
                     value={formData.aadharNumber}
@@ -737,7 +811,7 @@ const KiranaStoreLoan = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="udyamNumber">Udyam Number *</Label>
+                  <Label htmlFor="udyamNumber">Udyam Number (Optional)</Label>
                   <Input
                     id="udyamNumber"
                     value={formData.udyamNumber}

@@ -19,6 +19,7 @@ export type Database = {
           aadhar_number: string | null
           advisor_name: string | null
           bank_statement_url: string | null
+          city: string | null
           co_applicant_contact: string | null
           co_applicant_dob: string | null
           co_applicant_name: string | null
@@ -37,17 +38,20 @@ export type Database = {
           nature_of_retail_shop: string
           nature_of_shop_ownership: string
           pan_number: string | null
+          pincode: string | null
           residence_address: string | null
           retail_shop_address: string
           retail_shop_name: string
           shop_photo_url: string | null
           shop_size: string
+          state: string | null
           udyam_number: string | null
         }
         Insert: {
           aadhar_number?: string | null
           advisor_name?: string | null
           bank_statement_url?: string | null
+          city?: string | null
           co_applicant_contact?: string | null
           co_applicant_dob?: string | null
           co_applicant_name?: string | null
@@ -66,17 +70,20 @@ export type Database = {
           nature_of_retail_shop: string
           nature_of_shop_ownership: string
           pan_number?: string | null
+          pincode?: string | null
           residence_address?: string | null
           retail_shop_address: string
           retail_shop_name: string
           shop_photo_url?: string | null
           shop_size: string
+          state?: string | null
           udyam_number?: string | null
         }
         Update: {
           aadhar_number?: string | null
           advisor_name?: string | null
           bank_statement_url?: string | null
+          city?: string | null
           co_applicant_contact?: string | null
           co_applicant_dob?: string | null
           co_applicant_name?: string | null
@@ -95,11 +102,13 @@ export type Database = {
           nature_of_retail_shop?: string
           nature_of_shop_ownership?: string
           pan_number?: string | null
+          pincode?: string | null
           residence_address?: string | null
           retail_shop_address?: string
           retail_shop_name?: string
           shop_photo_url?: string | null
           shop_size?: string
+          state?: string | null
           udyam_number?: string | null
         }
         Relationships: []
